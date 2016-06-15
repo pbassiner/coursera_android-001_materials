@@ -1,0 +1,948 @@
+1
+00:00:00,000 --> 00:00:08,459
+[BLANK_AUDIO]
+
+2
+00:00:08,459 --> 00:00:10,950
+Hi.
+I'm Adam Porter.
+
+3
+00:00:10,950 --> 00:00:17,100
+And this is Programming Mobile
+Applications for Android Handheld Systems.
+
+4
+00:00:19,710 --> 00:00:21,870
+>> In addition to what I've just shown
+you
+
+5
+00:00:21,870 --> 00:00:26,440
+Menus can also support a number of more
+advanced features.
+
+6
+00:00:26,440 --> 00:00:29,690
+For example, you can put related menu
+items into a
+
+7
+00:00:29,690 --> 00:00:34,580
+group so you can process and manipulate
+them as a unit.
+
+8
+00:00:34,580 --> 00:00:37,490
+You can also find the short cut keys to
+
+9
+00:00:37,490 --> 00:00:40,810
+specific menu items so you can access them
+more quickly.
+
+10
+00:00:41,830 --> 00:00:44,570
+And you can bind In tens to menu items.
+
+11
+00:00:44,570 --> 00:00:48,930
+So for instance you can start a particular
+activity
+
+12
+00:00:48,930 --> 00:00:51,620
+when the user clicks on a particular menu
+item.
+
+13
+00:00:54,520 --> 00:00:56,830
+So I've mentioned the ActionBar a few
+times now.
+
+14
+00:00:56,830 --> 00:01:02,820
+The ActionBar was added in Android 3.10
+And kind of mimics the
+
+15
+00:01:02,820 --> 00:01:08,550
+application bar that you often see in
+desktop app, desktop applications.
+
+16
+00:01:08,550 --> 00:01:13,860
+You know, that bar at the top of the
+application window that just says things
+
+17
+00:01:13,860 --> 00:01:19,880
+like File, Edit, Help and those things.
+And the basic idea behind
+
+18
+00:01:19,880 --> 00:01:21,390
+the action bar.
+
+19
+00:01:21,390 --> 00:01:26,830
+Is that rather than hiding actions behind
+a traditional pop-up menu,
+
+20
+00:01:26,830 --> 00:01:31,540
+you want to give the users quick access to
+the actions that they're likely to use.
+
+21
+00:01:32,720 --> 00:01:36,390
+Let's look at some uses of the action bar
+Now the
+
+22
+00:01:36,390 --> 00:01:40,390
+first example I'll give goes back to our
+lesson on fragments.
+
+23
+00:01:41,520 --> 00:01:46,010
+You remember those quote viewer
+applications, well, in this application,
+
+24
+00:01:46,010 --> 00:01:53,760
+fragment dynamic layout with action bar,
+I've added some items to the action bar.
+
+25
+00:01:54,790 --> 00:01:57,090
+Now, as you'll see in a minute, these
+items are
+
+26
+00:01:57,090 --> 00:02:01,720
+provided by three different classes Some
+items come from the
+
+27
+00:02:01,720 --> 00:02:05,600
+main activity, some come from the fragment
+that displays the
+
+28
+00:02:05,600 --> 00:02:10,330
+titles, and some come from the fragment
+that displays the quotes.
+
+29
+00:02:10,330 --> 00:02:11,280
+Let's take
+
+30
+00:02:11,280 --> 00:02:14,700
+a look.
+Here's my emulated tablet.
+
+31
+00:02:14,700 --> 00:02:17,720
+Now I'll start the application.
+
+32
+00:02:19,410 --> 00:02:21,720
+And as before, when it starts up, there's
+a
+
+33
+00:02:21,720 --> 00:02:26,280
+main activity, which hosts a single
+fragment, the title fragment.
+
+34
+00:02:27,760 --> 00:02:31,310
+Now if you look at the action bar at the
+top of the tablet,
+
+35
+00:02:31,310 --> 00:02:35,730
+you see that there are two bits of text in
+the upper right corner.
+
+36
+00:02:35,730 --> 00:02:36,920
+One says
+
+37
+00:02:36,920 --> 00:02:40,620
+Activity Action.
+And the other says title action.
+
+38
+00:02:41,860 --> 00:02:46,490
+That first piece of text was put there by
+the quote viewer activity.
+
+39
+00:02:46,490 --> 00:02:50,090
+The second was put there by the title
+fragment.
+
+40
+00:02:50,090 --> 00:02:56,750
+And if I click on these bits of text,
+you'll see some text pop up.
+
+41
+00:02:56,750 --> 00:03:02,410
+Letting you know which object is actually
+carrying out the actions associated
+
+42
+00:03:02,410 --> 00:03:04,430
+with that action bar item.
+
+43
+00:03:04,430 --> 00:03:09,120
+Now if I click on one of the titles, you
+remember that
+
+44
+00:03:09,120 --> 00:03:13,550
+this causes the quote fragment to be
+dynamically added to the layout.
+
+45
+00:03:14,840 --> 00:03:17,640
+Well the quote fragment also adds.
+
+46
+00:03:17,640 --> 00:03:20,740
+Some items to the action bar, dynamically.
+
+47
+00:03:20,740 --> 00:03:23,760
+In this case there's a main action, and
+the
+
+48
+00:03:23,760 --> 00:03:27,290
+second action, that gets put in the
+overflow area.
+
+49
+00:03:28,360 --> 00:03:28,520
+So
+
+50
+00:03:28,520 --> 00:03:32,330
+I'll click on the main action, and again,
+you can see
+
+51
+00:03:32,330 --> 00:03:36,720
+the text saying, that this action is
+provided by the quote fragment.
+
+52
+00:03:37,750 --> 00:03:40,800
+If I click on the overflow icon, this
+causes
+
+53
+00:03:40,800 --> 00:03:44,510
+the second item provided by the quote
+fragment, to appear.
+
+54
+00:03:45,840 --> 00:03:51,920
+And if I now click on that pop up, you
+again see an associated text pop up.
+
+55
+00:03:53,750 --> 00:03:56,300
+Now let's look at how this is implemented
+in the source code.
+
+56
+00:03:58,420 --> 00:04:01,360
+Here I've opened the application in the
+IDE.
+
+57
+00:04:01,360 --> 00:04:03,830
+I'll first open the code viewer activity
+file.
+
+58
+00:04:05,510 --> 00:04:13,287
+There, we see the on create options menu,
+and on options menu item selected methods.
+
+59
+00:04:13,287 --> 00:04:16,970
+Same as we've talked about before.
+Not much new here.
+
+60
+00:04:18,180 --> 00:04:24,140
+Let's take a look at the menu layout in
+the activity underscore menu dot XML file.
+
+61
+00:04:25,910 --> 00:04:28,570
+And this looks like what we've already
+seen.
+
+62
+00:04:28,570 --> 00:04:31,800
+But one difference is the show as action
+attribute.
+
+63
+00:04:32,880 --> 00:04:37,210
+Its value is if room Or, with the text.
+
+64
+00:04:38,210 --> 00:04:40,540
+And this means that Android should show
+this
+
+65
+00:04:40,540 --> 00:04:44,390
+item in the action bar, if there's room.
+
+66
+00:04:44,390 --> 00:04:47,190
+But it should put it in the overflow area
+if otherwise.
+
+67
+00:04:49,050 --> 00:04:50,990
+It also means the item should be shown as
+
+68
+00:04:50,990 --> 00:04:55,810
+text, rather than by displaying san icon
+Now,
+
+69
+00:04:55,810 --> 00:04:58,630
+I'll open up the title fragmentt fli,
+file.
+
+70
+00:04:58,630 --> 00:05:00,630
+And again, there're calls to
+
+71
+00:05:00,630 --> 00:05:05,770
+the onCreateOptionsMenu and
+onOptionsMenuItemSelected methods.
+
+72
+00:05:07,300 --> 00:05:08,450
+The one difference here,
+
+73
+00:05:10,860 --> 00:05:13,190
+is that because title fragment is a
+fragment, we
+
+74
+00:05:13,190 --> 00:05:18,460
+also have to issue the command Set has
+options true.
+
+75
+00:05:18,460 --> 00:05:20,700
+Which we do in the on create method.
+
+76
+00:05:22,330 --> 00:05:25,080
+And last I'll open up the quote fragment
+file.
+
+77
+00:05:26,600 --> 00:05:28,440
+Again, not much new here.
+
+78
+00:05:28,440 --> 00:05:32,570
+My quote fragment has it's menu file and
+
+79
+00:05:32,570 --> 00:05:35,821
+quote underscore menu .XML And lets look
+at that.
+
+80
+00:05:35,821 --> 00:05:45,406
+[BLANK_AUDIO]
+
+81
+00:05:45,406 --> 00:05:50,407
+This menu has two items.
+One has it's
+
+82
+00:05:50,407 --> 00:05:56,310
+show as action attribute.
+Set to if room, or with text.
+
+83
+00:05:56,310 --> 00:05:57,400
+Just like we saw before.
+
+84
+00:05:58,920 --> 00:06:03,480
+The other one though, has its show as an
+attribute.
+
+85
+00:06:03,480 --> 00:06:06,516
+Set to never and so it will always appear
+
+86
+00:06:06,516 --> 00:06:10,340
+in the overflow area and never in the
+action bar.
+
+87
+00:06:10,340 --> 00:06:15,501
+[BLANK_AUDIO]
+
+88
+00:06:15,501 --> 00:06:18,981
+Another use of the ActionBar is to help
+provide a
+
+89
+00:06:18,981 --> 00:06:24,809
+consistent way of switching, between
+different views, in an application.
+
+90
+00:06:24,809 --> 00:06:29,960
+When using the ActionBar this way, the
+screen is divided into two sections.
+
+91
+00:06:29,960 --> 00:06:36,030
+A tab area And a content area.The
+ActionBar.Tab
+
+92
+00:06:36,030 --> 00:06:40,830
+class allows you to associate a fragment,
+with each tab indicator,
+
+93
+00:06:40,830 --> 00:06:41,770
+in the tab area.
+
+94
+00:06:41,770 --> 00:06:48,390
+Now only one tab indicator, can be
+selected at any one time, so when the user
+
+95
+00:06:48,390 --> 00:06:54,720
+selects a particular tab indicator Its
+fragment can be shown in the content area.
+
+96
+00:06:54,720 --> 00:06:57,440
+If the user then selects a different tab,
+a
+
+97
+00:06:57,440 --> 00:07:00,350
+different fragment can be shown in the
+content area.
+
+98
+00:07:00,350 --> 00:07:06,030
+So here's a sample application called
+UITabLayout that uses
+
+99
+00:07:06,030 --> 00:07:11,290
+the ActionBar.Tab class to switch between
+two instances.
+
+100
+00:07:11,290 --> 00:07:15,500
+Of a fragment that uses the grid view
+layout that we discussed earlier.
+
+101
+00:07:17,770 --> 00:07:20,370
+Here I'll start the UI tab layout
+application.
+
+102
+00:07:22,070 --> 00:07:24,410
+The application displays two tab
+indicators,
+
+103
+00:07:25,450 --> 00:07:28,720
+one labeled flowers, and one labeled
+animals.
+
+104
+00:07:28,720 --> 00:07:32,980
+The flowers tab is currently selected.
+
+105
+00:07:32,980 --> 00:07:37,390
+And in fact does exactly what we saw in
+the UI GridView application.
+
+106
+00:07:38,390 --> 00:07:40,730
+Now I'll select the animals tab.
+
+107
+00:07:42,840 --> 00:07:46,640
+As you can see, the application is now
+displaying another GridView
+
+108
+00:07:46,640 --> 00:07:52,319
+fragment but this time it's showing images
+of dogs rather than flowers.
+
+109
+00:07:53,440 --> 00:07:55,640
+Let's take a look at the source code for
+this application.
+
+110
+00:07:56,840 --> 00:07:59,510
+Here's the application open in the IDE.
+
+111
+00:07:59,510 --> 00:08:04,320
+I'll now open the tab layout activity file
+and go to the on create method.
+
+112
+00:08:06,730 --> 00:08:11,030
+First the code get's the action bar, then
+it
+
+113
+00:08:11,030 --> 00:08:13,940
+configures the action bar to operate as a
+tab.
+
+114
+00:08:15,310 --> 00:08:19,570
+Next, I create the grid view fragment,
+giving
+
+115
+00:08:19,570 --> 00:08:22,120
+it the list of images that it should
+display.
+
+116
+00:08:22,120 --> 00:08:26,000
+And in this case, that's the flower
+images.
+
+117
+00:08:27,180 --> 00:08:31,230
+Finally, I create and configure a new tab
+indicator.
+
+118
+00:08:31,230 --> 00:08:31,750
+And attach
+
+119
+00:08:31,750 --> 00:08:32,810
+it to the action bar.
+
+120
+00:08:33,840 --> 00:08:36,600
+And I'll do essentially the same thing
+with the other tab.
+
+121
+00:08:37,640 --> 00:08:40,950
+Now when I added the tab notice that I
+
+122
+00:08:40,950 --> 00:08:45,730
+also created an instance of something
+called the Tab Listener.
+
+123
+00:08:45,730 --> 00:08:47,540
+And this is an object that will be
+
+124
+00:08:47,540 --> 00:08:53,270
+called when the user selects and unselects
+individual tabs.
+
+125
+00:08:53,270 --> 00:08:54,780
+Let me scroll down to that code.
+
+126
+00:08:54,780 --> 00:08:57,080
+Now here's
+
+127
+00:08:57,080 --> 00:08:58,860
+the on tab selected method.
+
+128
+00:08:58,860 --> 00:09:04,760
+I'm going to tab selected this code adds
+it's fragment to the hosting activity.
+
+129
+00:09:06,490 --> 00:09:09,340
+Here's the on tab unselected method.
+
+130
+00:09:09,340 --> 00:09:11,740
+When a tab is unselected this code
+
+131
+00:09:11,740 --> 00:09:15,040
+removes the current fragment From the
+hosting activity.
+
+132
+00:09:17,570 --> 00:09:20,120
+The last thing I want to discuss are
+dialogs.
+
+133
+00:09:21,280 --> 00:09:23,860
+A dialog is a kind of independent
+subwindow, that
+
+134
+00:09:25,080 --> 00:09:29,240
+is used by an activity for short
+communications with users.
+
+135
+00:09:30,310 --> 00:09:35,208
+Some dialog classes provided by Andriod
+include the alert dialog
+
+136
+00:09:35,208 --> 00:09:39,890
+The progress dialog, and the date and time
+picker dialogs.
+
+137
+00:09:39,890 --> 00:09:42,940
+Let's look at a sample application
+
+138
+00:09:42,940 --> 00:09:46,970
+that uses both the AlertDialog, and the
+ProgressDialog.
+
+139
+00:09:50,090 --> 00:09:53,440
+Here's the UIAlertDialog application.
+
+140
+00:09:53,440 --> 00:09:56,200
+When I start it up, it displays one
+button.
+
+141
+00:09:56,200 --> 00:10:00,000
+That the user can press to initiate
+application shutdown.
+
+142
+00:10:00,000 --> 00:10:02,300
+Let me hit that button now.
+
+143
+00:10:03,620 --> 00:10:07,010
+When I do that, you see that the
+application pops
+
+144
+00:10:07,010 --> 00:10:12,190
+up a dialog, an alert dialog, that shows a
+message.
+
+145
+00:10:12,190 --> 00:10:13,480
+Do you really want to exit?
+
+146
+00:10:14,550 --> 00:10:15,300
+And it allows
+
+147
+00:10:15,300 --> 00:10:20,450
+the user to respond in this case, either
+yes or no.
+
+148
+00:10:20,450 --> 00:10:21,410
+I'll hit no now.
+
+149
+00:10:23,110 --> 00:10:27,660
+It simply dismisses the alert dialog and
+returns me back to the application.
+
+150
+00:10:29,250 --> 00:10:33,580
+Let's say time goes by and now I really do
+want exit.
+
+151
+00:10:33,580 --> 00:10:35,669
+So I'll hit the shutdown button again.
+
+152
+00:10:36,690 --> 00:10:39,040
+Which again brings up the alert dialog.
+
+153
+00:10:40,100 --> 00:10:44,530
+This time, however, I'll hit the yes
+button on the alert dialog.
+
+154
+00:10:44,530 --> 00:10:48,340
+And at this point, the alert dialog is
+dismissed, and
+
+155
+00:10:48,340 --> 00:10:53,330
+a new dialog, this time a progress dialog,
+is displayed.
+
+156
+00:10:53,330 --> 00:10:55,720
+Which shows a graphic spinner.
+
+157
+00:10:55,720 --> 00:10:59,110
+To let me know that the shut down process
+is proceeding.
+
+158
+00:10:59,110 --> 00:11:05,180
+And eventually the shutdown finishes and
+the application terminates itself.
+
+159
+00:11:06,660 --> 00:11:08,290
+Lets see what this looks like in the
+source code.
+
+160
+00:11:10,950 --> 00:11:14,506
+So here's the application of the IDE I'll
+open up the
+
+161
+00:11:14,506 --> 00:11:18,575
+alert dialog activity file, and go to its
+on create method.
+
+162
+00:11:18,575 --> 00:11:22,565
+As you can see, when the user presses the
+shut
+
+163
+00:11:22,565 --> 00:11:28,340
+down button, the show dialog fragment
+method is invoked passing
+
+164
+00:11:28,340 --> 00:11:32,540
+in an ID for the desired dialog, the show
+dialog
+
+165
+00:11:32,540 --> 00:11:36,810
+fragment method Creates and instance of
+the alert dialog fragment.
+
+166
+00:11:38,050 --> 00:11:41,960
+And then calls the show method on it.
+Lets look at that class.
+
+167
+00:11:43,490 --> 00:11:46,660
+Alert dialog fragment is a sub class of
+dialog
+
+168
+00:11:46,660 --> 00:11:51,800
+fragment and it has an on create dialog
+method.
+
+169
+00:11:51,800 --> 00:11:56,800
+This method will be called in response to
+the show method being invoked.
+
+170
+00:11:58,020 --> 00:12:02,470
+And this method creates a new
+alertDialog.builder instance.
+
+171
+00:12:03,610 --> 00:12:07,980
+The methods of a builder almost always
+return the current object.
+
+172
+00:12:07,980 --> 00:12:13,470
+And this is useful because it allows you
+to create an object And then just keep
+
+173
+00:12:13,470 --> 00:12:18,610
+tacking on method calls one after another
+to configure that object.
+
+174
+00:12:18,610 --> 00:12:23,240
+In fact, here you can see a call that set
+message and right after that
+
+175
+00:12:23,240 --> 00:12:25,680
+a call that set cancelable, and then a
+
+176
+00:12:25,680 --> 00:12:28,460
+call that set negative button and so
+forth.
+
+177
+00:12:29,540 --> 00:12:32,690
+And once you've set all the things that
+you want.
+
+178
+00:12:32,690 --> 00:12:37,950
+You end with a call to the create method,
+which effectively puts together all of
+
+179
+00:12:37,950 --> 00:12:43,290
+the previous calls and returns the final
+configured object.
+
+180
+00:12:44,800 --> 00:12:49,440
+Now once this dialog is displayed, if the
+user selects
+
+181
+00:12:49,440 --> 00:12:55,740
+No Then there's a call to shut down
+continue with the parameter false.
+
+182
+00:12:55,740 --> 00:12:58,680
+If the use instead select yes then there's
+a
+
+183
+00:12:58,680 --> 00:13:02,120
+call to shut down continue with the
+parameter true.
+
+184
+00:13:03,210 --> 00:13:04,800
+Lets go to the shutdown continue method.
+
+185
+00:13:07,460 --> 00:13:11,860
+So if should continue is false Then we
+dismiss the
+
+186
+00:13:11,860 --> 00:13:15,350
+alert dialog and everything goes on as if
+nothing had happened.
+
+187
+00:13:16,650 --> 00:13:22,320
+It should continue is true however, we
+dismiss the alert dialog, and
+
+188
+00:13:22,320 --> 00:13:27,020
+then call show dialog passing in the
+progress tag ID.
+
+189
+00:13:27,020 --> 00:13:32,430
+And this call creates a progress dialog
+fragment object.
+
+190
+00:13:32,430 --> 00:13:34,760
+And then calls the show method on it.
+
+191
+00:13:37,570 --> 00:13:39,220
+Eventually, we end up at the
+
+192
+00:13:39,220 --> 00:13:45,390
+onCreateDialog method, in the
+ProgressDialogFragment class.
+
+193
+00:13:45,390 --> 00:13:51,380
+And here we make a new progress dialog,
+set its message to Activity Shutting Down
+
+194
+00:13:53,060 --> 00:13:56,910
+And then calls set indeterminate true,
+which allows
+
+195
+00:13:56,910 --> 00:13:59,790
+the dialog to stay visible until its
+dismissed.
+
+196
+00:13:59,790 --> 00:14:00,290
+So
+
+197
+00:14:05,360 --> 00:14:08,870
+that's all for our discussion of android's
+user interface classes.
+
+198
+00:14:09,980 --> 00:14:14,260
+Please join me next time, when we'll
+discuss, user notifications.
+
+199
+00:14:14,260 --> 00:14:15,284
+See you then.
+
+200
+00:14:15,284 --> 00:14:21,420
+[BLANK_AUDIO]
+

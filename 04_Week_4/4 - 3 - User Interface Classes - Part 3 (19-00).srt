@@ -1,0 +1,1158 @@
+1
+00:00:00,025 --> 00:00:08,455
+[BLANK_AUDIO]
+
+2
+00:00:08,455 --> 00:00:13,647
+Hi, I'm Adam Porter and this is
+Programming Mobile
+
+3
+00:00:13,647 --> 00:00:18,873
+Applications for Android Handheld Systems.
+Adapter
+
+4
+00:00:18,873 --> 00:00:24,730
+views are generic ViewGroups that are used
+to display a list of data.
+
+5
+00:00:24,730 --> 00:00:27,750
+Layouts are generic ViewGroups that are
+used
+
+6
+00:00:27,750 --> 00:00:32,435
+to organize and structure other views in
+ViewGroups.
+
+7
+00:00:34,500 --> 00:00:37,830
+For example, consider the linear layout.
+
+8
+00:00:37,830 --> 00:00:43,330
+This ViewGroup holds a set of child views
+or ViewGroups, but it arranges the
+
+9
+00:00:43,330 --> 00:00:49,220
+children in a single row, either
+horizontally or vertically.
+
+10
+00:00:49,220 --> 00:00:50,077
+Let's look at an example.
+
+11
+00:00:50,077 --> 00:00:56,448
+[BLANK_AUDIO]
+
+12
+00:00:56,448 --> 00:01:01,200
+Here's an application called
+UILinearLayout.
+
+13
+00:01:01,200 --> 00:01:03,937
+And what you see here is a set
+
+14
+00:01:03,937 --> 00:01:09,920
+of colored boxes labeled red, green, blue,
+and yellow.
+
+15
+00:01:09,920 --> 00:01:13,350
+And they're all laid out in a horizontal
+row.
+
+16
+00:01:15,320 --> 00:01:20,370
+Under that, there's another set of boxes
+laid out vertically.
+
+17
+00:01:20,370 --> 00:01:22,360
+And they're labeled row one,
+
+18
+00:01:22,360 --> 00:01:25,510
+row two, row three, and row four.
+
+19
+00:01:27,830 --> 00:01:32,390
+So let's look at the source code to see
+how that layout was actually created.
+
+20
+00:01:34,510 --> 00:01:38,315
+Here's the UI layout application.
+And I'm going to go straight to the main
+
+21
+00:01:38,315 --> 00:01:43,030
+.XML file where its layout is stored.
+In
+
+22
+00:01:43,030 --> 00:01:46,907
+this file, you see that the entire layout
+is a LinearLayout.
+
+23
+00:01:48,070 --> 00:01:55,490
+And that LinearLayout has two children,
+each of which is also a LinearLayout.
+
+24
+00:01:55,490 --> 00:01:59,626
+Now the outermost linear layout has a
+layout_width and
+
+25
+00:01:59,626 --> 00:02:05,570
+a layout_height of match_parent.
+And this means that it takes
+
+26
+00:02:05,570 --> 00:02:10,550
+up all of the space of its parent, in this
+case, the entire application window.
+
+27
+00:02:10,550 --> 00:02:15,690
+And you can also see that its orientation
+is vertical.
+
+28
+00:02:15,690 --> 00:02:19,140
+And this means that the children will be
+layout,
+
+29
+00:02:19,140 --> 00:02:21,710
+will be laid out one on top of the other.
+
+30
+00:02:22,780 --> 00:02:24,919
+Now, if we look at the first
+
+31
+00:02:24,919 --> 00:02:30,630
+child LinearLayout, we see that its
+layout_width is match_parent.
+
+32
+00:02:30,630 --> 00:02:34,443
+So it should be as wide as the parent, the
+outermost LinearLayout.
+
+33
+00:02:35,960 --> 00:02:38,673
+Its layout_height, however, is set to 0.
+
+34
+00:02:40,030 --> 00:02:43,390
+It also has a layout_weight of 1, and
+we'll see
+
+35
+00:02:43,390 --> 00:02:46,960
+how these bits of information are used in
+a minute.
+
+36
+00:02:46,960 --> 00:02:51,530
+The last thing to notice is that the
+orientation is horizontal.
+
+37
+00:02:51,530 --> 00:02:55,540
+So, the children of this LinearLayout will
+be laid out next
+
+38
+00:02:55,540 --> 00:02:59,670
+to each other horizontally.
+Now,
+
+39
+00:02:59,670 --> 00:03:03,520
+let's go to the second child of that
+outermost LinearLayout.
+
+40
+00:03:04,710 --> 00:03:10,698
+And it again is also a LinearLayout.
+And this element has a layout_width
+
+41
+00:03:10,698 --> 00:03:16,787
+of match_parent and a layout_height of 0.
+Its layout_weight,
+
+42
+00:03:16,787 --> 00:03:21,190
+however, is 3, whereas that first child
+had a layout_weight of 1.
+
+43
+00:03:22,720 --> 00:03:27,550
+And these weights tell Android that the
+first child LinearLayout should get one
+
+44
+00:03:27,550 --> 00:03:32,490
+fourth of the space, while the second
+child gets the remaining three fourths.
+
+45
+00:03:33,540 --> 00:03:38,310
+The second child also has an orientation
+of vertical rather than horizontal.
+
+46
+00:03:41,390 --> 00:03:43,218
+The next layout is a RelativeLayout.
+
+47
+00:03:43,218 --> 00:03:48,794
+With a RelativeLayout, child views are
+positioned relative to each other and to
+
+48
+00:03:48,794 --> 00:03:54,414
+their parents, rather than in a fixed
+order, as we saw with the LinearLayout.
+
+49
+00:03:54,414 --> 00:04:02,398
+[BLANK_AUDIO]
+
+50
+00:04:02,398 --> 00:04:07,467
+Here's the UIRelativeLayout application.
+
+51
+00:04:07,467 --> 00:04:11,210
+This application contains an EditText view
+and two buttons.
+
+52
+00:04:11,210 --> 00:04:14,940
+Let's look at how we get that particular
+layout.
+
+53
+00:04:14,940 --> 00:04:19,690
+Now here's the UI RelativeLayout
+application.
+
+54
+00:04:19,690 --> 00:04:23,350
+Now let's open up the main.xml layout
+file.
+
+55
+00:04:23,350 --> 00:04:29,180
+As you can see, we've got a RelativeLayout
+as the outermost ViewGroup.
+
+56
+00:04:30,430 --> 00:04:34,460
+Inside it, there are the elements that we
+saw on the screen.
+
+57
+00:04:34,460 --> 00:04:37,520
+An EditText field and two buttons.
+
+58
+00:04:37,520 --> 00:04:39,970
+And they're labeled OK and Cancel.
+
+59
+00:04:41,090 --> 00:04:44,310
+And if we look more closely, we can see
+that the
+
+60
+00:04:44,310 --> 00:04:49,290
+OK button should be aligned to the right
+of the parent.
+
+61
+00:04:49,290 --> 00:04:50,370
+That's the RelativeLayout.
+
+62
+00:04:51,900 --> 00:04:55,610
+And below the EditText, which is
+designated by
+
+63
+00:04:55,610 --> 00:04:57,930
+its ID entry.
+
+64
+00:04:57,930 --> 00:05:03,620
+Now the Cancel button says that it should
+be aligned to the left of the OK button,
+
+65
+00:05:05,130 --> 00:05:09,900
+and that its top should be aligned with
+the top of the OK button.
+
+66
+00:05:11,160 --> 00:05:15,570
+So, putting all those constraints together
+then, Android is able to come
+
+67
+00:05:15,570 --> 00:05:19,410
+up with the layout that you saw when we
+ran the application.
+
+68
+00:05:21,530 --> 00:05:24,400
+The next layout is a TableLayout.
+
+69
+00:05:24,400 --> 00:05:29,030
+With a TableLayout, child views are
+arranged into rows and columns.
+
+70
+00:05:31,420 --> 00:05:34,360
+Here, I'll start up the UITableLayout
+application.
+
+71
+00:05:37,160 --> 00:05:41,000
+This application mimics an old text-based
+menu, which
+
+72
+00:05:41,000 --> 00:05:44,240
+you see is laid out, one command per row.
+
+73
+00:05:45,270 --> 00:05:50,070
+And within each row, the different pieces
+of information are laid out in columns.
+
+74
+00:05:52,710 --> 00:05:55,010
+In the IDE, we can open up the layout
+file.
+
+75
+00:05:56,020 --> 00:05:59,980
+And here we can see that the layout is a
+TableLayout,
+
+76
+00:05:59,980 --> 00:06:04,960
+and that within the TableLayout, there are
+a number of table rows.
+
+77
+00:06:04,960 --> 00:06:08,800
+Within each table row, there's a list of
+views.
+
+78
+00:06:08,800 --> 00:06:12,710
+And these views are assumed to be in
+numerical column order.
+
+79
+00:06:14,270 --> 00:06:18,720
+But if necessary, you can specify a
+layout_column.
+
+80
+00:06:18,720 --> 00:06:24,390
+For instance, this row has nothing in
+column 0, so we have to tell Android
+
+81
+00:06:24,390 --> 00:06:30,220
+that the first row's text view should go
+in column 1, not in column 0.
+
+82
+00:06:30,220 --> 00:06:35,070
+And you can also see that this TextView
+specifies a gravity of right,
+
+83
+00:06:36,240 --> 00:06:41,330
+which means that the views text should be
+pushed to the right of the TextView.
+
+84
+00:06:41,330 --> 00:06:41,830
+The
+
+85
+00:06:44,340 --> 00:06:46,590
+next layout is the GridView.
+
+86
+00:06:46,590 --> 00:06:54,224
+GridViews arrange their children in a two
+dimensional, scrollable grid.
+
+87
+00:06:54,224 --> 00:06:57,029
+So I'll start up the UIGridView
+application.
+
+88
+00:06:59,410 --> 00:07:03,390
+This application reads in a bunch of
+images and
+
+89
+00:07:03,390 --> 00:07:06,940
+then automatically lays them out in a
+rectangular grid.
+
+90
+00:07:06,940 --> 00:07:09,780
+And when I click on any one of these
+
+91
+00:07:09,780 --> 00:07:15,980
+images, another activity is started, that
+displays that single image.
+
+92
+00:07:15,980 --> 00:07:17,840
+Let's look at the source code now.
+
+93
+00:07:21,280 --> 00:07:24,260
+So here I've got the UIGridView
+application open in the IDE.
+
+94
+00:07:24,260 --> 00:07:28,540
+I'll open its main.xml layout file.
+
+95
+00:07:28,540 --> 00:07:32,779
+And in that file, you see that there's a
+GridView element.
+
+96
+00:07:34,360 --> 00:07:38,650
+In that element, I've specified some
+things such as the width of
+
+97
+00:07:38,650 --> 00:07:43,560
+the columns, and the amount of spacing to
+leave around each image.
+
+98
+00:07:44,740 --> 00:07:46,360
+I also specify that the GridView
+
+99
+00:07:46,360 --> 00:07:50,030
+is free to determine the number of columns
+to use.
+
+100
+00:07:52,180 --> 00:07:56,580
+Now going to the source code, I'll open up
+the GridLayout activity file.
+
+101
+00:07:58,380 --> 00:08:02,408
+In there, you can see that I've specified
+a list of image resources.
+
+102
+00:08:03,680 --> 00:08:10,850
+This should be displayed by the GridView.
+Down in onCreate, I set the ContentView,
+
+103
+00:08:10,850 --> 00:08:18,220
+and then set the adapter, which is an
+instance of the ImageAdapter class.
+
+104
+00:08:18,220 --> 00:08:23,110
+Let's look at the ImageAdapter class.
+First, ImageAdapter is a
+
+105
+00:08:23,110 --> 00:08:28,830
+subclass of BaseAdapter, which ultimately
+implements the adapter interface.
+
+106
+00:08:30,130 --> 00:08:33,000
+This class has several methods that get
+used when
+
+107
+00:08:33,000 --> 00:08:36,100
+the GridView is asking for data and for
+data views.
+
+108
+00:08:38,180 --> 00:08:41,450
+Let's go through a few of this class's
+methods.
+
+109
+00:08:41,450 --> 00:08:43,530
+First, there's the getCount method.
+
+110
+00:08:44,890 --> 00:08:49,380
+This method should return the number of
+data items managed by the adapter.
+
+111
+00:08:51,460 --> 00:08:55,920
+Another method is getItemId, and this
+returns an
+
+112
+00:08:55,920 --> 00:08:59,760
+ID for the data item in a specified
+position.
+
+113
+00:09:00,870 --> 00:09:07,500
+And this gets used, for instance, when the
+user clicks on an image in the GridView
+
+114
+00:09:07,500 --> 00:09:13,200
+to indicate which image to load when the
+larger individual view pops up.
+
+115
+00:09:14,610 --> 00:09:17,330
+The last method I'll talk about is
+GetView.
+
+116
+00:09:18,380 --> 00:09:24,130
+This method gets called when GridView asks
+the adapter for one view
+
+117
+00:09:24,130 --> 00:09:28,800
+that will go into the grid.
+One of the parameters for this method is a
+
+118
+00:09:28,800 --> 00:09:35,770
+view called ConvertView.
+And this parameter will sometimes be no.
+
+119
+00:09:35,770 --> 00:09:41,080
+If so, then you need to create a new view
+and configure it however you want.
+
+120
+00:09:42,380 --> 00:09:43,365
+But other times,
+
+121
+00:09:43,365 --> 00:09:45,770
+ConvertView will not be null.
+
+122
+00:09:45,770 --> 00:09:49,080
+It will actually reference a view that was
+
+123
+00:09:49,080 --> 00:09:53,440
+already returned by this method in the
+past.
+
+124
+00:09:53,440 --> 00:09:57,920
+For example, if you have a lot of views in
+the grid and only some of them might
+
+125
+00:09:57,920 --> 00:10:01,820
+be visible at any one time, so GridView
+will
+
+126
+00:10:01,820 --> 00:10:04,430
+only ask for the views that it's going to
+display.
+
+127
+00:10:05,570 --> 00:10:08,420
+But if the user later scrolls to
+
+128
+00:10:08,420 --> 00:10:12,090
+GridView, some of the views that were
+visible are
+
+129
+00:10:12,090 --> 00:10:15,820
+going to become invisible because they
+scroll off the screen.
+
+130
+00:10:15,820 --> 00:10:22,330
+So Android will try to reuse those views,
+and it will pass one of those
+
+131
+00:10:22,330 --> 00:10:28,110
+new views off to the adapter to get to the
+GetView method.
+
+132
+00:10:28,110 --> 00:10:33,430
+Then you'll just use that view and reset
+whatever fields that you
+
+133
+00:10:33,430 --> 00:10:34,760
+need for your current data item.
+
+134
+00:10:35,870 --> 00:10:39,540
+And this is good because it saves the time
+needed to allocate
+
+135
+00:10:39,540 --> 00:10:44,550
+new views, which in turn can make the
+scrolling look much more fluid.
+
+136
+00:10:44,550 --> 00:10:49,840
+The next thing I'll talk about are Menus
+and the ActionBar.
+
+137
+00:10:51,040 --> 00:10:53,460
+Activities can support Menus.
+
+138
+00:10:53,460 --> 00:10:57,750
+Menus can be presented to the user in
+different ways.
+
+139
+00:10:57,750 --> 00:10:58,580
+But the basic
+
+140
+00:10:58,580 --> 00:11:03,390
+idea is that Menus give users a quick way
+to access
+
+141
+00:11:03,390 --> 00:11:07,590
+important functions.
+So, activities can add items to a Menu,
+
+142
+00:11:08,690 --> 00:11:13,630
+and they can respond when the user invokes
+the Menu item, say by clicking on it.
+
+143
+00:11:14,720 --> 00:11:19,840
+Now, the appearance of Menus has changed
+in Android over time,
+
+144
+00:11:19,840 --> 00:11:23,630
+so I'll talk about basic menus first, and
+then later I'll
+
+145
+00:11:23,630 --> 00:11:26,660
+talk specifically about the newer
+ActionBar class.
+
+146
+00:11:26,660 --> 00:11:31,920
+Now there are three kinds of Android
+menus.
+
+147
+00:11:31,920 --> 00:11:36,990
+First, there are Options Menus, which are
+shown when a user presses the menu button.
+
+148
+00:11:38,120 --> 00:11:43,720
+Older Android devices usually had a
+dedicated physical menu key.
+
+149
+00:11:43,720 --> 00:11:49,360
+Newer ones don't.
+Second, there are Context Menus.
+
+150
+00:11:49,360 --> 00:11:53,420
+And these menus are attached to specific
+views and are
+
+151
+00:11:53,420 --> 00:11:57,890
+shown only when the user presses and holds
+that view.
+
+152
+00:11:58,990 --> 00:12:01,830
+Context Menus are usually used for
+operating
+
+153
+00:12:01,830 --> 00:12:05,300
+on the specific data held in the view,
+
+154
+00:12:05,300 --> 00:12:08,030
+while Option Menus and SubMenus tend to be
+
+155
+00:12:08,030 --> 00:12:11,580
+for global operations that affect the
+whole application.
+
+156
+00:12:13,240 --> 00:12:15,850
+And third, there are SubMenus.
+
+157
+00:12:15,850 --> 00:12:19,280
+And these are secondary menus that are
+only activated
+
+158
+00:12:19,280 --> 00:12:22,470
+when the user touches an already visible
+menu item.
+
+159
+00:12:23,500 --> 00:12:24,950
+Let's look at some examples of these.
+
+160
+00:12:24,950 --> 00:12:25,450
+So
+
+161
+00:12:28,740 --> 00:12:33,850
+here's the Phone application.
+Let me show you an example of an Options
+
+162
+00:12:33,850 --> 00:12:38,830
+Menu for this application.
+First, I'll scroll over
+
+163
+00:12:38,830 --> 00:12:44,360
+to the Contacts tab, and you can see that
+there's an icon here at the bottom.
+
+164
+00:12:44,360 --> 00:12:48,870
+And when I click on it, a menu pops up,
+allowing me to do things
+
+165
+00:12:48,870 --> 00:12:54,000
+like, specify which contacts to display,
+or import or
+
+166
+00:12:54,000 --> 00:12:56,500
+export contacts.
+
+167
+00:12:56,500 --> 00:12:59,030
+Next, let's see an example of a Context
+Menu.
+
+168
+00:13:01,110 --> 00:13:04,280
+I'll open the Browser application and use
+an
+
+169
+00:13:04,280 --> 00:13:07,900
+Options Menu to get to the bookmarks
+functionality.
+
+170
+00:13:09,260 --> 00:13:15,340
+Now that brings up a tab showing
+bookmarks, history, and saved pages.
+
+171
+00:13:16,450 --> 00:13:21,540
+I'll select History, which shows me a list
+of web pages that
+
+172
+00:13:21,540 --> 00:13:26,470
+I've visited recently.
+And now I'll press and hold on
+
+173
+00:13:26,470 --> 00:13:32,130
+one of these web page history entries.
+And as you can see, that brings
+
+174
+00:13:32,130 --> 00:13:37,420
+up a new menu, supporting actions that can
+be applied to this one webpage link.
+
+175
+00:13:38,640 --> 00:13:43,620
+Things like opening it, bookmarking it, or
+sharing it.
+
+176
+00:13:43,620 --> 00:13:47,202
+And last, let me show you an, let me show
+you an example of a SubMenu.
+
+177
+00:13:48,650 --> 00:13:51,580
+Here I'll open the Gallery application,
+
+178
+00:13:51,580 --> 00:13:55,090
+which shows me some photo albums stored on
+my device.
+
+179
+00:13:55,090 --> 00:14:00,960
+I'll click on one and now I see a photo
+from the album.
+
+180
+00:14:00,960 --> 00:14:03,590
+I'll click on the Menu ic, icon, which
+
+181
+00:14:03,590 --> 00:14:07,670
+presents a set of actions that I can
+perform.
+
+182
+00:14:07,670 --> 00:14:09,990
+I'll select the Delete menu option.
+
+183
+00:14:11,230 --> 00:14:14,090
+Now this brings up a secondary menu, which
+actually
+
+184
+00:14:14,090 --> 00:14:17,140
+gets shown as a kind of dialog in this
+case,
+
+185
+00:14:17,140 --> 00:14:19,320
+asking me to confirm the deletion.
+
+186
+00:14:21,810 --> 00:14:26,780
+Now in order to create the Menus, you
+first define the contents of the menu in
+
+187
+00:14:26,780 --> 00:14:32,250
+an XML file in the res/menu directory.
+
+188
+00:14:32,250 --> 00:14:36,808
+When the user later opens the menu,
+Android calls a particular method,
+
+189
+00:14:36,808 --> 00:14:41,738
+such as onCreateOptionsMenu for Options
+Menus and their
+
+190
+00:14:41,738 --> 00:14:48,060
+SubMenus, or onCreateContextMenu for
+Context Menus.
+
+191
+00:14:48,060 --> 00:14:49,935
+In these methods, you'll use a
+
+192
+00:14:49,935 --> 00:14:53,860
+MenuInflater to create the actual menu
+layout.
+
+193
+00:14:55,500 --> 00:15:00,350
+When the user later selects one of the
+menu items, Android will call a method,
+
+194
+00:15:00,350 --> 00:15:06,564
+such as onOptionsMenuItem selected for
+Options Menus and SubMenus,
+
+195
+00:15:06,564 --> 00:15:12,755
+or onContextMenuItem selected Context
+Menus.
+
+196
+00:15:12,755 --> 00:15:13,090
+Let's look
+
+197
+00:15:13,090 --> 00:15:16,850
+at a simple example with all these
+different kinds of menus.
+
+198
+00:15:18,900 --> 00:15:22,000
+This application is called HelloAndroid
+WithMenus.
+
+199
+00:15:23,010 --> 00:15:24,590
+I'll start it up and as you can
+
+200
+00:15:24,590 --> 00:15:29,220
+see, there's a TextView with the words
+Hello Android.
+
+201
+00:15:30,280 --> 00:15:35,510
+And if I press and hold this TextView, a
+Context Menu will pop up.
+
+202
+00:15:36,640 --> 00:15:39,980
+And this one simply tells me to hit the
+menu button instead.
+
+203
+00:15:39,980 --> 00:15:42,290
+So let's try that.
+
+204
+00:15:44,020 --> 00:15:48,190
+Now, if you look up in the top right
+corner, you
+
+205
+00:15:48,190 --> 00:15:51,850
+can see the icon that gets you to the menu
+items.
+
+206
+00:15:51,850 --> 00:15:55,530
+And I'm calling that icon a menu button,
+but
+
+207
+00:15:55,530 --> 00:16:00,020
+actually it's an overflow area for actions
+that appear
+
+208
+00:16:00,020 --> 00:16:03,660
+on the ActionBar, which is in the area,
+which
+
+209
+00:16:03,660 --> 00:16:07,150
+is the area at the top of the application.
+
+210
+00:16:07,150 --> 00:16:08,850
+So, let me click on that icon,
+
+211
+00:16:10,310 --> 00:16:13,098
+and this brings up a menu with three
+entries.
+
+212
+00:16:13,098 --> 00:16:17,810
+Help, more help, and still more help.
+
+213
+00:16:19,050 --> 00:16:23,000
+And if I click on these, some actions will
+be taken.
+
+214
+00:16:24,230 --> 00:16:29,340
+Now for the first two menu entries, I just
+display some texts on the screen.
+
+215
+00:16:30,680 --> 00:16:35,490
+The last one, however, is associated with
+a SubMenu, which in this case just
+
+216
+00:16:35,490 --> 00:16:39,050
+has one entry, telling me there is no more
+help.
+
+217
+00:16:40,705 --> 00:16:43,670
+Let's look at how this is implemented in
+the source code.
+
+218
+00:16:46,150 --> 00:16:48,210
+And here we are in the IDE.
+
+219
+00:16:48,210 --> 00:16:51,360
+And I'll open up the
+HelloAndroidWithMenuActivity file.
+
+220
+00:16:51,360 --> 00:16:57,800
+And first, we'll look at the
+onCreateOptionsMenu method.
+
+221
+00:16:58,990 --> 00:17:04,950
+In this method, we get the MenuInflater,
+and then call its inflate method
+
+222
+00:17:04,950 --> 00:17:11,160
+passing in a reference to the menu layout,
+and passing in the menu in
+
+223
+00:17:11,160 --> 00:17:13,310
+which we want to put the new layout.
+Now
+
+224
+00:17:15,510 --> 00:17:21,130
+I'll open the menu file top_menu.xml.
+
+225
+00:17:21,130 --> 00:17:25,160
+And this file contains a menu tag.
+And inside it, there are
+
+226
+00:17:25,160 --> 00:17:29,870
+several item tags.
+In each tag, there are
+
+227
+00:17:29,870 --> 00:17:35,200
+attributes, such as an ID, an icon to
+display for
+
+228
+00:17:35,200 --> 00:17:40,620
+this item, and a title for this item.
+The third Menu
+
+229
+00:17:40,620 --> 00:17:46,870
+item also includes a SubMenu, which is
+specified by the nested menu tag.
+
+230
+00:17:49,080 --> 00:17:50,110
+Back in the activity.
+
+231
+00:17:51,350 --> 00:17:56,680
+In the last line of onCreateOptionsMenu,
+we'll return the value
+
+232
+00:17:56,680 --> 00:18:01,100
+true, indicating that we want to display
+this Menu item now.
+
+233
+00:18:01,100 --> 00:18:05,750
+Now when the users selects one of these
+Menu items,
+
+234
+00:18:07,080 --> 00:18:12,480
+Android will call onOptionsItemSelected,
+passing in the selecting item.
+
+235
+00:18:14,290 --> 00:18:20,250
+Here, we check the item's ID and then take
+the appropriate action for that item.
+
+236
+00:18:21,500 --> 00:18:25,250
+Now let's look at how the Context Menu is
+set up.
+
+237
+00:18:25,250 --> 00:18:27,830
+First, when a user invokes the Context
+
+238
+00:18:27,830 --> 00:18:33,370
+Menu for the first time, Android calls
+onCreateContextMenu.
+
+239
+00:18:33,370 --> 00:18:36,930
+The code is very similar to what we saw
+with the Options Menu.
+
+240
+00:18:38,580 --> 00:18:39,300
+You get the
+
+241
+00:18:39,300 --> 00:18:43,240
+MenuInflater and you use it to inflate an
+XML layout file.
+
+242
+00:18:48,280 --> 00:18:53,370
+Let's open it up.
+Now this menu just has a single item with
+
+243
+00:18:53,370 --> 00:19:00,871
+the ID help_guide.
+

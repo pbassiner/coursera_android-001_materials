@@ -1,0 +1,1194 @@
+1
+00:00:08,880 --> 00:00:12,320
+Hi, I'm Adam Porter, and this is
+
+2
+00:00:12,320 --> 00:00:17,100
+Programming Mobile Applications for
+Android Handheld Systems.
+
+3
+00:00:18,920 --> 00:00:23,240
+In this lesson, we're going to talk about
+the many different kinds of classes
+
+4
+00:00:23,240 --> 00:00:25,160
+that Android gives you to help you
+
+5
+00:00:25,160 --> 00:00:28,440
+build good looking and effective user
+interfaces.
+
+6
+00:00:29,580 --> 00:00:33,830
+In particular, I'll start by introducing
+the view class.
+
+7
+00:00:33,830 --> 00:00:34,420
+A basic
+
+8
+00:00:34,420 --> 00:00:38,680
+building block for just about everything
+that's visible on your device's screen.
+
+9
+00:00:39,680 --> 00:00:43,380
+I'll also discuss the various events that
+views can receive.
+
+10
+00:00:44,660 --> 00:00:49,830
+After that, I'll discuss a higher level
+compound view called groups, called View
+
+11
+00:00:49,830 --> 00:00:55,190
+Groups which combine multiple views to
+create a particular look or behavior.
+
+12
+00:00:56,570 --> 00:01:00,070
+I'll also discuss some specific view
+groups.
+
+13
+00:01:00,070 --> 00:01:06,960
+In particular AdapterViews, and Layouts.
+And after that, I'll talk about menus
+
+14
+00:01:06,960 --> 00:01:13,270
+and the action bar, which give users easy
+access to frequently used functions.
+
+15
+00:01:13,270 --> 00:01:16,300
+And last, I'll finish up with the
+discussion of Dialogs.
+
+16
+00:01:17,300 --> 00:01:20,100
+Those views that popup in front of an
+application,
+
+17
+00:01:20,100 --> 00:01:24,250
+to give and get information to and from
+the user.
+
+18
+00:01:25,660 --> 00:01:29,390
+So let's talk about user interfaces or
+UI's in general.
+
+19
+00:01:31,250 --> 00:01:35,080
+First of all, a user interface is
+essentially the place and
+
+20
+00:01:35,080 --> 00:01:40,120
+the means by which the user and the
+application exchange information.
+
+21
+00:01:40,120 --> 00:01:46,020
+And in this lesson, when I talk about a
+UI, I'm specifically going to concentrate
+
+22
+00:01:46,020 --> 00:01:51,600
+on the device screen, and the visual
+elements that users can see and
+
+23
+00:01:51,600 --> 00:01:53,640
+touch on that screen.
+
+24
+00:01:53,640 --> 00:01:58,470
+But of course modern user interfaces can
+be much more than just that.
+
+25
+00:01:58,470 --> 00:02:02,220
+Now for instance, hand held devices
+typically have many sensors.
+
+26
+00:02:02,220 --> 00:02:05,730
+So user interfaces increasingly leverage
+many different
+
+27
+00:02:05,730 --> 00:02:09,180
+kinds and qualities of input and output.
+
+28
+00:02:09,180 --> 00:02:14,950
+Including audio, LED lights, radio waves
+and more.
+
+29
+00:02:16,500 --> 00:02:16,830
+Now getting
+
+30
+00:02:16,830 --> 00:02:18,020
+back to Android.
+
+31
+00:02:18,020 --> 00:02:20,980
+As I said before, activities usually
+display
+
+32
+00:02:20,980 --> 00:02:24,590
+a visual user interface to the user.
+
+33
+00:02:24,590 --> 00:02:28,090
+So Android provides a rich set of classes
+
+34
+00:02:28,090 --> 00:02:32,690
+from which developers can create those
+user interfaces.
+
+35
+00:02:32,690 --> 00:02:37,100
+Let's talk about some of those classes
+starting with the view class.
+
+36
+00:02:39,910 --> 00:02:44,380
+The view class is a key building block for
+UI components.
+
+37
+00:02:44,380 --> 00:02:50,360
+Views occupy a rectangular space on the
+screen, and they're responsible
+
+38
+00:02:50,360 --> 00:02:55,990
+for drawing themselves and for handling
+any events that are directed to them.
+
+39
+00:02:58,190 --> 00:03:02,640
+Android comes with a number of predefined
+or built-in views.
+
+40
+00:03:02,640 --> 00:03:08,296
+Let me talk about a couple of them.
+Specifically, I'll talk about Buttons,
+
+41
+00:03:08,296 --> 00:03:15,070
+ToggleButtons, Checkboxes, the RatingBar,
+and the AutoCompleteTextView.
+
+42
+00:03:17,640 --> 00:03:20,540
+So we've seen lots of buttons already in
+this class.
+
+43
+00:03:20,540 --> 00:03:22,820
+A button is just a view.
+
+44
+00:03:22,820 --> 00:03:26,220
+It's usually a somewhat small view that
+users can
+
+45
+00:03:26,220 --> 00:03:30,525
+click on to start or to perform some
+action.
+
+46
+00:03:30,525 --> 00:03:33,840
+Let's see one in the UI button
+application.
+
+47
+00:03:36,440 --> 00:03:38,660
+So let me start up this simple
+application.
+
+48
+00:03:40,560 --> 00:03:43,740
+As you can see it's called UIButton, and
+it has
+
+49
+00:03:43,740 --> 00:03:46,380
+a single button at the the bottom of the
+screen.
+
+50
+00:03:46,380 --> 00:03:51,000
+And that button is labeled Press Me.
+And if you give into the
+
+51
+00:03:51,000 --> 00:03:56,120
+temptation and press the button, you'll
+see that the label changes,
+
+52
+00:03:57,410 --> 00:04:02,300
+and now says got pressed, followed by the
+number of times
+
+53
+00:04:02,300 --> 00:04:03,850
+that button has been pressed so far.
+
+54
+00:04:05,090 --> 00:04:07,570
+So, I'll press it a few more times, and
+you
+
+55
+00:04:07,570 --> 00:04:11,380
+can see that the count continues to rise by
+one, each
+
+56
+00:04:11,380 --> 00:04:15,030
+time that I press the button, And by now,
+you
+
+57
+00:04:15,030 --> 00:04:19,090
+can probably guess what the code for this
+activity looks like.
+
+58
+00:04:19,090 --> 00:04:21,370
+In fact you've seen lots of examples in
+
+59
+00:04:21,370 --> 00:04:24,010
+previous lessons that do things just like
+this.
+
+60
+00:04:25,020 --> 00:04:27,480
+The code for this activity has created
+
+61
+00:04:27,480 --> 00:04:32,210
+a button object and its attached to a
+listener to that button.
+
+62
+00:04:32,210 --> 00:04:36,210
+And every time I press this button,
+Android promises to
+
+63
+00:04:36,210 --> 00:04:40,950
+and in fact does call the button
+listener's onClick method.
+
+64
+00:04:42,180 --> 00:04:45,760
+Let's look at some more built in views,
+and then I'll stop and give
+
+65
+00:04:45,760 --> 00:04:49,390
+you some time to look at the code for each
+of the sample applications.
+
+66
+00:04:51,770 --> 00:04:53,640
+The next view is called the ToggleButton.
+
+67
+00:04:54,670 --> 00:04:58,040
+A ToggleButton is a kind, is another kind
+of button, however, it
+
+68
+00:04:58,040 --> 00:05:01,974
+also has the extra property that when you
+press it, it stays pressed.
+
+69
+00:05:01,974 --> 00:05:07,020
+And it stays pressed until you press it
+again.
+
+70
+00:05:07,020 --> 00:05:09,710
+So a ToggleButton is always in one of two
+states.
+
+71
+00:05:09,710 --> 00:05:12,060
+It's either checked or it's not checked.
+
+72
+00:05:13,195 --> 00:05:16,930
+ToggleButton's also typically display some
+kind of indicator to
+
+73
+00:05:16,930 --> 00:05:21,370
+let the user know what this, what state
+the button is currently in.
+
+74
+00:05:21,370 --> 00:05:23,550
+And you've probably seen toggle buttons
+likes
+
+75
+00:05:23,550 --> 00:05:27,820
+this in many applications such as music
+players.
+
+76
+00:05:27,820 --> 00:05:30,980
+You hit the button and the music starts
+playing,
+
+77
+00:05:30,980 --> 00:05:33,830
+and it continues playing until you hit the
+button again.
+
+78
+00:05:35,440 --> 00:05:36,770
+Let's see a ToggleButton in action.
+
+79
+00:05:40,050 --> 00:05:42,820
+I'll start the Toggle, the UIToggleButton
+application.
+
+80
+00:05:42,820 --> 00:05:45,690
+And the application starts up, and
+
+81
+00:05:45,690 --> 00:05:49,510
+shows a single, unchecked ToggleButton,
+labeled Start.
+
+82
+00:05:50,660 --> 00:05:52,430
+Under the label there's a small area.
+
+83
+00:05:52,430 --> 00:05:54,630
+It's not lit up right now.
+
+84
+00:05:54,630 --> 00:05:58,270
+But it will light up when the toggle
+button is eventually checked.
+
+85
+00:05:58,270 --> 00:06:01,370
+So the idea here is that something's
+going to
+
+86
+00:06:01,370 --> 00:06:05,576
+start happening when the user presses this
+ToggleButton.
+
+87
+00:06:06,870 --> 00:06:10,520
+So, I'll hit the Start button now.
+And what happens?
+
+88
+00:06:10,520 --> 00:06:13,190
+In this case, the background color changes
+from
+
+89
+00:06:13,190 --> 00:06:17,810
+black to white, and the ToggleButton now
+says Stop.
+
+90
+00:06:19,170 --> 00:06:21,830
+You can see there's also a small blue
+highlight underneath
+
+91
+00:06:21,830 --> 00:06:26,730
+the label, which indicates that the
+ToggleButton is now checked.
+
+92
+00:06:30,370 --> 00:06:33,030
+The next view I'll talk about is the
+checkbox.
+
+93
+00:06:34,650 --> 00:06:38,560
+And you've probably seen things like this
+in many applications.
+
+94
+00:06:38,560 --> 00:06:41,890
+Things like order forms, where for
+instance, you check all the
+
+95
+00:06:41,890 --> 00:06:45,120
+toppings that you want on your pizza, or
+something like that.
+
+96
+00:06:46,868 --> 00:06:49,520
+Now a checkbox is actually just another
+kind
+
+97
+00:06:49,520 --> 00:06:52,520
+of two state button, just like a toggle
+button.
+
+98
+00:06:52,520 --> 00:06:55,315
+The main difference is just what it looks
+like to the user.
+
+99
+00:06:55,315 --> 00:07:00,160
+Checkboxes usually display some kind of
+area that's empty
+
+100
+00:07:00,160 --> 00:07:02,980
+when the checkbox is not checked, but
+shows a
+
+101
+00:07:02,980 --> 00:07:05,320
+check mark or an x symbol or something
+like
+
+102
+00:07:05,320 --> 00:07:08,320
+that, when the check box is in the checked
+state.
+
+103
+00:07:09,620 --> 00:07:11,220
+Let's see a checkbox in action.
+
+104
+00:07:15,170 --> 00:07:20,130
+So here's my phone's home screen, and now
+we'll start the UI Checkbox application.
+
+105
+00:07:21,900 --> 00:07:28,380
+The application starts up, And going from
+top to bottom, displays some text,
+
+106
+00:07:29,390 --> 00:07:34,510
+and then an unchecked check box followed
+by the words, I'm not checked.
+
+107
+00:07:36,150 --> 00:07:40,300
+And then underneath all that, there's a
+button that says, Hide
+
+108
+00:07:40,300 --> 00:07:43,757
+CheckBox.
+Now, I'll click on the checkbox.
+
+109
+00:07:45,250 --> 00:07:46,930
+And as you can see, it displays a check
+
+110
+00:07:46,930 --> 00:07:50,280
+mark to show that it has now been
+selected.
+
+111
+00:07:50,280 --> 00:07:52,907
+You'll also notice that the text following
+
+112
+00:07:52,907 --> 00:07:55,840
+the checkbox has changed to say, I'm
+checked.
+
+113
+00:07:57,600 --> 00:08:01,950
+And as you can imagine in the source code,
+I've attached a listener to the checkbox.
+
+114
+00:08:01,950 --> 00:08:05,347
+Which changes that text to reflect the
+checkbox's
+
+115
+00:08:05,347 --> 00:08:07,300
+current state.
+
+116
+00:08:07,300 --> 00:08:09,960
+Now, I'll click on the Hide CheckBox
+button.
+
+117
+00:08:09,960 --> 00:08:14,890
+And when I do that, the listener attached
+to the button
+
+118
+00:08:14,890 --> 00:08:20,290
+changes the visibility of the checkbox so
+that now it's invisible.
+
+119
+00:08:20,290 --> 00:08:26,360
+When I click on the button again, the
+check box becomes visible again and again.
+
+120
+00:08:26,360 --> 00:08:30,680
+When we take a break, please walk through
+the code for all of these sample
+
+121
+00:08:30,680 --> 00:08:33,900
+applications to get an idea or see
+
+122
+00:08:33,900 --> 00:08:37,100
+the different ways that views can be
+manipulated.
+
+123
+00:08:39,740 --> 00:08:45,530
+The next view is the RatingBar.
+This view displays a row of stars like
+
+124
+00:08:45,530 --> 00:08:50,540
+you might use in a application that rates
+restaurants or songs, or things like that.
+
+125
+00:08:50,540 --> 00:08:53,520
+You know, it's great, I gave it five stars
+out of five,
+
+126
+00:08:53,520 --> 00:08:55,822
+or aw, that's awful I gave it one star out
+of five.
+
+127
+00:08:55,822 --> 00:09:00,450
+The RatingBar allows users to highlight
+some number of
+
+128
+00:09:00,450 --> 00:09:05,540
+stars by clicking or dragging on the
+RatingBar view.
+
+129
+00:09:05,540 --> 00:09:07,991
+Let's see an application that uses a
+RatingBar.
+
+130
+00:09:10,730 --> 00:09:13,200
+Now I'll start the UIRatingBar
+application.
+
+131
+00:09:14,480 --> 00:09:15,840
+I've set up the RatingBar to show a
+
+132
+00:09:15,840 --> 00:09:19,240
+total of four stars, all unselected at the
+beginning.
+
+133
+00:09:20,560 --> 00:09:24,540
+Now I'll select the first star and as you
+can see it highlights.
+
+134
+00:09:24,540 --> 00:09:27,630
+Now the second star, and now the third.
+
+135
+00:09:27,630 --> 00:09:30,695
+And now I'll drag back across the
+
+136
+00:09:30,695 --> 00:09:34,340
+RatingBar, which essentially deselects all
+the stars.
+
+137
+00:09:34,340 --> 00:09:36,560
+And the
+
+138
+00:09:36,560 --> 00:09:41,020
+last view I'll talk about is the
+AutoCompleteTextView.
+
+139
+00:09:41,020 --> 00:09:43,900
+This view is first of all a text view.
+
+140
+00:09:43,900 --> 00:09:47,250
+That is, it's a view that displays text.
+
+141
+00:09:47,250 --> 00:09:52,780
+And we've seen lots of those already.
+This text view is also editable,
+
+142
+00:09:52,780 --> 00:09:58,430
+which means that users can type text that
+will go into this text view.
+
+143
+00:09:58,430 --> 00:10:01,800
+And in addition, this view will show a
+list of text
+
+144
+00:10:01,800 --> 00:10:06,130
+entries and will filter that list, as you
+type, so
+
+145
+00:10:06,130 --> 00:10:10,050
+that it only shows those entries that
+match what you're typing.
+
+146
+00:10:10,050 --> 00:10:14,470
+And once you've narrowed down the list,
+you can touch a
+
+147
+00:10:14,470 --> 00:10:18,570
+single entry which will then be placed
+into the text view.
+
+148
+00:10:18,570 --> 00:10:19,780
+Let's see that in an application.
+
+149
+00:10:22,040 --> 00:10:23,530
+Back to my phone.
+
+150
+00:10:23,530 --> 00:10:27,390
+I'll start up the UIAutoComplete
+application.
+
+151
+00:10:27,390 --> 00:10:31,200
+This application shows the words Country,
+and
+
+152
+00:10:31,200 --> 00:10:34,240
+then next to that there's an
+AutoCompleteTextView.
+
+153
+00:10:34,240 --> 00:10:40,500
+And I've associated a long list of
+countries with this AutoCompleteTextView.
+
+154
+00:10:41,960 --> 00:10:45,750
+And now I want to have the name Chile
+appear in this box.
+
+155
+00:10:46,946 --> 00:10:47,087
+Now
+
+156
+00:10:47,087 --> 00:10:50,940
+I could have put the list in some kind of
+scrolling view, but then I would've
+
+157
+00:10:50,940 --> 00:10:53,290
+had to you know, keep scrolling through
+the
+
+158
+00:10:53,290 --> 00:10:55,940
+long list to find the country that I
+wanted.
+
+159
+00:10:55,940 --> 00:11:00,290
+With an AutoCompleteTextView however, I
+don't have to do any scrolling.
+
+160
+00:11:00,290 --> 00:11:04,420
+I can just tart, start typing in some
+letters For instance,
+
+161
+00:11:04,420 --> 00:11:08,450
+here I'll type the letter C, and now the
+letter H.
+
+162
+00:11:09,570 --> 00:11:12,290
+And as you can see, there's a drop down
+list that
+
+163
+00:11:12,290 --> 00:11:18,830
+has appeared, showing only those countries
+that start with the letters CH.
+
+164
+00:11:18,830 --> 00:11:23,340
+So in this case, there's Chad, Chile,
+China, and the
+
+165
+00:11:23,340 --> 00:11:27,780
+Christmas Islands.
+So I'll continue by typing the letter I.
+
+166
+00:11:27,780 --> 00:11:32,450
+And now the list has shrunk to just Chile
+and China.
+
+167
+00:11:33,980 --> 00:11:37,740
+Now I'll go ahead and type one more letter
+L, and now
+
+168
+00:11:37,740 --> 00:11:42,430
+there's just the single country Chile, and
+that's left in the drop down list.
+
+169
+00:11:42,430 --> 00:11:43,770
+So I'll just select it now.
+
+170
+00:11:44,800 --> 00:11:45,820
+And as you can see, the world
+
+171
+00:11:45,820 --> 00:11:49,960
+Chile has been inserted into the
+AutoCompleteTextView.
+
+172
+00:11:49,960 --> 00:11:55,100
+And a little message window pops up
+confirming that I've chosen Chile.
+
+173
+00:11:59,290 --> 00:12:02,270
+So those are a few of the views that
+Android provides.
+
+174
+00:12:03,410 --> 00:12:05,560
+In the example application showed some of
+
+175
+00:12:05,560 --> 00:12:10,350
+the operations that are commonly applied
+to views.
+
+176
+00:12:10,350 --> 00:12:15,519
+For instance, the UICheckbox application
+changes the visibility of the checkbox.
+
+177
+00:12:16,600 --> 00:12:20,961
+The UIToggleButton and UICheckbox
+applications changed
+
+178
+00:12:20,961 --> 00:12:23,110
+the check state of the view.
+
+179
+00:12:24,160 --> 00:12:24,650
+And also
+
+180
+00:12:24,650 --> 00:12:30,420
+all of the examples used listeners in
+various ways to take some kind of action
+
+181
+00:12:30,420 --> 00:12:35,740
+once the user has manipulated the view.
+Your own applications of course.
+
+182
+00:12:35,740 --> 00:12:39,628
+You'll put your own applications specific
+code in those listeners.
+
+183
+00:12:39,628 --> 00:12:44,710
+And there are also many other view
+operations that we didn't show.
+
+184
+00:12:44,710 --> 00:12:49,390
+For instance, you can set a view opa,
+opacity or transparency.
+
+185
+00:12:49,390 --> 00:12:49,750
+You can set
+
+186
+00:12:49,750 --> 00:12:53,910
+it's background.
+It's orientation on a display.
+
+187
+00:12:53,910 --> 00:12:55,440
+And other things.
+
+188
+00:12:55,440 --> 00:12:57,340
+And you can also have your viewers
+interact
+
+189
+00:12:57,340 --> 00:13:00,420
+with the keyboard by requesting or
+accepting the
+
+190
+00:13:00,420 --> 00:13:04,030
+input focus which tells Android that
+keyboard clicks,
+
+191
+00:13:04,030 --> 00:13:06,670
+for example, should be sent to a
+particular view.
+
+192
+00:13:08,630 --> 00:13:13,670
+Views handle events, and these events can
+come from various sources.
+
+193
+00:13:13,670 --> 00:13:15,450
+Including the user
+
+194
+00:13:15,450 --> 00:13:18,900
+when he or she touches a view on the
+display or
+
+195
+00:13:18,900 --> 00:13:25,000
+uses physical input devices, such as a
+physical keyboard, trackball or D-pad.
+
+196
+00:13:25,000 --> 00:13:27,760
+Android itself can also be a source of
+events.
+
+197
+00:13:27,760 --> 00:13:31,560
+For instance, views receive various method
+calls when
+
+198
+00:13:31,560 --> 00:13:36,090
+Android needs to reposition or re-draw the
+views.
+
+199
+00:13:36,090 --> 00:13:40,630
+Let's talk a bit more about view events.
+As we've seen
+
+200
+00:13:40,630 --> 00:13:44,470
+many times already, a very common way to
+handle events
+
+201
+00:13:44,470 --> 00:13:49,160
+is by attaching the, is by attaching
+listeners to individual views.
+
+202
+00:13:49,160 --> 00:13:54,390
+Android defines a number of different
+kinds of listener interfaces.
+
+203
+00:13:54,390 --> 00:13:59,830
+And the methods defined by those
+interfaces get called when specific events
+
+204
+00:13:59,830 --> 00:14:06,120
+occur on a view.
+For example, the view class defines an on
+
+205
+00:14:06,120 --> 00:14:10,430
+click listener interface that has an
+onClick method.
+
+206
+00:14:10,430 --> 00:14:13,800
+This method is called whenever a view has
+been clicked.
+
+207
+00:14:14,960 --> 00:14:17,310
+The view class also defines the
+
+208
+00:14:17,310 --> 00:14:23,470
+onLongClickListener, and that has an
+onLongClick method.
+
+209
+00:14:23,470 --> 00:14:25,520
+And this method is called whenever a view
+is
+
+210
+00:14:25,520 --> 00:14:29,770
+pressed and held pressed for a specific
+period of time.
+
+211
+00:14:31,700 --> 00:14:33,655
+The view class also defines that
+
+212
+00:14:33,655 --> 00:14:38,690
+onFocusedChangeListener, that has an
+onFocusChange method,
+
+213
+00:14:38,690 --> 00:14:42,930
+and this method is called when a view has
+received or lost focus.
+
+214
+00:14:44,120 --> 00:14:49,740
+It also defines an onKeyListener interface
+that has an onKey method which
+
+215
+00:14:49,740 --> 00:14:53,680
+is called when the view is about to
+receive a hardware key press.
+
+216
+00:14:54,740 --> 00:14:57,470
+And there are many other events that you
+can listen for as well.
+
+217
+00:15:00,080 --> 00:15:01,800
+So let's step back for a second.
+
+218
+00:15:01,800 --> 00:15:05,370
+Right now, we're talking about individual
+views.
+
+219
+00:15:05,370 --> 00:15:07,910
+But applications typically involve many
+views,
+
+220
+00:15:07,910 --> 00:15:09,690
+all being displayed at the same time.
+
+221
+00:15:10,920 --> 00:15:14,910
+As we saw when we used the UIHierarchy
+viewer in our lesson on
+
+222
+00:15:14,910 --> 00:15:18,030
+the Android development environment, and
+applications
+
+223
+00:15:18,030 --> 00:15:20,840
+views are typically organized as a tree.
+
+224
+00:15:22,230 --> 00:15:25,330
+Now, there's some outer most view, and it
+holds some
+
+225
+00:15:25,330 --> 00:15:27,320
+number of child views.
+
+226
+00:15:27,320 --> 00:15:30,680
+And each of those child views can have
+it's own children.
+
+227
+00:15:30,680 --> 00:15:31,990
+And so on, so on.
+
+228
+00:15:33,020 --> 00:15:38,450
+When Android goes to draw all these views
+on the screen, it does so by walking
+
+229
+00:15:38,450 --> 00:15:44,500
+through this view tree multiple times,
+each time doing something a bit different.
+
+230
+00:15:44,500 --> 00:15:50,420
+So, conceptually, on the first pass, it
+measures all of the views.
+
+231
+00:15:50,420 --> 00:15:53,440
+On the second pass, it positions all the
+views.
+
+232
+00:15:54,620 --> 00:15:57,160
+And on the third pass, it draws all the
+views.
+
+233
+00:15:58,340 --> 00:16:03,500
+Now much of the time, you don't worry or
+care about these steps.
+
+234
+00:16:03,500 --> 00:16:05,495
+But, if you create your own custom view
+
+235
+00:16:05,495 --> 00:16:09,240
+sub-classes, then you may also want to
+override these various
+
+236
+00:16:09,240 --> 00:16:12,560
+view methods to ensure that your custom
+view is
+
+237
+00:16:12,560 --> 00:16:13,980
+drawn the way that you want it to be.
+
+238
+00:16:15,720 --> 00:16:18,350
+For instance, when its doing its measuring
+
+239
+00:16:18,350 --> 00:16:22,210
+pass, Android will call onMeasure on your
+view.
+
+240
+00:16:22,210 --> 00:16:27,290
+And your view must calculate and then set
+its own dimensions.
+
+241
+00:16:28,500 --> 00:16:34,130
+When its doing its layout pass, Android
+will call your views onLayout method.
+
+242
+00:16:34,130 --> 00:16:38,930
+And this method should position itself and
+call layout on all of its children view.
+
+243
+00:16:40,500 --> 00:16:43,598
+During the third pass, Android will call
+your views'
+
+244
+00:16:43,598 --> 00:16:47,540
+onDraw method and this method then draws
+the view.
+
+245
+00:16:49,860 --> 00:16:52,470
+Some other method you might want to
+override in your custom
+
+246
+00:16:52,470 --> 00:16:58,030
+views, include onFocusChanged, to handle
+when your view's focus state changes.
+
+247
+00:16:59,190 --> 00:17:03,330
+OnKeyUp or onKeyDown, to handle hardware
+key events.
+
+248
+00:17:04,352 --> 00:17:08,260
+Or, onWindowVisibilityChanged, to handle a
+change in the
+
+249
+00:17:08,260 --> 00:17:11,640
+visibility status of the window containing
+your view.
+
