@@ -1,0 +1,817 @@
+1
+00:00:00,411 --> 00:00:08,763
+[BLANK_AUDIO]
+
+2
+00:00:08,763 --> 00:00:10,940
+Hi I'm Adam Porter.
+
+3
+00:00:10,940 --> 00:00:18,170
+And this is Programming Mobile
+Applications for Android Handheld Systems.
+
+4
+00:00:20,260 --> 00:00:24,390
+So far, our example application has
+requested data
+
+5
+00:00:24,390 --> 00:00:27,968
+and then just displayed that data in a
+TextView.
+
+6
+00:00:29,080 --> 00:00:33,560
+But as you saw, that data has a complex
+format that's
+
+7
+00:00:33,560 --> 00:00:39,150
+really intended for machine processing and
+not for displaying to human beings.
+
+8
+00:00:39,150 --> 00:00:42,170
+In fact, this is an increasingly popular
+way
+
+9
+00:00:42,170 --> 00:00:45,560
+to transport data around the internet and
+many
+
+10
+00:00:45,560 --> 00:00:49,980
+web services now provide data in such
+formats.
+
+11
+00:00:49,980 --> 00:00:55,430
+In particular, two formats that we'll talk
+about now are the JavaScript Object
+
+12
+00:00:55,430 --> 00:01:01,950
+Notation, JSON and the Extensible Markup
+Language, XML.
+
+13
+00:01:01,950 --> 00:01:04,730
+Let's talk about each of these, one at a
+time.
+
+14
+00:01:06,100 --> 00:01:10,440
+The first format we'll talk about is the
+JavaScript Object Notation,
+
+15
+00:01:10,440 --> 00:01:11,710
+JSON.
+
+16
+00:01:11,710 --> 00:01:14,440
+This format is intended to be lightweight
+and
+
+17
+00:01:14,440 --> 00:01:20,020
+resembles the data structures found in
+traditional programming languages.
+
+18
+00:01:20,020 --> 00:01:24,450
+JSON data is packaged in two kinds of data
+structures.
+
+19
+00:01:24,450 --> 00:01:30,476
+One, maps, which are essentially sets of
+key and value pairs.
+
+20
+00:01:30,476 --> 00:01:35,540
+And two, ordered lists.
+If you want more details
+
+21
+00:01:35,540 --> 00:01:38,280
+about JSON, please take a look at this
+website.
+
+22
+00:01:41,950 --> 00:01:44,900
+Now, let's go back our example
+application.
+
+23
+00:01:46,190 --> 00:01:48,880
+As you remember, that application made a
+request
+
+24
+00:01:48,880 --> 00:01:53,420
+to a web service, for some data about
+earthquakes.
+
+25
+00:01:53,420 --> 00:01:58,500
+Well, the response that came back was
+actually formatted in JSON.
+
+26
+00:01:58,500 --> 00:02:01,860
+So here's that date and let's break it
+apart.
+
+27
+00:02:01,860 --> 00:02:07,610
+First, the data comprises a JSON object
+and that object
+
+28
+00:02:07,610 --> 00:02:13,550
+is a map and that map has one key value
+pair.
+
+29
+00:02:13,550 --> 00:02:18,840
+The key is called earthquakes.
+And the value is an
+
+30
+00:02:18,840 --> 00:02:24,328
+ordered list.
+Now that list has several objects inside
+
+31
+00:02:24,328 --> 00:02:29,608
+it.
+And each of those objects is itself a map.
+
+32
+00:02:29,608 --> 00:02:33,689
+And each of those maps again, contains key
+valued pairs.
+
+33
+00:02:34,860 --> 00:02:41,670
+For instance, there's a key called eqid
+and it's value is an earthquake ID.
+
+34
+00:02:41,670 --> 00:02:45,680
+There's also a key called lng and it's
+value
+
+35
+00:02:45,680 --> 00:02:49,010
+is the longitude at which the earthquake
+was centered.
+
+36
+00:02:49,010 --> 00:02:52,790
+And there are a bunch of other keys, as
+well.
+
+37
+00:02:52,790 --> 00:02:57,120
+And together, all of these values provide
+the data for one earthquake.
+
+38
+00:02:58,410 --> 00:03:00,050
+Let's take a look at an example
+
+39
+00:03:00,050 --> 00:03:03,350
+application that gets this data from the
+internet and
+
+40
+00:03:03,350 --> 00:03:07,670
+then processes it to create a more human,
+readable display.
+
+41
+00:03:10,450 --> 00:03:14,030
+So here's my device and now I'll
+
+42
+00:03:14,030 --> 00:03:19,870
+launch the networking Android HTTP client
+JSON application.
+
+43
+00:03:21,580 --> 00:03:24,320
+As before, this application initially
+displays
+
+44
+00:03:24,320 --> 00:03:27,010
+a single button labeled Load Data.
+
+45
+00:03:28,950 --> 00:03:31,860
+And as before, when I press that button,
+
+46
+00:03:31,860 --> 00:03:35,990
+the application will issue an HTTP get
+request to
+
+47
+00:03:35,990 --> 00:03:37,830
+an external server.
+
+48
+00:03:37,830 --> 00:03:40,340
+And that server will respond, with some
+
+49
+00:03:40,340 --> 00:03:44,150
+complex text, containing the requested
+earthquake data.
+
+50
+00:03:45,240 --> 00:03:50,700
+This time however, the data will be
+summarized and presented, in a list view.
+
+51
+00:03:52,480 --> 00:03:55,350
+Okay, so now I'll press the Load Data
+button.
+
+52
+00:03:56,860 --> 00:04:01,190
+And, there you can see the requested data,
+summarized and presented
+
+53
+00:04:01,190 --> 00:04:02,650
+in a list view.
+
+54
+00:04:04,010 --> 00:04:06,950
+Let's look at the source code, to see how
+this works.
+
+55
+00:04:08,260 --> 00:04:11,170
+Here I've got the application open in the
+IDE.
+
+56
+00:04:12,540 --> 00:04:17,010
+And now, I'll open up the file that does
+the downloading and displaying.
+
+57
+00:04:17,010 --> 00:04:20,800
+And I'm going to skip right to the HTTP
+GetTask class.
+
+58
+00:04:20,800 --> 00:04:21,300
+Now
+
+59
+00:04:23,270 --> 00:04:29,080
+here, the doInBackground method is similar
+to what we've seen before, but this time,
+
+60
+00:04:29,080 --> 00:04:35,170
+it uses the JSON response handler class to
+process the response.
+
+61
+00:04:35,170 --> 00:04:37,900
+Let's scroll down and take a look at that
+class.
+
+62
+00:04:39,200 --> 00:04:43,140
+The key method in this class is the handle
+response method.
+
+63
+00:04:44,180 --> 00:04:48,700
+This method begins, by passing the raw
+response through a basic
+
+64
+00:04:48,700 --> 00:04:53,820
+response handler which just returns the
+response body without
+
+65
+00:04:53,820 --> 00:04:58,750
+the http response headers.
+Next, the code uses
+
+66
+00:04:58,750 --> 00:05:03,710
+a JSON tokener to parse the JSON response
+into a Java object.
+
+67
+00:05:04,830 --> 00:05:09,690
+And then to return that top-level object,
+which in this case is a map.
+
+68
+00:05:12,280 --> 00:05:17,970
+Next, the code extracts the value
+associated with the earthquake's key.
+
+69
+00:05:17,970 --> 00:05:20,140
+And in this case, that's an ordered list.
+
+70
+00:05:21,830 --> 00:05:27,170
+Next, the code iterates over the
+earthquakes' list and for each element
+
+71
+00:05:27,170 --> 00:05:32,250
+of that list, it gets the data associated
+with a single earthquake.
+
+72
+00:05:33,260 --> 00:05:35,720
+And this data is stored in Maps.
+
+73
+00:05:37,230 --> 00:05:42,750
+Next, the code summarizes the various
+pieces of earthquake data, converting them
+
+74
+00:05:42,750 --> 00:05:47,100
+to a single string and adding that string
+to a list, called result.
+
+75
+00:05:47,100 --> 00:05:52,160
+And then finally the result is returned
+back to the calling method.
+
+76
+00:05:53,500 --> 00:05:55,975
+Now, after the doInBackground method
+
+77
+00:05:55,975 --> 00:05:59,760
+finishes the onPostExecute method is
+called.
+
+78
+00:05:59,760 --> 00:06:03,580
+And it's provided the result as its
+parameter.
+
+79
+00:06:03,580 --> 00:06:09,390
+And as you can see, this method creates
+and sets a list adapter for the list
+
+80
+00:06:09,390 --> 00:06:15,080
+view, passing in the result list that was
+computed back in handle response.
+
+81
+00:06:17,630 --> 00:06:19,410
+The second data format that we'll talk
+
+82
+00:06:19,410 --> 00:06:23,860
+about is the Extensible Markup Language,
+XML.
+
+83
+00:06:23,860 --> 00:06:27,950
+XML is a markup language for creating XML
+documents.
+
+84
+00:06:27,950 --> 00:06:32,300
+XML documents contain markup and content.
+
+85
+00:06:32,300 --> 00:06:34,590
+The markup encodes a description of
+
+86
+00:06:34,590 --> 00:06:38,670
+the document's storage layout and logical
+structure.
+
+87
+00:06:38,670 --> 00:06:40,530
+The content is everything else.
+
+88
+00:06:41,590 --> 00:06:42,740
+And in particular,
+
+89
+00:06:42,740 --> 00:06:46,740
+that content comprises the response data
+when
+
+90
+00:06:46,740 --> 00:06:50,980
+XML is used to encode an http response.
+
+91
+00:06:50,980 --> 00:06:55,030
+Now, if you want more details about XML,
+please take a look at this website.
+
+92
+00:06:58,320 --> 00:07:01,590
+Now, let's go back to our example
+application.
+
+93
+00:07:01,590 --> 00:07:06,980
+If we give a slightly different URL then
+that web service will
+
+94
+00:07:06,980 --> 00:07:13,330
+return the earthquake data in XML format
+rather than in JSON format.
+
+95
+00:07:13,330 --> 00:07:15,910
+So, here's that data, let's break it
+apart.
+
+96
+00:07:17,160 --> 00:07:20,400
+First there's an element called geonames.
+
+97
+00:07:20,400 --> 00:07:24,680
+Nested inside that element, is a series of
+earthquake elements.
+
+98
+00:07:25,800 --> 00:07:30,220
+And each of the earthquake elements
+contains other elements that provide the
+
+99
+00:07:30,220 --> 00:07:35,540
+data for one earthquake.
+So comparable to what we saw with the JSON
+
+100
+00:07:35,540 --> 00:07:42,040
+format, there's an element called eqid and
+its value is an earthquake ID.
+
+101
+00:07:42,040 --> 00:07:45,170
+There's also the lng element, and its
+value
+
+102
+00:07:45,170 --> 00:07:48,620
+is the longitude at which the earthquake
+was centered.
+
+103
+00:07:48,620 --> 00:07:51,060
+And just like in the JSON example, there
+are a bunch
+
+104
+00:07:51,060 --> 00:07:52,840
+of other elements, as well.
+
+105
+00:07:53,860 --> 00:07:59,030
+So if our application gets XML data from
+the internet, it will need to parse
+
+106
+00:07:59,030 --> 00:08:04,200
+the XML document so it can create the list
+view display that we saw earlier.
+
+107
+00:08:04,200 --> 00:08:10,840
+Android provides several different types
+of XML parsers, including DOM parsers.
+
+108
+00:08:10,840 --> 00:08:16,130
+DOM stands for Document Object Model.
+And DOM parsers read the entire
+
+109
+00:08:16,130 --> 00:08:22,940
+XML document and convert it into a
+document model structure, a tree.
+
+110
+00:08:22,940 --> 00:08:27,690
+And then the application does its
+processing on this tree structure.
+
+111
+00:08:27,690 --> 00:08:32,200
+Now this kind of parser requires more
+memory, but does allow
+
+112
+00:08:32,200 --> 00:08:36,470
+the application to do things like
+multi-pass processing of the document.
+
+113
+00:08:37,730 --> 00:08:41,390
+SAX parsers.
+These parsers read the XML
+
+114
+00:08:41,390 --> 00:08:46,310
+document as a stream and as they encounter
+various document entities, they
+
+115
+00:08:46,310 --> 00:08:51,870
+call back into the application, which can
+then process the document's information.
+
+116
+00:08:51,870 --> 00:08:55,480
+Now, these parsers use less memory than
+DOM parsers, but they're
+
+117
+00:08:55,480 --> 00:08:59,229
+limited to doing their processing in a
+single pass of the document.
+
+118
+00:09:00,420 --> 00:09:05,800
+Pull parsers, like SAX parsers read the
+document as a stream.
+
+119
+00:09:05,800 --> 00:09:06,870
+But Pull parsers
+
+120
+00:09:06,870 --> 00:09:11,370
+use an iterator based approach.
+Where the application, rather
+
+121
+00:09:11,370 --> 00:09:16,510
+than the parser decides when to move the
+parsing process along.
+
+122
+00:09:16,510 --> 00:09:22,810
+And like SAX parsers, Pull parsers also
+use less memory than DOM parsers do.
+
+123
+00:09:22,810 --> 00:09:25,790
+But Pull parsers also give the application
+greater
+
+124
+00:09:25,790 --> 00:09:29,600
+control over the parsing process than SAX
+parsers do.
+
+125
+00:09:31,420 --> 00:09:31,910
+Now,
+
+126
+00:09:31,910 --> 00:09:34,910
+the example application looks exactly the
+same as
+
+127
+00:09:34,910 --> 00:09:38,270
+the one we showed for parsing JSON
+responses.
+
+128
+00:09:38,270 --> 00:09:41,810
+So, I won't show this application to you
+now.
+
+129
+00:09:41,810 --> 00:09:44,640
+Instead, let's look at this application's
+source code.
+
+130
+00:09:49,740 --> 00:09:52,500
+Now here I've opened the application in
+the IDE.
+
+131
+00:09:52,500 --> 00:09:58,700
+And now, I'll open up the file that does
+the downloading and displaying.
+
+132
+00:09:58,700 --> 00:10:03,400
+And again, I'm going to skip right to the
+HTTP GetTask class.
+
+133
+00:10:05,202 --> 00:10:09,110
+The doInBackground method, similar to what
+we have seen before, but
+
+134
+00:10:09,110 --> 00:10:15,390
+now it uses the XML response handler
+class, to process the response.
+
+135
+00:10:15,390 --> 00:10:18,490
+So let's open up that class and see how it
+works.
+
+136
+00:10:21,620 --> 00:10:26,920
+Now as before, the key method in this
+class is the handle response method.
+
+137
+00:10:26,920 --> 00:10:30,090
+And this method begins by creating the
+PullParser object.
+
+138
+00:10:31,630 --> 00:10:35,710
+Next, the code sets the parser's input to
+be the XML
+
+139
+00:10:35,710 --> 00:10:40,370
+document that was returned in the body of
+the http response.
+
+140
+00:10:41,620 --> 00:10:43,820
+And after that, the code gets the first
+
+141
+00:10:43,820 --> 00:10:47,020
+parser event, and then begins to iterate
+over
+
+142
+00:10:47,020 --> 00:10:48,229
+the XML document.
+
+143
+00:10:50,350 --> 00:10:52,310
+Now, inside the while loop, there are
+three
+
+144
+00:10:52,310 --> 00:10:56,340
+events that this code checks for: seeing
+the
+
+145
+00:10:56,340 --> 00:11:03,300
+start of an XML tag, seeing the end of an
+XML tag and seeing element content.
+
+146
+00:11:03,300 --> 00:11:07,650
+Now, when the event is a start event, The
+start tag
+
+147
+00:11:07,650 --> 00:11:11,200
+method is called passing in the element
+that is being started.
+
+148
+00:11:12,700 --> 00:11:16,000
+This method identifies, if this data
+element
+
+149
+00:11:16,000 --> 00:11:18,290
+is one that needs to be saved.
+
+150
+00:11:18,290 --> 00:11:21,770
+And if so, it records that by setting
+certain variables.
+
+151
+00:11:23,380 --> 00:11:27,580
+When the event is an end event, the end
+tag method is called.
+
+152
+00:11:27,580 --> 00:11:33,110
+Passing in the element that is being ended
+and again, this method identifies
+
+153
+00:11:33,110 --> 00:11:39,268
+whether this data element is one that's
+being saved and if so, it records that.
+
+154
+00:11:39,268 --> 00:11:41,250
+In addition, if this is the end of the
+
+155
+00:11:41,250 --> 00:11:45,430
+earthquake tag, then the results string
+for this piece
+
+156
+00:11:45,430 --> 00:11:47,889
+of earthquake data is added to the result
+list.
+
+157
+00:11:49,660 --> 00:11:52,100
+When the event is a text event, the
+
+158
+00:11:52,100 --> 00:11:55,620
+text method is called, passing in the
+element's content.
+
+159
+00:11:56,970 --> 00:11:59,570
+This method identifies which tag is
+currently being
+
+160
+00:11:59,570 --> 00:12:03,680
+parsed and then saves the content for
+later use.
+
+161
+00:12:05,310 --> 00:12:06,790
+And, as before,
+
+162
+00:12:06,790 --> 00:12:12,050
+after the doInBackground method finishes
+the onPostExecute method is
+
+163
+00:12:12,050 --> 00:12:16,280
+called with the result passed in as the
+parameter.
+
+164
+00:12:18,420 --> 00:12:22,438
+And that method creates and sets a list
+adapter for the list
+
+165
+00:12:22,438 --> 00:12:27,649
+view passing in the result list that was
+computed back in handle response.
+
+166
+00:12:27,649 --> 00:12:31,507
+[BLANK_AUDIO]
+
+167
+00:12:31,507 --> 00:12:34,490
+So that's all for our lesson on
+networking.
+
+168
+00:12:34,490 --> 00:12:38,370
+See you next time for a lesson on graphics
+and animation.
+
+169
+00:12:38,370 --> 00:12:39,277
+Bye for now.
+
+170
+00:12:39,277 --> 00:12:43,390
+[BLANK_AUDIO]
+

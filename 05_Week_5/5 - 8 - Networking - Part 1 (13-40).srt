@@ -1,0 +1,821 @@
+1
+00:00:00,000 --> 00:00:08,476
+[BLANK_AUDIO]
+
+2
+00:00:08,476 --> 00:00:13,432
+Hi, I'm Adam Porter, and this, is
+Programming
+
+3
+00:00:13,432 --> 00:00:19,007
+Mobile Applications, for Android Handheld
+Systems.
+
+4
+00:00:19,007 --> 00:00:24,501
+One of the defining characteristics of
+modern hand held systems is that they can
+
+5
+00:00:24,501 --> 00:00:29,770
+keep us connected and networked without
+tethering us to a single location.
+
+6
+00:00:31,150 --> 00:00:34,120
+In this lesson, we'll explore the software
+and
+
+7
+00:00:34,120 --> 00:00:39,410
+programming practices that you'll need to
+connect your applications to the network.
+
+8
+00:00:40,830 --> 00:00:44,930
+So I'll start this lesson by discussing
+networking in general.
+
+9
+00:00:44,930 --> 00:00:51,899
+That discussion will focus on connecting
+your applications to the internet using
+
+10
+00:00:51,899 --> 00:00:59,040
+the Hypertext Transfer Protocol or HTTP
+specifically by using HTTP GET requests.
+
+11
+00:01:00,520 --> 00:01:03,460
+After that, I'll present several classes
+that
+
+12
+00:01:03,460 --> 00:01:06,410
+Android provides to support this kind of
+networking.
+
+13
+00:01:06,410 --> 00:01:11,220
+And lastly, I'll discuss how your
+applications can process the
+
+14
+00:01:11,220 --> 00:01:16,280
+data they receive in response to these
+HTTP GET requests.
+
+15
+00:01:16,280 --> 00:01:21,080
+In particular, I'll talk about two popular
+data formatting languages.
+
+16
+00:01:21,080 --> 00:01:26,620
+One, the Javascript Object Notation
+Language, or JSON.
+
+17
+00:01:26,620 --> 00:01:31,910
+And two, the Extensible Markup Language,
+or XML.
+
+18
+00:01:31,910 --> 00:01:35,270
+And I'll talk about how you parse, or make
+sense, of
+
+19
+00:01:35,270 --> 00:01:40,030
+these HTTP responses when they're
+formatted in one of these languages.
+
+20
+00:01:41,570 --> 00:01:44,930
+So early handheld devices gave us
+mobility.
+
+21
+00:01:44,930 --> 00:01:50,830
+You could move from one place to another,
+and still perform useful computation.
+
+22
+00:01:50,830 --> 00:01:51,590
+However,
+
+23
+00:01:51,590 --> 00:01:55,390
+their networking capabilities were
+primitive by today's standards.
+
+24
+00:01:56,410 --> 00:02:01,090
+Now moving forward, today's devices
+combine powerful processors
+
+25
+00:02:01,090 --> 00:02:06,100
+with fast network connections over WiFi
+and cellular networks.
+
+26
+00:02:07,220 --> 00:02:11,800
+Handheld applications will therefore often
+want to make use
+
+27
+00:02:11,800 --> 00:02:16,820
+of these networking capabilities to access
+and provide data, and
+
+28
+00:02:16,820 --> 00:02:21,880
+services.
+Now, to help you do this, Android includes
+
+29
+00:02:21,880 --> 00:02:27,610
+a variety of networking support classes,
+including the Socket and URL
+
+30
+00:02:27,610 --> 00:02:33,500
+classes, in the Java.net packages.
+The HttpRequest,
+
+31
+00:02:33,500 --> 00:02:38,868
+and HttpResponse classes, in the
+org.apache
+
+32
+00:02:38,868 --> 00:02:44,450
+packages.
+And the URI, AndroidHttpClient,
+
+33
+00:02:44,450 --> 00:02:48,320
+and AudioStream classes, in the
+android.net packages.
+
+34
+00:02:49,770 --> 00:02:52,890
+In this lesson we're going to look at
+several of these
+
+35
+00:02:52,890 --> 00:02:59,210
+classes using each of them to implement
+the same example application.
+
+36
+00:02:59,210 --> 00:03:03,180
+And this application interacts with an
+internet service to get
+
+37
+00:03:03,180 --> 00:03:05,840
+information about earthquakes that have
+
+38
+00:03:05,840 --> 00:03:09,900
+occurred in a particular geographic
+region.
+
+39
+00:03:09,900 --> 00:03:14,510
+And as you'll see, that data is returned
+in various formats.
+
+40
+00:03:14,510 --> 00:03:19,170
+Now initially we'll just display the
+downloaded text as is.
+
+41
+00:03:19,170 --> 00:03:21,410
+Later on in the lesson, I'll show you how
+to
+
+42
+00:03:21,410 --> 00:03:27,090
+process that data to extract just the
+information that you want.
+
+43
+00:03:27,090 --> 00:03:29,180
+Oh, and, and one other thing.
+
+44
+00:03:29,180 --> 00:03:30,950
+As you'll see in a second, because
+
+45
+00:03:30,950 --> 00:03:35,220
+this data includes geographic information,
+it's really
+
+46
+00:03:35,220 --> 00:03:39,430
+begging to be displayed on a map, rather
+than as text.
+
+47
+00:03:39,430 --> 00:03:43,590
+Now, we won't do that in this lesson, but
+keep this in mind, because
+
+48
+00:03:43,590 --> 00:03:48,120
+we'll come back to this when we get to the
+lesson on maps and location.
+
+49
+00:03:49,530 --> 00:03:54,670
+So in order to make this application work,
+the code needs to create an HTTP
+
+50
+00:03:54,670 --> 00:04:00,130
+request, send it to a server computer,
+retrieve the results,
+
+51
+00:04:00,130 --> 00:04:04,730
+and then display those results.
+Android provides several classes for
+
+52
+00:04:04,730 --> 00:04:11,315
+helping with this.
+Three we'll talk about now are the Socket
+
+53
+00:04:11,315 --> 00:04:18,440
+class, the HttpUrlConnection class and the
+AndroidHttpClient.
+
+54
+00:04:18,440 --> 00:04:20,886
+So here's my device.
+
+55
+00:04:20,886 --> 00:04:27,600
+And now I'll launch the networking socket
+application.
+
+56
+00:04:27,600 --> 00:04:28,100
+As
+
+57
+00:04:30,530 --> 00:04:35,840
+you can see, this application initially
+displays a single button labeled
+
+58
+00:04:35,840 --> 00:04:40,670
+Load Data.
+When I press that button, the application
+
+59
+00:04:40,670 --> 00:04:46,190
+will issue an HTTP GET request to an
+external server.
+
+60
+00:04:46,190 --> 00:04:48,700
+And that server will respond with some
+
+61
+00:04:48,700 --> 00:04:52,950
+complex text containing the requested
+earthquake data.
+
+62
+00:04:54,340 --> 00:04:55,570
+Okay.
+
+63
+00:04:55,570 --> 00:05:02,440
+So now I'll press the Load Data button and
+there you can see the requested data.
+
+64
+00:05:03,800 --> 00:05:08,400
+Let's look at the source code to see what
+it took to get that data.
+
+65
+00:05:08,400 --> 00:05:10,860
+Now here I've opened the application in
+the IDE.
+
+66
+00:05:13,550 --> 00:05:16,490
+Now I'll open the main activity for this
+application.
+
+67
+00:05:18,770 --> 00:05:21,760
+And here I'm showing the listener for the
+Load Data button.
+
+68
+00:05:23,950 --> 00:05:30,784
+When this button is pressed, the
+application will create, and then execute,
+
+69
+00:05:30,784 --> 00:05:36,753
+an AsyncTask called HttpGetTask.
+Let's look at that class.
+
+70
+00:05:36,753 --> 00:05:41,735
+The HttpGetTask class first declares some
+variables,
+
+71
+00:05:41,735 --> 00:05:46,030
+they're used in creating an HTTP GET
+Request.
+
+72
+00:05:48,190 --> 00:05:50,790
+When the execute method is called, on
+
+73
+00:05:50,790 --> 00:05:55,460
+the HttpGetTask, the doInBackground method
+is called.
+
+74
+00:05:57,270 --> 00:06:00,760
+And that method begins by creating a new
+socket.
+
+75
+00:06:00,760 --> 00:06:08,040
+That will be connected to the host
+computer, api.geonames.org
+
+76
+00:06:08,040 --> 00:06:13,251
+on the standard http port port 80.
+Next, the code
+
+77
+00:06:13,251 --> 00:06:19,070
+gets the socket's output stream, and then
+writes the HTTP_GET_COMMAND.
+
+78
+00:06:20,380 --> 00:06:24,940
+And this string will be sent to the host
+computer, which interprets it
+
+79
+00:06:24,940 --> 00:06:28,910
+as an HTTPGetRequest, and then responds
+
+80
+00:06:28,910 --> 00:06:32,500
+by sending back the appropriate response
+data.
+
+81
+00:06:33,780 --> 00:06:39,040
+And then this code continues by getting
+the socket's input stream And
+
+82
+00:06:39,040 --> 00:06:43,750
+by passing it to a method called
+readStream.
+
+83
+00:06:43,750 --> 00:06:48,430
+The readStream method ultimately reads the
+response data from the socket's
+
+84
+00:06:48,430 --> 00:06:52,830
+InputStream.
+And then returns the response as a
+
+85
+00:06:52,830 --> 00:06:57,572
+single string.
+And this string is passed to the
+
+86
+00:06:57,572 --> 00:07:04,100
+onPostExecute method which executes on the
+main thread and which
+
+87
+00:07:04,100 --> 00:07:06,640
+displays the response in the text view.
+
+88
+00:07:07,640 --> 00:07:12,470
+If we return back to the application,
+you'll notice that the response text
+
+89
+00:07:12,470 --> 00:07:18,970
+includes not only the earthquake data, but
+also the HTTP response headers.
+
+90
+00:07:18,970 --> 00:07:22,990
+Now normally, I wouldn't want to display
+that text here.
+
+91
+00:07:22,990 --> 00:07:25,780
+I really just want to show you the
+earthquake data.
+
+92
+00:07:25,780 --> 00:07:29,760
+So in the case, I should have parsed the
+response and
+
+93
+00:07:29,760 --> 00:07:31,950
+pulled out just the data that I wanted.
+
+94
+00:07:33,730 --> 00:07:37,240
+In addition, you might have noticed I
+didn't write any of the
+
+95
+00:07:37,240 --> 00:07:41,450
+error handling code that you really need
+to make this application robust.
+
+96
+00:07:42,850 --> 00:07:47,490
+And these points, capture pretty well the
+trade offs of using sockets.
+
+97
+00:07:47,490 --> 00:07:50,700
+The very low level, you can write whatever
+you want on
+
+98
+00:07:50,700 --> 00:07:54,900
+the socket but in return, you have to
+handle all the many
+
+99
+00:07:54,900 --> 00:07:59,320
+details of making the HTTP requests, all
+the error
+
+100
+00:07:59,320 --> 00:08:03,630
+handling, and all the processing of the
+HTTP responses.
+
+101
+00:08:07,260 --> 00:08:14,100
+The next implementation we'll look at uses
+the HttpUrlConnection class.
+
+102
+00:08:14,100 --> 00:08:17,950
+This class provides a higher-level
+interface that handles more
+
+103
+00:08:17,950 --> 00:08:22,670
+of the networking details than the socket
+class does.
+
+104
+00:08:22,670 --> 00:08:25,320
+But as we'll see in a moment, it also has
+a less
+
+105
+00:08:25,320 --> 00:08:32,180
+flexible API than our last option, the H,
+the Android HTTP client class.
+
+106
+00:08:32,180 --> 00:08:36,580
+Now, having said that, I'll also point out
+that the Android
+
+107
+00:08:36,580 --> 00:08:42,020
+team is not actively working on the
+Android HTTP client anymore.
+
+108
+00:08:42,020 --> 00:08:47,230
+And it's putting it's efforts into
+improving this class going forward.
+
+109
+00:08:47,230 --> 00:08:50,130
+So let's look at the example application
+
+110
+00:08:50,130 --> 00:08:55,810
+implemented this time with the
+HttpURLConnection class.
+
+111
+00:08:55,810 --> 00:08:56,310
+So
+
+112
+00:08:58,200 --> 00:08:59,150
+here's my device.
+
+113
+00:09:01,520 --> 00:09:05,100
+And now I'll launch the NetworkingURL
+application.
+
+114
+00:09:08,470 --> 00:09:11,110
+As before, this application initially
+displays
+
+115
+00:09:11,110 --> 00:09:13,760
+a single button labeled Load Data.
+
+116
+00:09:15,280 --> 00:09:20,870
+And as before, when I press on that button
+the application will issue an HTTP
+
+117
+00:09:20,870 --> 00:09:25,450
+GET request To an external server, and
+that server will
+
+118
+00:09:25,450 --> 00:09:31,440
+respond, with some complex text,
+containing the requested earthquake data.
+
+119
+00:09:31,440 --> 00:09:33,280
+Okay, so now I'll press the
+
+120
+00:09:33,280 --> 00:09:34,390
+Load Data button.
+
+121
+00:09:35,690 --> 00:09:39,580
+There you can see the requested data,
+appearing in a text view.
+
+122
+00:09:40,620 --> 00:09:45,590
+Notice, however, that this time, the HTTP
+response headers have been stripped out.
+
+123
+00:09:47,540 --> 00:09:49,950
+Let's look at the source code and see how
+this works.
+
+124
+00:09:52,390 --> 00:09:55,120
+Now, here I've got the application opened
+in the IDE.
+
+125
+00:09:56,140 --> 00:09:59,280
+Now, I'll open the main activity for this
+application.
+
+126
+00:10:00,920 --> 00:10:04,150
+And here, I'm showing the listener for the
+load data button.
+
+127
+00:10:05,600 --> 00:10:10,320
+As before, when this button is pressed,
+the application will create and then
+
+128
+00:10:10,320 --> 00:10:17,390
+execute an AsyncTask called, HttpGetTask.
+Let's look at that class.
+
+129
+00:10:19,950 --> 00:10:24,390
+When the execute method is called on HTTP
+GetTask, the doInBackground
+
+130
+00:10:24,390 --> 00:10:29,490
+method is invoked.
+That method begins by creating a new URL
+
+131
+00:10:29,490 --> 00:10:35,800
+object, and passing a URL string for the
+desired service as a parameter.
+
+132
+00:10:37,710 --> 00:10:40,580
+The code then calls the open connection
+method
+
+133
+00:10:40,580 --> 00:10:46,950
+on the URL object, which returns an
+httpUrlConnection.
+
+134
+00:10:46,950 --> 00:10:51,951
+This object is then stored in a variable
+called HttpURLConnection.
+
+135
+00:10:53,570 --> 00:10:59,710
+The code continues by getting the HTTP URL
+connection's input stream.
+
+136
+00:10:59,710 --> 00:11:02,250
+And by passing it through the readStream
+method.
+
+137
+00:11:03,570 --> 00:11:07,700
+And as before, the readStream method,
+reads the response data
+
+138
+00:11:07,700 --> 00:11:12,140
+from the socket's input stream, and then
+returns the response,
+
+139
+00:11:12,140 --> 00:11:18,010
+as a single string.
+This time however, the HTTP URL connection
+
+140
+00:11:18,010 --> 00:11:24,550
+strips off the HTTP response headers and
+handles the error checking for you.
+
+141
+00:11:26,040 --> 00:11:29,792
+Now this string is then passed to the
+onPostExecute
+
+142
+00:11:29,792 --> 00:11:33,470
+method which displays the response in a
+text view.
+
+143
+00:11:36,040 --> 00:11:42,760
+The third class is Android HTTP client.
+This class is an implementation of the
+
+144
+00:11:42,760 --> 00:11:50,180
+Apache project's DefaultHttpClient and it
+allows a great deal of customization.
+
+145
+00:11:50,180 --> 00:11:56,230
+In particular, the class breaks an HTTP
+transaction into a
+
+146
+00:11:56,230 --> 00:12:01,650
+request object and into a response object.
+So you can create subclasses
+
+147
+00:12:01,650 --> 00:12:06,580
+that customize the handling of requests
+and their responses.
+
+148
+00:12:06,580 --> 00:12:09,870
+Now, by this point, you know what the
+application looks like,
+
+149
+00:12:09,870 --> 00:12:13,580
+so let's jump straight into the code and
+look at the implementation.
+
+150
+00:12:16,380 --> 00:12:22,500
+Now, here I've got the networking Android
+HTTP client application opened in the IDE.
+
+151
+00:12:23,960 --> 00:12:27,290
+Now, I'll open the main activity for this
+application.
+
+152
+00:12:27,290 --> 00:12:31,790
+And let's go right to the HTTP get task
+class.
+
+153
+00:12:33,400 --> 00:12:36,097
+That class begins by creating a new
+
+154
+00:12:36,097 --> 00:12:41,830
+AndroidHttpClient object by calling the
+classes newInstance method.
+
+155
+00:12:43,600 --> 00:12:48,640
+Now, when the doInBackground method is
+called, the code creates
+
+156
+00:12:48,640 --> 00:12:53,570
+an HttpGet object, passing in the URL
+string for that request.
+
+157
+00:12:54,620 --> 00:12:58,230
+Next, it creates a response handler
+object.
+
+158
+00:12:58,230 --> 00:13:05,000
+This object is responsible for handling
+the response to the HttpGet request.
+
+159
+00:13:05,000 --> 00:13:09,090
+In this case, a response handler is of
+type basic
+
+160
+00:13:09,090 --> 00:13:14,390
+response handler.
+Which will return the response's body.
+
+161
+00:13:14,390 --> 00:13:18,520
+Now we'll see a more complex response
+handler, later in this lesson.
+
+162
+00:13:20,220 --> 00:13:22,120
+And finally, the request and the
+
+163
+00:13:22,120 --> 00:13:26,570
+ResponseHandler, are passed into the
+execute method.
+
+164
+00:13:26,570 --> 00:13:29,060
+Which sends the request, gets the
+
+165
+00:13:29,060 --> 00:13:32,670
+response, passing it through the
+ResponseHandler.
+
+166
+00:13:32,670 --> 00:13:34,250
+And the
+
+167
+00:13:34,250 --> 00:13:40,010
+result of all this is then passed on to
+onPostExecute.
+
+168
+00:13:40,010 --> 00:13:42,276
+Which displays the response in a text
+field.
+
+169
+00:13:42,276 --> 00:13:46,616
+[BLANK_AUDIO]
+
