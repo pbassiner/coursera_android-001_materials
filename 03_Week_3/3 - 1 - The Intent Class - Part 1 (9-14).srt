@@ -1,0 +1,625 @@
+1
+00:00:08,880 --> 00:00:12,270
+Hi, I'm Adam Porter and this is
+
+2
+00:00:12,270 --> 00:00:17,060
+Programming Mobile Applications for
+Android Handheld Systems.
+
+3
+00:00:19,840 --> 00:00:23,720
+In our last lesson, we talked about the
+activity class
+
+4
+00:00:23,720 --> 00:00:27,880
+and I showed you how one activity can
+programmatically start
+
+5
+00:00:27,880 --> 00:00:32,440
+another activity by first creating an
+intent object, and then
+
+6
+00:00:32,440 --> 00:00:36,700
+by passing that intent to a method such as
+start activity.
+
+7
+00:00:36,700 --> 00:00:38,830
+Or start activity for result.
+
+8
+00:00:38,830 --> 00:00:42,620
+Today, we're going to take a deeper look
+at intents.
+
+9
+00:00:42,620 --> 00:00:45,940
+We'll discuss how they're created and
+processed,
+
+10
+00:00:45,940 --> 00:00:49,320
+as they're used in starting other
+activities.
+
+11
+00:00:49,320 --> 00:00:52,831
+And I'll begin by presenting the intent
+class itself.
+
+12
+00:00:52,831 --> 00:00:56,131
+I'll talk about how they're created, what
+fields
+
+13
+00:00:56,131 --> 00:01:00,380
+they have and what information those
+fields contain.
+
+14
+00:01:00,380 --> 00:01:04,200
+After that, I'll talk about the two ways
+in which Android decides which
+
+15
+00:01:04,200 --> 00:01:09,420
+activity should be stated when a method,
+such as start activity, is called.
+
+16
+00:01:09,420 --> 00:01:11,200
+First, I'll talk about explicit
+
+17
+00:01:11,200 --> 00:01:17,390
+activation, in which intents specifically
+name the activity they want to start.
+
+18
+00:01:17,390 --> 00:01:21,530
+And second, I'll talk about implicit
+activation, where intents
+
+19
+00:01:21,530 --> 00:01:25,860
+don't select a target activity, but
+instead describe the operation
+
+20
+00:01:25,860 --> 00:01:30,110
+they want to be performed after which
+Android finds
+
+21
+00:01:30,110 --> 00:01:33,860
+and then starts the activity that can
+perform that operation.
+
+22
+00:01:33,860 --> 00:01:36,560
+The intent class is basically
+
+23
+00:01:36,560 --> 00:01:40,380
+a data structure that serves at least two
+purposes in Android.
+
+24
+00:01:40,380 --> 00:01:46,170
+One, it can specify an operation that you
+want to perform and two, it can represent
+
+25
+00:01:46,170 --> 00:01:48,720
+an event that has occurred in the system
+
+26
+00:01:48,720 --> 00:01:51,310
+that you want to notify other components
+about.
+
+27
+00:01:52,630 --> 00:01:55,270
+Today, however, we're going to focus on
+just the first of
+
+28
+00:01:55,270 --> 00:01:59,980
+these, using intents to specify operations
+that you want performed.
+
+29
+00:01:59,980 --> 00:02:01,620
+And we'll leave the second of these,
+
+30
+00:02:01,620 --> 00:02:04,350
+using intents for events notification, for
+a
+
+31
+00:02:04,350 --> 00:02:07,630
+later lesson when we talk about broadcast
+receivers.
+
+32
+00:02:09,220 --> 00:02:11,320
+Now, you can think about intents as
+providing a kind
+
+33
+00:02:11,320 --> 00:02:16,548
+of language for specifying operations that
+you want to have performed.
+
+34
+00:02:16,548 --> 00:02:19,090
+In essence, intents give you an easy way
+to
+
+35
+00:02:19,090 --> 00:02:22,930
+say things like, I want to select a
+contact.
+
+36
+00:02:22,930 --> 00:02:26,730
+I want to take a photo.
+I want to dial a phone number, or I want
+
+37
+00:02:26,730 --> 00:02:28,420
+to display a map.
+
+38
+00:02:28,420 --> 00:02:31,120
+And so in practice, intents are usually
+constructed
+
+39
+00:02:31,120 --> 00:02:33,660
+by one activity that wants some work to be
+
+40
+00:02:33,660 --> 00:02:36,890
+done, and then Android uses that intent to
+
+41
+00:02:36,890 --> 00:02:41,050
+start another activity that can perform
+the desired work.
+
+42
+00:02:42,310 --> 00:02:44,000
+So let's talk now about the kinds of
+
+43
+00:02:44,000 --> 00:02:47,790
+information that can be specified within
+an intent.
+
+44
+00:02:47,790 --> 00:02:51,750
+For example, we'll talk about intent
+
+45
+00:02:51,750 --> 00:02:56,910
+fields including action, data, category,
+mine
+
+46
+00:02:56,910 --> 00:03:01,610
+type, target component, extras and flags.
+
+47
+00:03:01,610 --> 00:03:03,950
+An intent's action field is a string that
+
+48
+00:03:03,950 --> 00:03:08,400
+represents or names the operation to be
+performed.
+
+49
+00:03:08,400 --> 00:03:13,240
+Some built in examples include
+action_dial, which means,
+
+50
+00:03:13,240 --> 00:03:15,035
+I want someone to dial a phone number.
+
+51
+00:03:15,035 --> 00:03:17,900
+Action_Edit.
+
+52
+00:03:17,900 --> 00:03:21,125
+I want someone to display some data for
+the user to edit.
+
+53
+00:03:21,125 --> 00:03:23,590
+Action_Sync.
+
+54
+00:03:23,590 --> 00:03:28,448
+I would like to synchronize some data on
+my device with data on a server.
+
+55
+00:03:28,448 --> 00:03:31,224
+And Action_Main.
+
+56
+00:03:31,224 --> 00:03:35,620
+I want to start an activity as the initial
+activity of an application.
+
+57
+00:03:37,550 --> 00:03:40,580
+You can set an intent's action in several
+ways.
+
+58
+00:03:40,580 --> 00:03:46,890
+For example, you can pass an action string
+as a parameter to the intent constructor.
+
+59
+00:03:46,890 --> 00:03:51,010
+Alternatively, you can create an empty
+intent, and then, call the set
+
+60
+00:03:51,010 --> 00:03:54,700
+action method on it, passing the action
+string, again as a parameter.
+
+61
+00:03:55,830 --> 00:03:58,280
+Intents also have a data field which
+
+62
+00:03:58,280 --> 00:04:02,440
+represents data that is associated with
+the intent.
+
+63
+00:04:02,440 --> 00:04:05,550
+That data is formatted as a Uniform
+Resource
+
+64
+00:04:05,550 --> 00:04:11,180
+Identifier, or URI.
+And one example of intent data
+
+65
+00:04:11,180 --> 00:04:16,060
+is a geo schemed URI.
+Which indicates map data.
+
+66
+00:04:17,060 --> 00:04:19,850
+You might also remember that we saw
+something exactly like
+
+67
+00:04:19,850 --> 00:04:25,110
+this in earlier lessons as part of those
+MapLocation applications.
+
+68
+00:04:25,110 --> 00:04:28,750
+Another example is the tel schemed URI
+
+69
+00:04:28,750 --> 00:04:30,820
+indicating a phone number that you want
+dialed.
+
+70
+00:04:32,010 --> 00:04:37,010
+And note that the strings that represent
+the underlying data are first being passed
+
+71
+00:04:37,010 --> 00:04:40,240
+through the uri.parse method which takes
+that
+
+72
+00:04:40,240 --> 00:04:43,463
+string and then returns an URI object.
+
+73
+00:04:45,380 --> 00:04:48,270
+You can set the intent's data in a variety
+of ways.
+
+74
+00:04:48,270 --> 00:04:52,760
+For instance, you can pass it directly to
+the intent's constructor or you
+
+75
+00:04:52,760 --> 00:04:57,100
+can create an empty intent and then use
+the set data method to set
+
+76
+00:04:57,100 --> 00:04:58,240
+the data for that intent.
+
+77
+00:04:59,780 --> 00:05:04,030
+Intent category represents additional
+information about the kinds of
+
+78
+00:05:04,030 --> 00:05:07,500
+components that can handle or should
+handle this intent.
+
+79
+00:05:07,500 --> 00:05:11,760
+Some examples include category_browsable.
+
+80
+00:05:11,760 --> 00:05:17,670
+Which means that the activity can be
+invoked by a browser, via a URI link.
+
+81
+00:05:17,670 --> 00:05:22,590
+Another example is category_launcher,
+which means that the target
+
+82
+00:05:22,590 --> 00:05:24,960
+activity can be the initial activity of a
+
+83
+00:05:24,960 --> 00:05:30,370
+task, and is listed in the top-level
+application launcher.
+
+84
+00:05:30,370 --> 00:05:32,690
+Intents also have a type field, which
+
+85
+00:05:32,690 --> 00:05:35,990
+specifies the mime type of the intent's
+data.
+
+86
+00:05:37,370 --> 00:05:41,115
+Some examples of mime types include
+various image formats, things like,
+
+87
+00:05:41,115 --> 00:05:48,180
+image/png for png images, and image/jpg,
+or jpg,
+
+88
+00:05:48,180 --> 00:05:53,080
+for jpg images.
+There are also various text formats such
+
+89
+00:05:53,080 --> 00:06:00,350
+as text/html for html text, or text/plain
+for arbitrary text data.
+
+90
+00:06:00,350 --> 00:06:03,570
+And of course, if you don't specify a mime
+
+91
+00:06:03,570 --> 00:06:06,080
+type, Android will try to infer one for
+you.
+
+92
+00:06:08,510 --> 00:06:12,620
+You can set an intent's mime type by using
+the set type method.
+
+93
+00:06:12,620 --> 00:06:16,670
+Passing in a string that represents the
+desired mime type.
+
+94
+00:06:16,670 --> 00:06:21,010
+You can also set both the data and the
+type together by calling the
+
+95
+00:06:21,010 --> 00:06:27,510
+setDataAndType method.
+Intents also have a component field that
+
+96
+00:06:27,510 --> 00:06:33,790
+identifies the intent's target activity.
+And you can set this field, if you
+
+97
+00:06:33,790 --> 00:06:38,310
+know that there's exactly one activity
+that should always receive this intent.
+
+98
+00:06:39,660 --> 00:06:41,860
+You can set the intent's target component
+using
+
+99
+00:06:41,860 --> 00:06:44,550
+one of the intent's constructors, by
+passing in
+
+100
+00:06:44,550 --> 00:06:48,080
+a context object and a class object which
+
+101
+00:06:48,080 --> 00:06:52,300
+represents the activity that should
+perform the desired operation.
+
+102
+00:06:52,300 --> 00:06:54,730
+And we'll see a code example of this in a
+few minutes.
+
+103
+00:06:56,120 --> 00:06:58,970
+You can also create an empty intent and
+then use one
+
+104
+00:06:58,970 --> 00:07:04,440
+of the set component, set class, or set
+class name methods,
+
+105
+00:07:04,440 --> 00:07:10,340
+to set that target activity.
+Intents also have an extras field.
+
+106
+00:07:10,340 --> 00:07:15,030
+Extras store additional information
+associated with the intent.
+
+107
+00:07:15,030 --> 00:07:19,950
+Now extras are effectively a map of key
+value pairs.
+
+108
+00:07:19,950 --> 00:07:24,800
+And so the target activity has to know
+both the name and the type
+
+109
+00:07:24,800 --> 00:07:26,899
+of any extra data that it intends to use.
+
+110
+00:07:28,570 --> 00:07:34,120
+For example, the intent class, defines an
+extra called extra_email.
+
+111
+00:07:34,120 --> 00:07:39,780
+And this extra is used to pass a list of
+recipients in sending email.
+
+112
+00:07:39,780 --> 00:07:47,010
+As you can see here, this code creates an
+intent with the action intent.action_send.
+
+113
+00:07:47,010 --> 00:07:50,080
+If we want to send some email.
+It also
+
+114
+00:07:50,080 --> 00:07:54,855
+adds an extra to that intent.
+The extra is named
+
+115
+00:07:54,855 --> 00:08:00,162
+EXTRA_EMAIL.
+And in this case its values include
+
+116
+00:08:00,162 --> 00:08:05,682
+me, aporter@cs.umd.edu, ceo@microsoft.com,
+
+117
+00:08:05,682 --> 00:08:11,685
+potus@whitehouse.gov, and Mozart, at
+musician.org.
+
+118
+00:08:11,685 --> 00:08:15,365
+Now, there are several different methods
+for setting
+
+119
+00:08:15,365 --> 00:08:18,885
+extras, and the specific form of these
+methods will
+
+120
+00:08:18,885 --> 00:08:21,864
+depend on the type of data you want to
+store.
+
+121
+00:08:21,864 --> 00:08:24,792
+So, for example, there is method for
+storing a string,
+
+122
+00:08:24,792 --> 00:08:27,610
+one method for storing an array of floats,
+and so on.
+
+123
+00:08:29,660 --> 00:08:32,700
+Another intent field is called flags.
+
+124
+00:08:32,700 --> 00:08:36,220
+Flags represent information about how the
+intent should be handled.
+
+125
+00:08:37,530 --> 00:08:44,050
+Some built in examples include
+FLAG_ACTIVITY_NO_HISTORY.
+
+126
+00:08:44,050 --> 00:08:48,890
+Which means that when an activity is
+started, based on this intent, it
+
+127
+00:08:48,890 --> 00:08:57,120
+shouldn't be put in the history stack.
+Another flag is FLAG_DEBUG_LOG_RESOLUTION.
+
+128
+00:08:57,120 --> 00:08:59,150
+Which tells Android to print out extra
+
+129
+00:08:59,150 --> 00:09:03,540
+logging information when this intent is
+being processed.
+
+130
+00:09:03,540 --> 00:09:06,350
+And this is a great tool to use if your
+intents
+
+131
+00:09:06,350 --> 00:09:09,050
+are not starting up the activities that
+you want them to.
+
