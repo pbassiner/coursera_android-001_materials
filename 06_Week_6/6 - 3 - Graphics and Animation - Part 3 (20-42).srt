@@ -1,0 +1,1175 @@
+1
+00:00:00,000 --> 00:00:09,616
+[BLANK_AUDIO]
+
+2
+00:00:09,616 --> 00:00:11,632
+Hi, I'm Adam Porter.
+
+3
+00:00:11,632 --> 00:00:18,030
+And this is Programming Mobile
+Applications for Android handheld systems.
+
+4
+00:00:19,540 --> 00:00:21,200
+In the bubble view examples that we just
+
+5
+00:00:21,200 --> 00:00:26,110
+saw, I demonstrated a simple kind of
+animation.
+
+6
+00:00:26,110 --> 00:00:29,730
+I took a single view, and I changed some
+of its properties.
+
+7
+00:00:29,730 --> 00:00:34,770
+Specifically, its location, and
+orientation, and I did this over
+
+8
+00:00:34,770 --> 00:00:39,590
+a period of time.
+Animations like this are fairly common.
+
+9
+00:00:39,590 --> 00:00:44,290
+Applications often animate changes to
+thing to properties of a view like
+
+10
+00:00:44,290 --> 00:00:49,440
+it's size, it's position, it's
+transparency, it's orientation,
+
+11
+00:00:49,440 --> 00:00:54,040
+and more.
+To make animation easier Android provides
+
+12
+00:00:54,040 --> 00:00:59,860
+several different view animation support
+classes and three that we'll talk about
+
+13
+00:00:59,860 --> 00:01:06,310
+now are the Transition Drawable class for
+animating a transition between two views,
+
+14
+00:01:07,420 --> 00:01:13,360
+the Animation Drawable for creating
+frame-by-frame animations, and
+
+15
+00:01:13,360 --> 00:01:19,160
+the Animation class for creating tween
+animations, where you specify certain
+
+16
+00:01:19,160 --> 00:01:25,210
+frames or moments in the animation and
+Android interpolates or fills
+
+17
+00:01:25,210 --> 00:01:28,100
+in the points in between.
+
+18
+00:01:28,100 --> 00:01:30,620
+Let's look at each of these classes one at
+a time.
+
+19
+00:01:32,600 --> 00:01:37,370
+The first animation class we'll discuss is
+the Transition Drawable.
+
+20
+00:01:37,370 --> 00:01:43,300
+This class specifies a two layer drawable,
+and when it's displayed, the user
+
+21
+00:01:43,300 --> 00:01:46,980
+sees the first layer, and then a bit
+later, sees the second layer.
+
+22
+00:01:48,400 --> 00:01:50,604
+Our example application is called
+
+23
+00:01:50,604 --> 00:01:54,936
+Graphics Transition Drawable, and this
+application takes us back
+
+24
+00:01:54,936 --> 00:01:59,660
+to the Graphics Shape Draw applications
+that we saw earlier.
+
+25
+00:01:59,660 --> 00:02:04,990
+But this time, instead displaying both
+shapes at the same time, this
+
+26
+00:02:04,990 --> 00:02:09,740
+application first displays the leftmost
+cyan colored shape,
+
+27
+00:02:10,850 --> 00:02:15,100
+which then fades into a display of the
+rightmost magenta colored shape.
+
+28
+00:02:16,150 --> 00:02:17,070
+Let's see how that works.
+
+29
+00:02:19,350 --> 00:02:23,140
+So here's my device, and when I start up
+the Graphics
+
+30
+00:02:23,140 --> 00:02:29,220
+Transition Drawable application you'll see
+the first shape fading into the second.
+
+31
+00:02:29,220 --> 00:02:30,800
+So here we go.
+
+32
+00:02:32,100 --> 00:02:32,940
+Here's the first shape,
+
+33
+00:02:35,210 --> 00:02:38,920
+and here's the second.
+So let's take a look at the source code.
+
+34
+00:02:40,970 --> 00:02:46,380
+So here's the Graphics Transition Drawable
+application, open in the IDE.
+
+35
+00:02:46,380 --> 00:02:47,940
+Now I'll open the main activity.
+
+36
+00:02:49,360 --> 00:02:53,709
+In OnCreate, this application loads a
+transition drawable
+
+37
+00:02:55,630 --> 00:02:59,500
+from a file called shape_transition.xml.
+
+38
+00:02:59,500 --> 00:03:07,440
+Let's open that file.
+This file defines a transition resource.
+
+39
+00:03:07,440 --> 00:03:10,560
+Resources of this type can have up to two
+
+40
+00:03:10,560 --> 00:03:15,250
+item tags, and each item tag describes one
+drawable.
+
+41
+00:03:16,520 --> 00:03:22,260
+In this case, the drawables are our
+familiar cyan and magenta shapes.
+
+42
+00:03:24,000 --> 00:03:27,090
+Now, back in the main activity, the code
+
+43
+00:03:27,090 --> 00:03:31,580
+calls set crossfade enabled with the
+parameter true,
+
+44
+00:03:32,970 --> 00:03:38,060
+and this causes the first drawable to
+visually fade into the second drawable.
+
+45
+00:03:39,420 --> 00:03:45,490
+Next, the code sets the transition, as the
+drawable for the image view, by calling
+
+46
+00:03:45,490 --> 00:03:52,100
+set image drawable, and then finally, it
+calls start on the transition,
+
+47
+00:03:52,100 --> 00:03:57,120
+passing in a value of 5000 for the
+animation's duration.
+
+48
+00:03:59,290 --> 00:04:04,346
+The next kind of animation that we'll talk
+about is the Animation Drawable.
+
+49
+00:04:05,590 --> 00:04:10,000
+This drawable animates a series of other
+drawables,
+
+50
+00:04:10,000 --> 00:04:12,360
+showing each one for some period of time.
+
+51
+00:04:14,410 --> 00:04:18,950
+Our next example application is called
+Graphics Frame Animation.
+
+52
+00:04:20,070 --> 00:04:23,050
+This application uses an Animation
+Drawable to
+
+53
+00:04:23,050 --> 00:04:26,020
+display a kind of splash screen, which
+
+54
+00:04:26,020 --> 00:04:29,560
+itself presents a series of images
+counting
+
+55
+00:04:29,560 --> 00:04:32,050
+down to the start of the main application.
+
+56
+00:04:33,170 --> 00:04:33,944
+Let's see what this does.
+
+57
+00:04:33,944 --> 00:04:38,619
+[BLANK_AUDIO]
+
+58
+00:04:38,619 --> 00:04:42,759
+So here's my device.
+When I start up the graphics frame
+
+59
+00:04:42,759 --> 00:04:46,532
+animation application, you'll see a series
+of images,
+
+60
+00:04:46,532 --> 00:04:50,848
+counting down to a final image.
+Okay, let's get started.
+
+61
+00:04:50,848 --> 00:04:57,530
+Nine, eight, seven, six, five,
+
+62
+00:04:57,530 --> 00:05:03,720
+four, three, two, one, and finally, the
+image we've all
+
+63
+00:05:03,720 --> 00:05:04,360
+been waiting for.
+
+64
+00:05:06,280 --> 00:05:08,550
+So let's go to the source code for this
+application.
+
+65
+00:05:09,750 --> 00:05:15,010
+So here's the Graphics Frame Animation
+application open in the IDE.
+
+66
+00:05:15,010 --> 00:05:20,830
+Now I'll open the main activity and in
+OnCreate this application loads an
+
+67
+00:05:20,830 --> 00:05:26,830
+Animation Drawable from a file called
+view_animation.xml.
+
+68
+00:05:26,830 --> 00:05:27,330
+And
+
+69
+00:05:29,390 --> 00:05:34,370
+then it sets that animation drawable as
+the background on an image view.
+
+70
+00:05:35,650 --> 00:05:40,220
+This code then stores that drawable in a
+variable called mAnim.
+
+71
+00:05:41,480 --> 00:05:48,030
+And before we go forward, let's take a
+look at the view_animation.xml file.
+
+72
+00:05:50,400 --> 00:05:54,690
+So here's the view_animation.xml file and
+
+73
+00:05:54,690 --> 00:05:58,319
+this file defines an animation list
+resource.
+
+74
+00:06:00,940 --> 00:06:06,270
+This resource contains a list of item
+tags, where each tag
+
+75
+00:06:06,270 --> 00:06:12,100
+represents a drawable, and in this case,
+the first drawable is just a
+
+76
+00:06:12,100 --> 00:06:17,990
+black screen, and that displays for one
+second, and this is
+
+77
+00:06:17,990 --> 00:06:24,140
+followed by nine other images, each of
+which is displayed also for one second.
+
+78
+00:06:26,590 --> 00:06:32,290
+Now back in the main activity, the code
+waits until the on window focus changed
+
+79
+00:06:32,290 --> 00:06:36,310
+method is called, and this method is
+called
+
+80
+00:06:36,310 --> 00:06:41,450
+when the applications window gains or
+loses focus.
+
+81
+00:06:41,450 --> 00:06:45,230
+In this method the code first checks
+whether the window is
+
+82
+00:06:45,230 --> 00:06:50,010
+currently gaining focus and if it is it
+then starts the animation.
+
+83
+00:06:54,520 --> 00:06:59,690
+Next class is the animation class, and
+this class is used to create
+
+84
+00:06:59,690 --> 00:07:05,880
+animations in which transformations are
+applied to the contents of a view.
+
+85
+00:07:07,000 --> 00:07:11,030
+Applications can play with the timing of
+these transformations to
+
+86
+00:07:11,030 --> 00:07:14,630
+sequence and combine different
+transformations
+
+87
+00:07:14,630 --> 00:07:16,550
+to make more complex animations.
+
+88
+00:07:17,840 --> 00:07:19,915
+The graphics Tween Animation
+
+89
+00:07:19,915 --> 00:07:24,090
+application demonstrates the use of the
+animation class.
+
+90
+00:07:25,230 --> 00:07:29,620
+When this application runs, it displays a
+bubble view and
+
+91
+00:07:29,620 --> 00:07:34,280
+then proceeds to animate a number of
+changes to that bubble.
+
+92
+00:07:34,280 --> 00:07:35,130
+Let's see it in action.
+
+93
+00:07:38,790 --> 00:07:42,980
+So here's my device.
+When I start up the Graphics Tween
+
+94
+00:07:42,980 --> 00:07:47,130
+Animation application you'll see the
+bubble, and
+
+95
+00:07:47,130 --> 00:07:51,820
+then you'll see a series of
+transformations applied to that bubble.
+
+96
+00:07:51,820 --> 00:07:57,130
+You'll see it fade in, rotate, move,
+
+97
+00:07:58,210 --> 00:08:04,360
+change its size, and finally, fade out,
+and you'll also see
+
+98
+00:08:04,360 --> 00:08:09,640
+that the timing of these transformations
+is not always linear.
+
+99
+00:08:09,640 --> 00:08:14,960
+That is, some transformations will happen
+at a uniform pace,
+
+100
+00:08:14,960 --> 00:08:18,810
+some will start slow and build up speed,
+some will
+
+101
+00:08:18,810 --> 00:08:22,530
+start fast and then reduce their speed,
+some will both
+
+102
+00:08:22,530 --> 00:08:25,710
+speed up and slow down at different points
+in the animation.
+
+103
+00:08:26,832 --> 00:08:29,400
+Now, I'll slow down the video here a
+little bit, so you
+
+104
+00:08:29,400 --> 00:08:32,710
+can see these effects more clearly.
+
+105
+00:08:32,710 --> 00:08:36,170
+So, here we go, first the bubble fades in
+and
+
+106
+00:08:39,840 --> 00:08:43,779
+next the bubble rotates twice, getting
+faster as it goes.
+
+107
+00:08:45,760 --> 00:08:51,130
+Now the bubble will move, overshoot its
+final position and then pull back a bit.
+
+108
+00:08:54,270 --> 00:08:58,860
+After that, the bubble will shrink a bit
+before quickly doubling its size,
+
+109
+00:09:01,360 --> 00:09:05,542
+and finally the bubble fades out of view,
+quickly
+
+110
+00:09:05,542 --> 00:09:08,290
+at first, and then more slowly near the
+end.
+
+111
+00:09:11,890 --> 00:09:13,880
+Let's take a look at the source code for
+this application.
+
+112
+00:09:15,650 --> 00:09:20,920
+So here's the Graphics Tween Animation
+application open in the IDE.
+
+113
+00:09:20,920 --> 00:09:23,940
+Now, I'll open the main activity.
+
+114
+00:09:23,940 --> 00:09:26,500
+And this application sets the, calls
+
+115
+00:09:26,500 --> 00:09:30,140
+setContentView, passing in the main.xml
+file.
+
+116
+00:09:31,610 --> 00:09:34,320
+And then it finds an image view in that
+layout.
+
+117
+00:09:35,780 --> 00:09:37,070
+And after that it
+
+118
+00:09:37,070 --> 00:09:42,520
+reads an animation from the
+view_animation.xml file
+
+119
+00:09:42,520 --> 00:09:46,730
+which is stored in the res/Anim directory.
+
+120
+00:09:49,000 --> 00:09:55,540
+Here's the resource and nested within the
+set tag there are several other tags,
+
+121
+00:09:55,540 --> 00:10:01,900
+each of which indicates a specific
+transformation to be applied to the view.
+
+122
+00:10:01,900 --> 00:10:05,620
+The first is an alpha transformation, the
+
+123
+00:10:05,620 --> 00:10:09,590
+duration of the animation is three
+seconds.
+
+124
+00:10:09,590 --> 00:10:14,020
+It goes from an alpha of zero, or
+completely transparent, to an
+
+125
+00:10:14,020 --> 00:10:20,490
+alpha of one, completely opaque.
+The transformation also uses the linear
+
+126
+00:10:20,490 --> 00:10:26,350
+interpolator, so the effect is applied
+uniformly throughout the animation.
+
+127
+00:10:26,350 --> 00:10:29,750
+The next tag is a rotate transformation.
+
+128
+00:10:29,750 --> 00:10:33,100
+The duration is set to four seconds, but
+it's
+
+129
+00:10:33,100 --> 00:10:37,800
+also set to start only after three seconds
+have passed.
+
+130
+00:10:37,800 --> 00:10:39,880
+So, the first transformation
+
+131
+00:10:39,880 --> 00:10:43,880
+will occur and finish, and then this one
+will start up.
+
+132
+00:10:45,290 --> 00:10:51,630
+This animation goes from 0 to 720 degrees,
+or two full turns,
+
+133
+00:10:51,630 --> 00:10:56,090
+and its interpolator accelerates, or
+speeds, up as
+
+134
+00:10:56,090 --> 00:10:59,680
+the animation proceeds and you can look at
+all the
+
+135
+00:10:59,680 --> 00:11:02,260
+other tags on your own when we take a
+break.
+
+136
+00:11:04,750 --> 00:11:10,350
+Going back now to the main activity, let's
+go to the on window focus changed method.
+
+137
+00:11:11,400 --> 00:11:14,637
+Again, this code checks to see if the
+window is
+
+138
+00:11:14,637 --> 00:11:19,211
+currently gaining focus, and if so, it
+starts the animation.
+
+139
+00:11:19,211 --> 00:11:23,640
+[BLANK_AUDIO]
+
+140
+00:11:23,640 --> 00:11:28,167
+The last concept I'll talk about is
+property animation.
+
+141
+00:11:28,167 --> 00:11:32,675
+The previous examples showed classes that
+are designed to
+
+142
+00:11:32,675 --> 00:11:37,190
+animate a set of simple property changes
+on views.
+
+143
+00:11:37,190 --> 00:11:41,910
+But sometimes, you want to animate more
+than just those things and to
+
+144
+00:11:41,910 --> 00:11:44,900
+support that, Android has developed a
+system
+
+145
+00:11:44,900 --> 00:11:49,790
+for changing general ,properties of
+generic objects
+
+146
+00:11:49,790 --> 00:11:52,400
+over a given period of time, and
+
+147
+00:11:52,400 --> 00:11:56,680
+this system of Property Animation has
+several components.
+
+148
+00:11:56,680 --> 00:12:00,110
+First, there is a Value Animator, and this
+
+149
+00:12:00,110 --> 00:12:03,890
+is the main class that controls the
+animation.
+
+150
+00:12:03,890 --> 00:12:09,280
+The Value Animator contains a time
+interpolator which determines
+
+151
+00:12:09,280 --> 00:12:15,040
+how values change as a function of time.
+For instance, over time do the changes
+
+152
+00:12:15,040 --> 00:12:21,232
+happen uniformly, do they speed up, slow
+down, or use some combination of the two?
+
+153
+00:12:21,232 --> 00:12:26,630
+Value Animator also defines a listener
+interface
+
+154
+00:12:26,630 --> 00:12:31,590
+called Animator Update Listener, and this
+interface defines
+
+155
+00:12:31,590 --> 00:12:36,090
+the on animation update method which gets
+called
+
+156
+00:12:36,090 --> 00:12:39,530
+each time a new animation frame is
+created.
+
+157
+00:12:41,440 --> 00:12:47,220
+And lastly, while Android knows how to
+animate the values of common types, like
+
+158
+00:12:47,220 --> 00:12:54,120
+imagers or floats, it doesn't know how to
+animate custom types that you create.
+
+159
+00:12:54,120 --> 00:12:57,330
+So if you need to animate your own types,
+or animate
+
+160
+00:12:57,330 --> 00:13:04,590
+existing types in new ways you can
+implement the Type Evaluator Interface.
+
+161
+00:13:04,590 --> 00:13:06,450
+This interface defines an
+
+162
+00:13:06,450 --> 00:13:10,320
+Evaluate method that gets called to set
+the
+
+163
+00:13:10,320 --> 00:13:14,250
+animation values at a particular point in
+the animation.
+
+164
+00:13:15,680 --> 00:13:20,940
+The last piece of property animation is
+the Animator Set Class.
+
+165
+00:13:20,940 --> 00:13:25,750
+This class allows you to combine animator
+objects, like the value animator we just
+
+166
+00:13:25,750 --> 00:13:31,900
+discussed, into more complex animations.
+So let's look at some example
+
+167
+00:13:31,900 --> 00:13:35,480
+applications that make use of property
+animation.
+
+168
+00:13:36,620 --> 00:13:38,888
+The first of these applications is called
+
+169
+00:13:38,888 --> 00:13:43,170
+Graphics Value Animator, and this
+application uses
+
+170
+00:13:43,170 --> 00:13:50,600
+a value animator to animate a change in
+the background color of an image view.
+
+171
+00:13:50,600 --> 00:13:51,700
+Let's watch this application.
+
+172
+00:13:51,700 --> 00:13:54,980
+So here's my device.
+
+173
+00:13:54,980 --> 00:13:59,020
+I'll now start up the graphics value
+animator application.
+
+174
+00:13:59,020 --> 00:14:03,890
+And as you can see it presents a single
+button labeled Animate.
+
+175
+00:14:05,250 --> 00:14:09,620
+When I press that button, a red rectangle
+will appear in the middle of the
+
+176
+00:14:09,620 --> 00:14:14,520
+display, and over a period of about ten
+seconds, that
+
+177
+00:14:14,520 --> 00:14:19,420
+rectangle will change color until it's
+finally blue.
+
+178
+00:14:20,840 --> 00:14:21,830
+I'll press the button now.
+
+179
+00:14:24,800 --> 00:14:25,880
+There's the red rectangle.
+
+180
+00:14:25,880 --> 00:14:30,370
+And now let's watch as it slowly turns
+blue.
+
+181
+00:14:33,470 --> 00:14:35,700
+Let's open the source code and see how we
+did that.
+
+182
+00:14:38,770 --> 00:14:44,580
+So here's the graphics value animator
+application open in the IDE.
+
+183
+00:14:44,580 --> 00:14:46,380
+Now I'll open the main activity.
+
+184
+00:14:48,140 --> 00:14:53,120
+This application starts by setting two
+integer values, which
+
+185
+00:14:53,120 --> 00:14:57,460
+represent the starting and ending points
+for the animation.
+
+186
+00:14:58,500 --> 00:15:03,160
+The first value is the integer
+representation of the color red.
+
+187
+00:15:05,100 --> 00:15:09,320
+The second value is the integer
+representation of the color blue.
+
+188
+00:15:11,330 --> 00:15:17,880
+In OnCreate, the code creates a button
+that will start the animation, and as
+
+189
+00:15:17,880 --> 00:15:23,290
+you see here, when the button is clicked,
+the start animation method is run.
+
+190
+00:15:24,300 --> 00:15:25,200
+Let's look at that method.
+
+191
+00:15:27,630 --> 00:15:34,610
+Here, the start animation method creates a
+value animated object called anim,
+
+192
+00:15:34,610 --> 00:15:40,200
+and it created that object by calling the
+value animators of object method.
+
+193
+00:15:41,270 --> 00:15:47,150
+The first parameter for this method is a
+type evaluator, in this case the type
+
+194
+00:15:47,150 --> 00:15:53,590
+evaluator is actually a, an ARGB evaluator
+object, and
+
+195
+00:15:53,590 --> 00:15:57,680
+this class knows how to interpolate the
+integer
+
+196
+00:15:57,680 --> 00:16:02,370
+representations of colors.
+The second and third
+
+197
+00:16:02,370 --> 00:16:06,960
+parameters for the of object method are
+the starting
+
+198
+00:16:06,960 --> 00:16:11,630
+and ending points for the animation, the
+colors red and blue.
+
+199
+00:16:12,890 --> 00:16:18,610
+Next the code adds an Animator Update
+Listener and that is going to
+
+200
+00:16:18,610 --> 00:16:22,940
+be called back each time new animation
+frames are created
+
+201
+00:16:24,700 --> 00:16:29,180
+and that code calls the Get Animated Value
+method to
+
+202
+00:16:29,180 --> 00:16:34,210
+retrieve the current color value, and then
+
+203
+00:16:34,210 --> 00:16:38,930
+it makes that color the background color
+of the image view, which is shown in the
+
+204
+00:16:38,930 --> 00:16:43,630
+layout.
+And lastly this code sets the duration of
+
+205
+00:16:43,630 --> 00:16:47,960
+ten seconds for the animation, and then
+starts the animation running.
+
+206
+00:16:52,120 --> 00:16:54,352
+Let's also look at a second property
+
+207
+00:16:54,352 --> 00:16:58,530
+animation application, called Graphics
+View Property Animator.
+
+208
+00:16:59,640 --> 00:17:03,182
+This application will implement the same
+application
+
+209
+00:17:03,182 --> 00:17:08,040
+we created for the Graphics Tween
+Animation application.
+
+210
+00:17:08,040 --> 00:17:11,280
+You'll see a bubble that fades in,
+
+211
+00:17:11,280 --> 00:17:15,640
+rotates, moves, resizes, and then fades
+out.
+
+212
+00:17:17,325 --> 00:17:22,360
+And this version of the application,
+however, will use the view property
+
+213
+00:17:22,360 --> 00:17:29,110
+animator class, which is a simplified kind
+of animator for just view properties.
+
+214
+00:17:29,110 --> 00:17:30,980
+Let's see that application in action.
+
+215
+00:17:30,980 --> 00:17:31,520
+So
+
+216
+00:17:34,420 --> 00:17:35,620
+here's my device.
+
+217
+00:17:36,810 --> 00:17:40,960
+And I'll start up the Graphics View
+Property Animator application.
+
+218
+00:17:41,960 --> 00:17:46,210
+And we'll watch as the bubble goes through
+a series of transformations.
+
+219
+00:17:47,750 --> 00:17:48,553
+Here we go.
+
+220
+00:17:48,553 --> 00:17:58,553
+[BLANK_AUDIO]
+
+221
+00:18:00,788 --> 00:18:06,370
+Let's open up the source code for this
+application.
+
+222
+00:18:06,370 --> 00:18:11,350
+So here's the Graphics View Property
+Animator application open in the
+
+223
+00:18:11,350 --> 00:18:16,733
+IDE.
+Now I'll open the main activity.
+
+224
+00:18:16,733 --> 00:18:20,900
+And let's scroll over to the on window
+focus changed method.
+
+225
+00:18:22,230 --> 00:18:26,390
+When this method is called, the
+application insures that the activity
+
+226
+00:18:26,390 --> 00:18:30,790
+window is gaining focus and if so, it
+calls the run
+
+227
+00:18:30,790 --> 00:18:36,060
+method of the fade in object, and that
+fade in object is
+
+228
+00:18:36,060 --> 00:18:41,240
+a runnable.
+Now inside its run method, its code
+
+229
+00:18:41,240 --> 00:18:46,510
+calls animate on the image view, which
+returns a view property
+
+230
+00:18:46,510 --> 00:18:51,540
+animator object.
+This object, or this class, uses a
+
+231
+00:18:51,540 --> 00:18:57,910
+fluent interface, like what we saw with
+the notification area notifications.
+
+232
+00:18:57,910 --> 00:19:04,190
+And so you can build an animation by
+tacking on various method calls.
+
+233
+00:19:04,190 --> 00:19:10,180
+In this case, the next call is set
+duration to three seconds, then
+
+234
+00:19:10,180 --> 00:19:16,640
+set interpolator to the linear
+interpolater, then a call
+
+235
+00:19:16,640 --> 00:19:22,150
+to the alpha method to change the
+transparency to fully opaque and
+
+236
+00:19:22,150 --> 00:19:27,690
+then a final call which tells the View
+Property Animator that when this animation
+
+237
+00:19:27,690 --> 00:19:32,980
+ends it should invoke the run method of
+another runnable called rotate.
+
+238
+00:19:34,910 --> 00:19:38,020
+And, as you can probably guess, this
+rotate
+
+239
+00:19:38,020 --> 00:19:42,040
+runnable creates the rotation step of the
+animation,
+
+240
+00:19:42,040 --> 00:19:45,900
+and then it ends by calling the movement
+step of the
+
+241
+00:19:45,900 --> 00:19:51,450
+animation, and this continues until all of
+the steps have been completed.
+
+242
+00:19:51,450 --> 00:19:51,950
+So
+
+243
+00:19:54,340 --> 00:19:57,410
+that's all for our lesson on graphics and
+animation.
+
+244
+00:19:57,410 --> 00:20:02,829
+See you next time for a lesson on
+multi-touch and gestures.
+
+245
+00:20:02,829 --> 00:20:04,074
+See you then.
+
+246
+00:20:04,074 --> 00:20:14,074
+[BLANK_AUDIO]
+

@@ -1,0 +1,1189 @@
+1
+00:00:00,000 --> 00:00:09,589
+[BLANK_AUDIO]
+
+2
+00:00:09,589 --> 00:00:12,460
+Hi, I'm Adam Porter, and this is
+
+3
+00:00:12,460 --> 00:00:18,030
+programming mobile applications for
+Android handheld systems.
+
+4
+00:00:20,410 --> 00:00:22,560
+The next class is the MediaPlayer.
+
+5
+00:00:23,910 --> 00:00:29,550
+MediaPlayer controls the playback of audio
+and video streams and files.
+
+6
+00:00:29,550 --> 00:00:32,900
+And this allows you to incorporate audio
+and video into your
+
+7
+00:00:32,900 --> 00:00:38,530
+applications, and to let the applications
+and users control that playback.
+
+8
+00:00:39,730 --> 00:00:43,490
+This class operates according to a complex
+state machine,
+
+9
+00:00:43,490 --> 00:00:45,810
+which I won't go over here in this lesson,
+
+10
+00:00:45,810 --> 00:00:49,320
+so please take a look at the following
+website for more information.
+
+11
+00:00:54,880 --> 00:01:00,120
+Some of the methods that you're likely to
+use when you use the MediaPlayer include
+
+12
+00:01:00,120 --> 00:01:04,540
+SetDataSource, which tells the media
+player which streams to play.
+
+13
+00:01:05,940 --> 00:01:11,090
+Prepare, which initializes the media
+player and loads the necessary streams.
+
+14
+00:01:11,090 --> 00:01:15,520
+The prepare method is synchronous, and
+you'll normally use it when
+
+15
+00:01:15,520 --> 00:01:19,890
+the media content is stored in a file on
+the device.
+
+16
+00:01:19,890 --> 00:01:22,930
+And there's also a asynchronous version of
+this method.
+
+17
+00:01:22,930 --> 00:01:27,430
+Which can be used, for example, when the
+media is streamed from the internet.
+
+18
+00:01:28,680 --> 00:01:32,420
+There's also a start method, to start or
+resume playback.
+
+19
+00:01:32,420 --> 00:01:36,360
+A pause method, to stop playing
+temporarily.
+
+20
+00:01:36,360 --> 00:01:41,850
+A seekTo method, to move to a particular
+position in the stream.
+
+21
+00:01:41,850 --> 00:01:44,270
+A stop method, to stop playing the media.
+
+22
+00:01:45,710 --> 00:01:48,170
+And the release method, which releases the
+
+23
+00:01:48,170 --> 00:01:51,250
+resources used by the current media
+player.
+
+24
+00:01:53,340 --> 00:01:59,230
+Another class that can be used to view
+video content is the VideoView class.
+
+25
+00:01:59,230 --> 00:02:03,440
+And this class is a sub-class of
+SurfaceView and internally
+
+26
+00:02:03,440 --> 00:02:06,330
+makes use of the media player we just
+talked about.
+
+27
+00:02:07,370 --> 00:02:12,240
+This class can load video content from
+different sources, and it includes a
+
+28
+00:02:12,240 --> 00:02:17,950
+number of methods and controls to make it
+easier to view video content.
+
+29
+00:02:20,140 --> 00:02:22,480
+Our next example application is called
+
+30
+00:02:22,480 --> 00:02:27,310
+AudioVideoVideoPlay, and this application
+displays a simple
+
+31
+00:02:27,310 --> 00:02:33,520
+view with video playback controls, and
+allows the user to play a video file.
+
+32
+00:02:33,520 --> 00:02:36,240
+In this case, the film is a clip from the
+
+33
+00:02:36,240 --> 00:02:39,800
+1902 film, A Trip to the Moon, by Georges
+Méliès.
+
+34
+00:02:39,800 --> 00:02:44,370
+Let's take a look.
+So here's my device.
+
+35
+00:02:48,270 --> 00:02:52,578
+And now I'll start up the
+AudioVideoVideoPlay application.
+
+36
+00:02:52,578 --> 00:02:59,700
+If I now touch the display, you can see
+that a set of playback controls appear.
+
+37
+00:02:59,700 --> 00:03:04,980
+And now I'll hit the single triangle and
+the video will begin playing.
+
+38
+00:03:04,980 --> 00:03:05,936
+Here we go.
+
+39
+00:03:05,936 --> 00:03:15,936
+[BLANK_AUDIO]
+
+40
+00:03:42,489 --> 00:03:45,443
+Let's take a look at the source code for
+this application.
+
+41
+00:03:45,443 --> 00:03:48,393
+[BLANK_AUDIO]
+
+42
+00:03:48,393 --> 00:03:53,954
+Here's the AudioVideoVideoPlay application
+open in the IDE.
+
+43
+00:03:53,954 --> 00:03:57,016
+And now I'll open the main activity.
+
+44
+00:03:57,016 --> 00:04:02,245
+In OnCreate, the code first gets a
+reference to a video view that's in this
+
+45
+00:04:02,245 --> 00:04:08,310
+activity's layout.
+Next, it creates a media controller,
+
+46
+00:04:08,310 --> 00:04:13,010
+which is a view that contains controls for
+controlling the media player.
+
+47
+00:04:14,580 --> 00:04:18,920
+The code continues by disabling the media
+controls, and
+
+48
+00:04:18,920 --> 00:04:23,440
+then by attaching this media controller to
+the video view, with
+
+49
+00:04:23,440 --> 00:04:27,800
+a call to the video view's
+setMediaController method.
+
+50
+00:04:29,540 --> 00:04:35,360
+Next, the code identifies the media file
+to play, passing in a URI
+
+51
+00:04:35,360 --> 00:04:40,800
+that points to a file stored in the
+res/raw directory.
+
+52
+00:04:42,210 --> 00:04:47,370
+After that, the code sets an
+OnPreparedListener on the video view.
+
+53
+00:04:48,690 --> 00:04:53,970
+This code will be called, once the media
+is loaded and ready to play.
+
+54
+00:04:53,970 --> 00:04:56,250
+And when that happens, the code will
+enable the
+
+55
+00:04:56,250 --> 00:05:00,310
+media controller, so the user can start
+the film playing.
+
+56
+00:05:01,900 --> 00:05:06,820
+And finally, down in the onPause method,
+the code shuts down the video view.
+
+57
+00:05:10,810 --> 00:05:15,150
+The next class we'll discuss is the
+MediaRecorder.
+
+58
+00:05:15,150 --> 00:05:19,590
+Now this class can be used to record both
+audio and video.
+
+59
+00:05:19,590 --> 00:05:22,974
+The class operates in accordance with a
+state machine,
+
+60
+00:05:22,974 --> 00:05:25,698
+which you can read more about, at this
+URL.
+
+61
+00:05:25,698 --> 00:05:29,109
+[BLANK_AUDIO]
+
+62
+00:05:29,109 --> 00:05:31,957
+Now some of the media recorder methods
+
+63
+00:05:31,957 --> 00:05:37,580
+that you'll likely use include
+setAudioSource, and setVideoSource.
+
+64
+00:05:37,580 --> 00:05:40,370
+Which set the source of the input, such as
+
+65
+00:05:40,370 --> 00:05:43,960
+the microphone for audio, or a camera for
+video.
+
+66
+00:05:45,170 --> 00:05:50,160
+SetOutputFormat, which sets the output
+format for the recording.
+
+67
+00:05:50,160 --> 00:05:54,340
+For instance, mp4.
+Prepare,
+
+68
+00:05:54,340 --> 00:05:58,380
+which readies the recorder to begin
+capturing and encoding data.
+
+69
+00:05:59,940 --> 00:06:03,150
+Start, which starts the actual recording
+process.
+
+70
+00:06:04,210 --> 00:06:07,670
+Stop, which stops the recording process.
+
+71
+00:06:07,670 --> 00:06:12,597
+And release, which releases the resources
+held by this MediaRecorder.
+
+72
+00:06:14,950 --> 00:06:19,940
+Our next example application is
+AudioVideoAudioRecording.
+
+73
+00:06:19,940 --> 00:06:23,470
+Now this application records audio from
+the user and
+
+74
+00:06:23,470 --> 00:06:27,350
+can play the recorded audio back to the
+user.
+
+75
+00:06:27,350 --> 00:06:30,100
+Let's use this application to capture my
+voice.
+
+76
+00:06:32,800 --> 00:06:33,918
+So here's my device.
+
+77
+00:06:33,918 --> 00:06:36,253
+[BLANK_AUDIO]
+
+78
+00:06:36,253 --> 00:06:40,820
+And now I'll start up the
+AudioVideoAudioRecording application.
+
+79
+00:06:43,500 --> 00:06:46,850
+This application displays two toggle
+buttons, one
+
+80
+00:06:46,850 --> 00:06:50,820
+labeled Start Recording and one labeled
+Start Playback.
+
+81
+00:06:51,900 --> 00:06:56,520
+When I press the Start Recording button
+the application will begin recording.
+
+82
+00:06:57,890 --> 00:07:01,498
+The button's label will change to Stop
+Recording,
+
+83
+00:07:01,498 --> 00:07:04,463
+and the play back button will be disabled.
+
+84
+00:07:04,463 --> 00:07:06,820
+[BLANK_AUDIO]
+
+85
+00:07:06,820 --> 00:07:11,350
+When I press the start recording button
+again, the recording will stop.
+
+86
+00:07:11,350 --> 00:07:17,108
+The button's label will change back, and
+the playback button will be enabled again.
+
+87
+00:07:17,108 --> 00:07:21,992
+Let's try it out.
+Now I'll press the Start Recording button.
+
+88
+00:07:21,992 --> 00:07:23,557
+[BLANK_AUDIO]
+
+89
+00:07:23,557 --> 00:07:27,340
+Testing, testing, one, two, three,
+testing.
+
+90
+00:07:29,030 --> 00:07:33,160
+And now that I've pressed the button
+again, the recording is finished, and
+
+91
+00:07:33,160 --> 00:07:38,640
+saved, and the Start Playback button is
+now enabled.
+
+92
+00:07:38,640 --> 00:07:39,910
+Let me press that one now.
+
+93
+00:07:43,080 --> 00:07:46,600
+Testing, testing, one, two, three,
+testing.
+
+94
+00:07:46,600 --> 00:07:47,100
+And
+
+95
+00:07:48,830 --> 00:07:52,860
+now I'll press that button again.
+And we're back to where we started.
+
+96
+00:07:54,830 --> 00:07:57,440
+Let's look at the source code for this
+application.
+
+97
+00:08:00,380 --> 00:08:05,980
+Here's the AudioVideoAudioRecording
+application open in the IDE.
+
+98
+00:08:05,980 --> 00:08:07,410
+Now I'll open the main activity.
+
+99
+00:08:08,710 --> 00:08:12,830
+In onCreate the code first gets references
+to the two toggle buttons.
+
+100
+00:08:14,110 --> 00:08:19,690
+Next it sets up an onCheckChangeListener,
+on each of the
+
+101
+00:08:19,690 --> 00:08:25,571
+toggle buttons.
+This code is called when the check state
+
+102
+00:08:25,571 --> 00:08:28,154
+of a toggle button changes.
+
+103
+00:08:28,154 --> 00:08:32,063
+Let's look at the first toggle button
+which is the recording button.
+
+104
+00:08:32,063 --> 00:08:35,894
+[BLANK_AUDIO]
+
+105
+00:08:35,894 --> 00:08:42,494
+When this button's checked state changes,
+say from off to on, this code will
+
+106
+00:08:42,494 --> 00:08:49,383
+first disable the play button, and then
+will call the onRecordPressed method.
+
+107
+00:08:49,383 --> 00:08:51,750
+The playback button does something
+similar.
+
+108
+00:08:52,860 --> 00:08:56,050
+It first changes the enabled state of the
+recording
+
+109
+00:08:56,050 --> 00:09:00,260
+button, disabling it if the user wants to
+start playback.
+
+110
+00:09:00,260 --> 00:09:01,040
+Or enabling
+
+111
+00:09:01,040 --> 00:09:03,360
+it, if the user wants to stop playback.
+
+112
+00:09:04,780 --> 00:09:08,270
+After that, it then calls the
+onPlayPressed method.
+
+113
+00:09:11,490 --> 00:09:14,710
+Let's look at the onRecordPressed method
+first.
+
+114
+00:09:14,710 --> 00:09:16,490
+As you can see, this method takes
+
+115
+00:09:16,490 --> 00:09:20,289
+a Boolean as a parameter called
+shouldStartRecording.
+
+116
+00:09:21,290 --> 00:09:27,190
+If shouldStartRecording is true, then the
+code calls the startRecording method.
+
+117
+00:09:27,190 --> 00:09:29,860
+Otherwise, it calls the stopRecording
+method.
+
+118
+00:09:31,290 --> 00:09:36,560
+The start recording method first creates a
+new media recorder and then sets
+
+119
+00:09:36,560 --> 00:09:41,380
+its source as the microphone.
+Then it sets the output format.
+
+120
+00:09:42,980 --> 00:09:45,960
+And then the output file where the
+recording will be saved.
+
+121
+00:09:47,650 --> 00:09:51,669
+And then it sets the encoder for the audio
+file.
+
+122
+00:09:51,669 --> 00:09:57,156
+Now continuing on, the code calls prepare
+to get the recorder ready,
+
+123
+00:09:57,156 --> 00:10:02,147
+and then finally it calls the start method
+to begin recording.
+
+124
+00:10:02,147 --> 00:10:03,949
+[BLANK_AUDIO]
+
+125
+00:10:03,949 --> 00:10:06,991
+The stop recording method instead, stops
+the
+
+126
+00:10:06,991 --> 00:10:10,279
+media recorder and then releases its
+resources.
+
+127
+00:10:10,279 --> 00:10:14,144
+[BLANK_AUDIO]
+
+128
+00:10:14,144 --> 00:10:16,319
+If the user instead had pressed the
+
+129
+00:10:16,319 --> 00:10:20,382
+playback button, then onPlayPressed would
+have been called.
+
+130
+00:10:22,100 --> 00:10:23,760
+If the button was checked then
+
+131
+00:10:23,760 --> 00:10:27,650
+the parameter shouldStartPlaying would be
+true.
+
+132
+00:10:27,650 --> 00:10:30,560
+If so, the start playing method is
+
+133
+00:10:30,560 --> 00:10:34,530
+called, otherwise the stop playing method
+is called.
+
+134
+00:10:36,890 --> 00:10:40,409
+The start playing method starts by
+creating a media player.
+
+135
+00:10:41,440 --> 00:10:45,998
+And then follows up by setting its data
+source, then by calling
+
+136
+00:10:45,998 --> 00:10:50,920
+prepare on the media player, and then by
+calling the start method.
+
+137
+00:10:52,470 --> 00:10:55,170
+The stop playing method will stop the
+media
+
+138
+00:10:55,170 --> 00:10:58,933
+player, and then release the media
+player's resources.
+
+139
+00:10:58,933 --> 00:11:01,502
+[BLANK_AUDIO]
+
+140
+00:11:01,502 --> 00:11:06,610
+The last class we'll talk about, in this
+lesson, is the camera class.
+
+141
+00:11:06,610 --> 00:11:10,960
+This class allows applications to access
+the camera service.
+
+142
+00:11:10,960 --> 00:11:15,700
+The low level code that manages the actual
+camera hardware on your device.
+
+143
+00:11:16,780 --> 00:11:23,810
+Now, through this class your application
+can manage settings for capturing images.
+
+144
+00:11:23,810 --> 00:11:26,630
+Start and stop a preview function, which
+allows
+
+145
+00:11:26,630 --> 00:11:31,700
+you to use the devices display as a kind
+of camera view finder.
+
+146
+00:11:31,700 --> 00:11:35,530
+And most importantly, it allows you to
+take pictures and video.
+
+147
+00:11:37,220 --> 00:11:42,390
+To use the camera features you'll need to
+set some permissions, and features.
+
+148
+00:11:42,390 --> 00:11:45,890
+You'll need at least the camera
+permission, and you'll probably want to
+
+149
+00:11:45,890 --> 00:11:52,760
+include a uses-feature tag in your Android
+manifest .xml file that specifies
+
+150
+00:11:52,760 --> 00:11:57,590
+the need for a camera.
+And you may want to specify that your
+
+151
+00:11:57,590 --> 00:12:02,830
+application requires other sub-features,
+such as autofocus or a flash.
+
+152
+00:12:05,280 --> 00:12:08,710
+Although you can easily use the built in
+camera application to take
+
+153
+00:12:08,710 --> 00:12:10,380
+pictures, you might want to add
+
+154
+00:12:10,380 --> 00:12:13,390
+some features to a traditional camera
+application.
+
+155
+00:12:13,390 --> 00:12:16,750
+Or, you might want to use the camera for
+other purposes.
+
+156
+00:12:16,750 --> 00:12:20,600
+In that case, you can follow the following
+steps.
+
+157
+00:12:20,600 --> 00:12:23,760
+First, you get a camera instance.
+
+158
+00:12:23,760 --> 00:12:27,570
+Next, you can set any camera parameters
+that you might need.
+
+159
+00:12:28,670 --> 00:12:30,460
+After that, you will want to setup
+
+160
+00:12:30,460 --> 00:12:34,890
+the preview display, so the user can see
+what the camera sees.
+
+161
+00:12:36,300 --> 00:12:39,110
+Next, you'll start the preview, and you'll
+keep
+
+162
+00:12:39,110 --> 00:12:41,440
+it running, until the user takes a
+picture.
+
+163
+00:12:42,970 --> 00:12:44,970
+And once the user takes a picture, your
+
+164
+00:12:44,970 --> 00:12:48,940
+application will receive and process the
+picture image.
+
+165
+00:12:48,940 --> 00:12:53,580
+And then eventually, your application will
+release the camera
+
+166
+00:12:53,580 --> 00:12:56,210
+so that other applications can have access
+to it.
+
+167
+00:12:58,630 --> 00:13:04,350
+The last example application for this
+lesson is called AudioVideoCamera.
+
+168
+00:13:04,350 --> 00:13:07,580
+This application takes still photos and
+uses
+
+169
+00:13:07,580 --> 00:13:11,220
+the device's display as the camera's
+viewfinder.
+
+170
+00:13:11,220 --> 00:13:12,360
+Let's give it a try.
+So
+
+171
+00:13:14,730 --> 00:13:15,750
+here's my device.
+
+172
+00:13:16,880 --> 00:13:20,641
+And now, I'll start up the
+AudioVideoCamera application.
+
+173
+00:13:21,980 --> 00:13:24,440
+As you can see, the application displays
+
+174
+00:13:24,440 --> 00:13:28,910
+the image currently visible through the
+camera's lens.
+
+175
+00:13:28,910 --> 00:13:31,840
+And if you move the camera, the image
+changes.
+
+176
+00:13:33,000 --> 00:13:35,700
+If the user is satisfied with the image,
+then he
+
+177
+00:13:35,700 --> 00:13:39,290
+or she can simply touch the screen to take
+a picture.
+
+178
+00:13:40,500 --> 00:13:42,930
+And when he or she does so, the camera
+will take
+
+179
+00:13:42,930 --> 00:13:47,890
+the picture, and then freeze the preview
+window for about two seconds.
+
+180
+00:13:47,890 --> 00:13:51,000
+So the user can see the picture they just
+snapped.
+
+181
+00:13:52,010 --> 00:13:53,450
+Let me do that.
+
+182
+00:13:53,450 --> 00:13:55,950
+I'll touch the display, to snap the
+picture,
+
+183
+00:13:55,950 --> 00:14:01,140
+and now the preview freezes for about two
+seconds.
+
+184
+00:14:01,140 --> 00:14:03,640
+And now the camera is ready to take
+another photo.
+
+185
+00:14:05,030 --> 00:14:05,500
+Let's look at the
+
+186
+00:14:05,500 --> 00:14:13,051
+source code for this application.
+Here's the AudioVideoCamera application
+
+187
+00:14:13,051 --> 00:14:18,997
+open in the IDE.
+Now, I'll open the main activity.
+
+188
+00:14:18,997 --> 00:14:21,581
+And let's scroll down to the onCreate
+method.
+
+189
+00:14:21,581 --> 00:14:23,176
+[BLANK_AUDIO]
+
+190
+00:14:23,176 --> 00:14:26,046
+And one of the things we see here is the
+code
+
+191
+00:14:26,046 --> 00:14:30,958
+calls the getCamera method, to get a
+reference to the camera object.
+
+192
+00:14:30,958 --> 00:14:33,049
+Let's scroll down to that method.
+
+193
+00:14:33,049 --> 00:14:37,538
+[BLANK_AUDIO]
+
+194
+00:14:37,538 --> 00:14:41,640
+This method calls the camera classes open
+method.
+
+195
+00:14:41,640 --> 00:14:46,980
+Which returns a reference, to the first
+back facing camera on this device.
+
+196
+00:14:48,670 --> 00:14:51,500
+If your device has several cameras, you
+can use
+
+197
+00:14:51,500 --> 00:14:55,360
+other versions of the open method to get
+particular cameras.
+
+198
+00:14:57,180 --> 00:15:02,540
+Now scrolling back up to onCreate, the
+code now sets up a touch listener on the
+
+199
+00:15:02,540 --> 00:15:03,250
+main view.
+
+200
+00:15:03,250 --> 00:15:09,290
+And when the user touches the screen, this
+listener's onTouch method will be called.
+
+201
+00:15:10,460 --> 00:15:15,785
+And this method will call the camera's
+takePicture method to take a picture.
+
+202
+00:15:15,785 --> 00:15:18,980
+Now we'll come back to this method in a
+few seconds.
+
+203
+00:15:20,210 --> 00:15:26,110
+Next, the code sets up a surface view that
+is used to display the preview,
+
+204
+00:15:27,580 --> 00:15:30,210
+which shows the user what the camera is
+currently seeing.
+
+205
+00:15:32,060 --> 00:15:36,420
+And these steps are just what we talked
+about in our previous lesson on graphics.
+
+206
+00:15:36,420 --> 00:15:40,330
+First, the code gets the surface holder
+for the surface view,
+
+207
+00:15:40,330 --> 00:15:44,780
+and then it adds a callback object to the
+surface holder.
+
+208
+00:15:45,860 --> 00:15:49,960
+And that callback object is defined below.
+Let's scroll down to it.
+
+209
+00:15:49,960 --> 00:15:51,490
+[BLANK_AUDIO]
+
+210
+00:15:51,490 --> 00:15:53,086
+Now as you remember, the
+
+211
+00:15:53,086 --> 00:15:57,140
+SurfaceHolder.Callback interface defines
+three methods.
+
+212
+00:15:58,300 --> 00:16:04,703
+SurfaceCreated, surfaceChanged, and
+surfaceDestroyed.
+
+213
+00:16:04,703 --> 00:16:08,255
+The surfaceCreated method starts by
+setting the surface
+
+214
+00:16:08,255 --> 00:16:11,430
+holder on which the camera will show its
+preview.
+
+215
+00:16:13,230 --> 00:16:16,030
+And after that, the code starts the
+camera's preview.
+
+216
+00:16:17,710 --> 00:16:19,410
+When the surface changes its structure
+
+217
+00:16:19,410 --> 00:16:24,020
+or format, the surfaceChanged method is
+called.
+
+218
+00:16:24,020 --> 00:16:29,440
+And this method disables touches on the
+layout, and then stops the camera preview.
+
+219
+00:16:30,720 --> 00:16:34,900
+Next, the code changes the camera
+parameters.
+
+220
+00:16:34,900 --> 00:16:39,590
+And in this case, the code finds an
+appropriate size for the camera preview.
+
+221
+00:16:39,590 --> 00:16:43,470
+And then sets the preview size,
+
+222
+00:16:43,470 --> 00:16:47,210
+and then passes the updated parameters
+object back to the camera.
+
+223
+00:16:49,050 --> 00:16:51,830
+Now that the parameters are set, the code
+
+224
+00:16:51,830 --> 00:16:55,590
+restarts the preview, by calling the
+startPreview method.
+
+225
+00:16:56,700 --> 00:17:00,700
+Then, finally, the code re-enables touches
+on the layout.
+
+226
+00:17:03,430 --> 00:17:05,800
+So now that we've gone over setting up and
+managing the
+
+227
+00:17:05,800 --> 00:17:10,140
+preview display, let's go back and look at
+taking an actual picture.
+
+228
+00:17:11,340 --> 00:17:13,960
+So scrolling back up to the
+onTouchListener,
+
+229
+00:17:15,990 --> 00:17:20,520
+When the user touches the display, the
+takePicture method gets called.
+
+230
+00:17:21,640 --> 00:17:26,068
+In that method, the code here passes in
+two CameraCallback objects.
+
+231
+00:17:27,120 --> 00:17:31,591
+One is the ShutterCallback, and the other
+is the CameraCallback.
+
+232
+00:17:32,912 --> 00:17:37,830
+The ShutterCallback is called around the
+time that the user takes the picture,
+
+233
+00:17:37,830 --> 00:17:42,010
+basically to let the user know that the
+camera is taking a picture.
+
+234
+00:17:44,292 --> 00:17:47,810
+The CameraCallback used here, is called
+after the picture
+
+235
+00:17:47,810 --> 00:17:52,890
+has been taken and when the compressed
+image is available.
+
+236
+00:17:52,890 --> 00:17:59,040
+When this happens, the CameraCallback's
+onPictureTaken method is called.
+
+237
+00:18:00,280 --> 00:18:03,080
+In this example, the code simply sleeps
+
+238
+00:18:03,080 --> 00:18:06,200
+for two seconds, and then restarts the
+preview.
+
+239
+00:18:07,400 --> 00:18:09,760
+And you might notice that this particular
+
+240
+00:18:09,760 --> 00:18:12,970
+application doesn't actually save the
+image.
+
+241
+00:18:12,970 --> 00:18:16,302
+But of course, you'd normally would want
+to do that, and
+
+242
+00:18:16,302 --> 00:18:19,586
+if so, you'd typically do it right here in
+this method.
+
+243
+00:18:19,586 --> 00:18:20,947
+[BLANK_AUDIO]
+
+244
+00:18:20,947 --> 00:18:24,570
+The last method I'll talk about is
+onPause.
+
+245
+00:18:24,570 --> 00:18:30,670
+Here the code disables touches on the
+display, shuts down the preview,
+
+246
+00:18:30,670 --> 00:18:36,377
+and then releases the camera so that other
+applications can use it.
+
+247
+00:18:36,377 --> 00:18:39,790
+So that's all for our lesson on
+multimedia.
+
+248
+00:18:39,790 --> 00:18:43,250
+Please join me next time, when we'll talk
+about sensors.
+
+249
+00:18:44,280 --> 00:18:44,680
+Thanks.
+

@@ -1,0 +1,978 @@
+1
+00:00:00,000 --> 00:00:09,684
+[BLANK_AUDIO]
+
+2
+00:00:09,684 --> 00:00:12,526
+Hi, I'm Adam Porter, and this is
+
+3
+00:00:12,526 --> 00:00:18,030
+Programming Mobile Applications for
+Android Handheld Systems.
+
+4
+00:00:19,430 --> 00:00:24,630
+If you use common applications that
+display maps or web pages, then
+
+5
+00:00:24,630 --> 00:00:29,520
+you've probably used gestures like swiping
+to scroll a view, or
+
+6
+00:00:29,520 --> 00:00:34,930
+inching and un-pinching your thumb and
+index finger to zoom in or zoom out.
+
+7
+00:00:36,310 --> 00:00:39,980
+In this lesson, I'll start by discussing
+MotionEvents.
+
+8
+00:00:41,030 --> 00:00:47,220
+Android uses this class to represent the
+movement in various input devices.
+
+9
+00:00:47,220 --> 00:00:52,110
+Things like a mouse, a trackball, and most
+common of all, your finger.
+
+10
+00:00:53,120 --> 00:00:57,460
+Next I'll discuss how Android takes these
+motion events and delivers
+
+11
+00:00:57,460 --> 00:01:01,410
+them to views and other objects, so that
+your application can
+
+12
+00:01:01,410 --> 00:01:03,270
+respond to them.
+
+13
+00:01:04,350 --> 00:01:06,210
+And finally, I'll finish up with
+
+14
+00:01:06,210 --> 00:01:09,960
+a discussion of how Android recognizes
+complex
+
+15
+00:01:09,960 --> 00:01:13,760
+movement patterns or gestures, things like
+the
+
+16
+00:01:13,760 --> 00:01:15,700
+pinch to zoom that I mentioned earlier.
+
+17
+00:01:18,290 --> 00:01:23,370
+Android uses the MotionEvent class to
+represent movements in an input device.
+
+18
+00:01:23,370 --> 00:01:27,270
+Such as a pen, a trackball, a mouse or
+your finger.
+
+19
+00:01:28,570 --> 00:01:33,180
+An individual movement event contains
+several pieces of information.
+
+20
+00:01:33,180 --> 00:01:38,590
+It has an action code, which indicates the
+kind of motion that has occurred.
+
+21
+00:01:38,590 --> 00:01:43,930
+It also contains a variety of data
+associated with that motion.
+
+22
+00:01:43,930 --> 00:01:47,690
+For instance, it has information about the
+time at which the
+
+23
+00:01:47,690 --> 00:01:53,620
+event occurred, which device the event
+came from, the event's location.
+
+24
+00:01:53,620 --> 00:01:58,180
+And if appropriate, how hard the device
+was pressed and more.
+
+25
+00:01:58,180 --> 00:02:00,290
+And as I just said, this information will
+
+26
+00:02:00,290 --> 00:02:04,100
+vary depending on the kind of input device
+involved.
+
+27
+00:02:04,100 --> 00:02:09,360
+In the rest of this lesson, I'll focus
+particularly on finger touch events
+
+28
+00:02:09,360 --> 00:02:12,120
+that are read by pressing a touch screen.
+
+29
+00:02:13,980 --> 00:02:18,140
+Many touch screen devices today are multi
+touch devices.
+
+30
+00:02:18,140 --> 00:02:24,300
+That means that they can register and
+track multiple touches all the same time
+
+31
+00:02:24,300 --> 00:02:31,060
+In Android, multi touch devices emit one
+movement trace per touch source.
+
+32
+00:02:31,060 --> 00:02:34,540
+And each of these touch sources is
+referred to
+
+33
+00:02:34,540 --> 00:02:35,390
+as a pointer.
+
+34
+00:02:38,210 --> 00:02:42,160
+When Android encounters a new pointer, it
+generates a unique
+
+35
+00:02:42,160 --> 00:02:47,730
+ID that will remain constant for as long
+as that pointer is active.
+
+36
+00:02:47,730 --> 00:02:54,150
+In some cases, Android will group multiple
+pointers within a single motion event.
+
+37
+00:02:54,150 --> 00:03:00,580
+And in that case, each pointer within the
+motion event can be accessed by its index.
+
+38
+00:03:00,580 --> 00:03:03,420
+But be aware, that that index is not
+
+39
+00:03:03,420 --> 00:03:06,450
+the same as the pointer's ID.
+
+40
+00:03:06,450 --> 00:03:11,330
+The pointer ID is constant for as long as
+the pointer is active.
+
+41
+00:03:11,330 --> 00:03:15,990
+The index in which a pointer's data is
+stored however may not be.
+
+42
+00:03:17,930 --> 00:03:21,200
+So let's talk about Motion Events in more
+detail.
+
+43
+00:03:21,200 --> 00:03:26,100
+Now as I said earlier Motion Events have
+an action code.
+
+44
+00:03:26,100 --> 00:03:28,210
+When a gesture begins,
+
+45
+00:03:28,210 --> 00:03:30,610
+motion events will be created, and they
+
+46
+00:03:30,610 --> 00:03:34,115
+will contain some of the following action
+codes.
+
+47
+00:03:34,115 --> 00:03:39,550
+ACTION_DOWN, which indicates that a first
+finger
+
+48
+00:03:39,550 --> 00:03:42,195
+has been, has started touching the screen.
+
+49
+00:03:42,195 --> 00:03:48,210
+ACTION_POINTER_DOWN, that means that we've
+already had an ACTION_DOWN,
+
+50
+00:03:48,210 --> 00:03:52,295
+and now we have another finger that has
+started touching the screen.
+
+51
+00:03:52,295 --> 00:03:55,520
+ACTION_POINTER_UP.
+
+52
+00:03:55,520 --> 00:03:59,070
+We've had an ACTION_POINTER and an
+ACTION_POINTER_DOWN, and now
+
+53
+00:03:59,070 --> 00:04:02,305
+one of the fingers has stopped touching
+the screen.
+
+54
+00:04:02,305 --> 00:04:05,180
+ACTION_MOVE.
+
+55
+00:04:05,180 --> 00:04:08,995
+Some of the fingers that are touching the
+screen have changed their position.
+
+56
+00:04:08,995 --> 00:04:11,540
+ACTION_UP.
+
+57
+00:04:11,540 --> 00:04:15,610
+The last of the fingers that was touching
+the screen has now stopped touching it.
+
+58
+00:04:17,270 --> 00:04:17,415
+And
+
+59
+00:04:17,415 --> 00:04:19,030
+ACTION_CANCEL.
+
+60
+00:04:19,030 --> 00:04:21,950
+Something has prematurely canceled the
+current gesture.
+
+61
+00:04:24,040 --> 00:04:26,740
+While the gesture is playing out Android
+will try
+
+62
+00:04:26,740 --> 00:04:31,450
+to ensure that it's motion events obey the
+following rules.
+
+63
+00:04:31,450 --> 00:04:33,630
+Touches will go down one at a time.
+
+64
+00:04:34,670 --> 00:04:36,660
+They will move as a group.
+
+65
+00:04:36,660 --> 00:04:41,200
+So a single motion event can refer to
+multiple pointers, and
+
+66
+00:04:41,200 --> 00:04:44,650
+they will come up one at a time or be
+cancelled.
+
+67
+00:04:47,400 --> 00:04:49,680
+When you need to process motion events,
+you can
+
+68
+00:04:49,680 --> 00:04:55,310
+use some of the following methods,
+getActionMasked which returns the
+
+69
+00:04:55,310 --> 00:05:01,810
+action code associated with the motion
+event getActionIndex,
+
+70
+00:05:01,810 --> 00:05:06,850
+which returns the index of the pointer
+associated with this action code.
+
+71
+00:05:06,850 --> 00:05:12,400
+For example, if the action code is action
+pointer down then you can use
+
+72
+00:05:12,400 --> 00:05:17,650
+this method to find the index of the
+particular pointer that is just
+
+73
+00:05:17,650 --> 00:05:22,750
+touched down, getPointerId.
+Given
+
+74
+00:05:22,750 --> 00:05:27,470
+an index, this method returns the stable
+ID of the pointer
+
+75
+00:05:27,470 --> 00:05:33,420
+associated with that index.
+GetPointerCount,
+
+76
+00:05:33,420 --> 00:05:37,798
+which returns the number of pointers
+associated with the motion event.
+
+77
+00:05:37,798 --> 00:05:42,860
+GetX and getY, which return the
+
+78
+00:05:42,860 --> 00:05:48,030
+x and y coordinates of the pointer stored
+at the current index.
+
+79
+00:05:49,430 --> 00:05:55,670
+And findPointerIndex, which returns the
+index associated with a given pointer ID.
+
+80
+00:05:59,140 --> 00:06:04,400
+When a touch occurs on a view, Android
+generates a motion event, and then
+
+81
+00:06:04,400 --> 00:06:11,260
+attempts to deliver that event to various
+objects, one of which is the view itself.
+
+82
+00:06:11,260 --> 00:06:15,570
+Android delivers the motion event through
+the onTouchEvent method.
+
+83
+00:06:16,610 --> 00:06:20,610
+This method can process the motion event,
+and should end,
+
+84
+00:06:20,610 --> 00:06:24,680
+by returning true if the motion event has
+been consumed,
+
+85
+00:06:24,680 --> 00:06:26,810
+and false if it is not.
+
+86
+00:06:28,860 --> 00:06:32,190
+Objects interested in receiving motion
+events that occur
+
+87
+00:06:32,190 --> 00:06:35,470
+on a given view, can register to receive
+those
+
+88
+00:06:35,470 --> 00:06:41,180
+events by implementing the views on touch
+listener interface,
+
+89
+00:06:42,330 --> 00:06:48,680
+and by registering the object with the
+view.setontouchlistener method.
+
+90
+00:06:51,108 --> 00:06:54,280
+The listener's onTouch method will then be
+called when
+
+91
+00:06:54,280 --> 00:06:59,730
+an event such as pressing, releasing, or
+dragging, occurs.
+
+92
+00:06:59,730 --> 00:07:02,990
+And this method will be called before the
+touch
+
+93
+00:07:02,990 --> 00:07:05,630
+to view gets a chance to handle that
+touch.
+
+94
+00:07:06,700 --> 00:07:12,000
+And again, onTouch should return true if
+it consumes the motion event.
+
+95
+00:07:12,000 --> 00:07:16,350
+Or false if it doesn't.
+In the simplest
+
+96
+00:07:16,350 --> 00:07:20,750
+case, you can process each touch event
+independently.
+
+97
+00:07:20,750 --> 00:07:25,930
+But applications often need or want to
+process multiple touches that are part
+
+98
+00:07:25,930 --> 00:07:30,810
+of a more complex gesture.
+To do this, your code will
+
+99
+00:07:30,810 --> 00:07:36,600
+need to identify and process particular
+combination
+
+100
+00:07:36,600 --> 00:07:41,831
+of touches for example, a double touch
+will involve an ACTION_DOWN.
+
+101
+00:07:43,580 --> 00:07:47,680
+And then and ACTION_UP and then another
+ACTION_DOWN
+
+102
+00:07:47,680 --> 00:07:51,030
+and finally an ACTION_UP all in quick
+succession.
+
+103
+00:07:51,030 --> 00:07:55,000
+To give some examples, suppose you start a
+
+104
+00:07:55,000 --> 00:07:59,000
+gesture by placing one finger down on the
+screen.
+
+105
+00:07:59,000 --> 00:08:01,870
+That will generate an ACTION_DOWN event.
+
+106
+00:08:01,870 --> 00:08:06,280
+And might assign a pointer ID of zero for
+that pointer.
+
+107
+00:08:06,280 --> 00:08:08,710
+If you keep that finger down and move it
+
+108
+00:08:08,710 --> 00:08:14,040
+on the screen, you might get several
+action move events associated
+
+109
+00:08:14,040 --> 00:08:18,480
+with pointer ID zero.
+Suppose now that
+
+110
+00:08:18,480 --> 00:08:22,950
+you put a second finger down.
+In that case you'll get an action pointer
+
+111
+00:08:22,950 --> 00:08:28,700
+down event, and this new pointer might get
+an ID, say of one.
+
+112
+00:08:28,700 --> 00:08:33,870
+If you keep those fingers down and you
+move them, you might get then several
+
+113
+00:08:33,870 --> 00:08:40,460
+action move events associated with the
+pointer IDs zero and one.
+
+114
+00:08:40,460 --> 00:08:43,250
+And if you now lift the first finger, then
+you'll
+
+115
+00:08:43,250 --> 00:08:49,030
+get an action pointer up event, associated
+with pointer zero.
+
+116
+00:08:49,030 --> 00:08:53,850
+And then, if you finally lift the last
+finger, you'll get an action up event
+
+117
+00:08:53,850 --> 00:08:59,560
+associated with pointer ID 1.
+In the next example,
+
+118
+00:08:59,560 --> 00:09:02,880
+we'll start as before, putting down the
+first finger.
+
+119
+00:09:02,880 --> 00:09:09,426
+Moving it, putting down a second finger,
+and then moving those fingers again.
+
+120
+00:09:09,426 --> 00:09:13,610
+But this time, however, we'll lift the
+second finger first.
+
+121
+00:09:13,610 --> 00:09:20,382
+In this case, we get an action pointer up
+action associated with pointer ID 1.
+
+122
+00:09:20,382 --> 00:09:24,837
+And then finally, when we lift the last
+finger, we get the action
+
+123
+00:09:24,837 --> 00:09:30,327
+up Action associated with the pointer ID
+0.
+
+124
+00:09:30,327 --> 00:09:33,590
+For a last example, we'll use three
+fingers.
+
+125
+00:09:33,590 --> 00:09:38,410
+We'll put down the first finger, then the
+second, and then a third.
+
+126
+00:09:38,410 --> 00:09:42,360
+And then we'll move the fingers, and then
+we'll lift them up.
+
+127
+00:09:42,360 --> 00:09:45,570
+First lifting the second finger, then the
+first
+
+128
+00:09:45,570 --> 00:09:49,090
+finger, and then finally lifting the third
+finger.
+
+129
+00:09:52,110 --> 00:09:53,730
+Our first example application in
+
+130
+00:09:53,730 --> 00:09:57,220
+this lesson is called
+touchindicatetouchlocation.
+
+131
+00:09:57,220 --> 00:10:03,830
+And this application draws a circle
+wherever the user touches the screen.
+
+132
+00:10:03,830 --> 00:10:09,600
+The circle's color is randomly selected,
+and the application also then redraws
+
+133
+00:10:09,600 --> 00:10:14,640
+the circle, following the user's finger,
+if it moves across the screen.
+
+134
+00:10:15,770 --> 00:10:17,370
+And finally, when the user
+
+135
+00:10:17,370 --> 00:10:20,250
+touches the screen in multiple locations.
+
+136
+00:10:20,250 --> 00:10:23,370
+The size of the circles that are drawn,
+will
+
+137
+00:10:23,370 --> 00:10:27,930
+change to reflect the number of currently
+active touches.
+
+138
+00:10:27,930 --> 00:10:31,369
+Lets take a look at this application in
+action.
+
+139
+00:10:31,369 --> 00:10:32,556
+So here's my device.
+
+140
+00:10:32,556 --> 00:10:34,398
+[BLANK_AUDIO]
+
+141
+00:10:34,398 --> 00:10:39,070
+And now I'll start up the touch indicate
+touch location application.
+
+142
+00:10:41,360 --> 00:10:43,780
+When it starts, the screen is blank
+
+143
+00:10:43,780 --> 00:10:46,240
+because I'm not touching the screen right
+now.
+
+144
+00:10:47,850 --> 00:10:52,870
+Now I'll place one finger on the screen
+and that causes a
+
+145
+00:10:52,870 --> 00:10:56,890
+single circle to be drawn at the place
+where I've touched the screen.
+
+146
+00:10:57,990 --> 00:11:00,900
+As I slide my finger along the screen, you
+can
+
+147
+00:11:00,900 --> 00:11:04,800
+see that the circle is redrawn, to track
+my finger movements.
+
+148
+00:11:05,990 --> 00:11:06,620
+Now,
+
+149
+00:11:06,620 --> 00:11:08,510
+I'll place a second finger on the screen.
+
+150
+00:11:10,140 --> 00:11:14,710
+And that causes the second circle to be
+drawn under that finger.
+
+151
+00:11:14,710 --> 00:11:19,410
+And as you can see, the size of the two
+circles, is now
+
+152
+00:11:19,410 --> 00:11:23,030
+about half of what you saw when there was
+only a single circle.
+
+153
+00:11:24,830 --> 00:11:27,820
+Now, here I'll take away the second
+finger, and
+
+154
+00:11:27,820 --> 00:11:30,160
+the first circle goes back to its original
+size.
+
+155
+00:11:31,500 --> 00:11:31,680
+Now,
+
+156
+00:11:31,680 --> 00:11:35,940
+I'll put the second finger back, and again
+the two circles appear at
+
+157
+00:11:35,940 --> 00:11:39,550
+half size.
+And, I can drag these two fingers around
+
+158
+00:11:39,550 --> 00:11:46,090
+the screen, and the circles will follow my
+movements, and finally here I'll put down
+
+159
+00:11:46,090 --> 00:11:55,870
+more fingers four, six, eight, ten.
+I'm out of fingers now.
+
+160
+00:11:57,370 --> 00:11:58,760
+So now I'll move them around, and
+
+161
+00:12:00,930 --> 00:12:10,542
+now I'll start to take away some fingers.
+Eight, six, four, two, one.
+
+162
+00:12:10,542 --> 00:12:13,880
+Now, let's take a look at the source code
+for this application.
+
+163
+00:12:16,410 --> 00:12:21,260
+Here's the application open in the IDE.
+Now I'll open the main activity.
+
+164
+00:12:23,140 --> 00:12:29,100
+This coast, this code first creates a pool
+of custom views called marker views.
+
+165
+00:12:30,910 --> 00:12:35,360
+Marker views will be used to mark the
+location of a single touch.
+
+166
+00:12:37,030 --> 00:12:42,280
+Next, the code defines a set that holds
+the MarkerViews that are currently visible
+
+167
+00:12:42,280 --> 00:12:43,060
+on the display.
+
+168
+00:12:43,060 --> 00:12:47,440
+And now down in onCreate, the code gets
+the
+
+169
+00:12:47,440 --> 00:12:51,530
+FrameLayout that represents the main view
+of this activity.
+
+170
+00:12:52,730 --> 00:12:58,040
+And then it creates an OnTouchListener and
+sets this as the recipient of
+
+171
+00:12:58,040 --> 00:13:03,210
+that listener's OnTouch callback.
+Let's look at that method.
+
+172
+00:13:05,910 --> 00:13:11,460
+When the user touches the screen, this
+listener's OnTouch method is called,
+
+173
+00:13:12,830 --> 00:13:17,730
+and that method begins by checking the
+action code for the new motion event.
+
+174
+00:13:19,240 --> 00:13:22,014
+If the action code is ACTION_DOWN or
+
+175
+00:13:22,014 --> 00:13:26,050
+ACTION_POINTER_DOWN, then there's been a
+new touch.
+
+176
+00:13:26,050 --> 00:13:30,550
+So the code creates and displays a new
+marker view.
+
+177
+00:13:30,550 --> 00:13:32,250
+The code
+
+178
+00:13:32,250 --> 00:13:36,660
+does this by recording the pointer ID, and
+pointer
+
+179
+00:13:36,660 --> 00:13:40,630
+index for this event.
+It then takes a marker view from the
+
+180
+00:13:40,630 --> 00:13:45,800
+inactive list.
+And it then adds that marker view to
+
+181
+00:13:45,800 --> 00:13:51,040
+the active set, using its pointer ID as
+the key for this view.
+
+182
+00:13:52,450 --> 00:13:57,380
+Next, it sets the location of this marker
+view, and then
+
+183
+00:13:57,380 --> 00:14:03,160
+it updates the total number of touches for
+each currently visible marker view.
+
+184
+00:14:04,750 --> 00:14:08,860
+And then it adds the marker view to the
+activity's main view.
+
+185
+00:14:10,520 --> 00:14:15,880
+Now if, instead, the action code was
+ACTION_UP, or ACTION_POINTER_UP.
+
+186
+00:14:15,880 --> 00:14:18,950
+Then that means that a finger has been
+lifted off the screen.
+
+187
+00:14:20,370 --> 00:14:22,900
+So the code essentially undoes
+
+188
+00:14:22,900 --> 00:14:24,380
+what we just finished talking about.
+
+189
+00:14:26,720 --> 00:14:29,290
+Now, as before, the code begins by
+recording
+
+190
+00:14:29,290 --> 00:14:32,600
+the pointer ID and pointer index for this
+event.
+
+191
+00:14:35,600 --> 00:14:38,670
+It then removes the marker view that was
+associated with
+
+192
+00:14:38,670 --> 00:14:42,420
+the finger that was just lifted from the
+active set.
+
+193
+00:14:43,640 --> 00:14:46,980
+It then adds that marker view back to the
+inactive list.
+
+194
+00:14:48,630 --> 00:14:50,780
+And next, it updates the total number
+
+195
+00:14:50,780 --> 00:14:53,930
+of touches for each currently visible
+marker view.
+
+196
+00:14:55,190 --> 00:14:58,830
+And then it removes the marker view from
+the activity's main view.
+
+197
+00:14:58,830 --> 00:15:00,942
+And lastly, if the
+
+198
+00:15:00,942 --> 00:15:06,090
+action code is ACTION_MOVE.
+Then the code adjusts the
+
+199
+00:15:06,090 --> 00:15:12,220
+location of the affected marker views, and
+initiates their redrawing.
+
+200
+00:15:12,220 --> 00:15:17,600
+The code does this by looping over the
+pointers in the motion event.
+
+201
+00:15:17,600 --> 00:15:20,960
+For each one, it gets the marker view for
+that
+
+202
+00:15:20,960 --> 00:15:26,880
+pointer then it checks whether the
+pointer's traveled some minimum distance.
+
+203
+00:15:27,880 --> 00:15:34,230
+If so, it sets a new location for that
+marker view, and then calls invalidate
+
+204
+00:15:34,230 --> 00:15:39,280
+on the MarkerView which indicates that the
+MarkerView wants to be redrawn.
+

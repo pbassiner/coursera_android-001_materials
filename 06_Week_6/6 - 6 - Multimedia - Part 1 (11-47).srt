@@ -1,0 +1,701 @@
+1
+00:00:00,130 --> 00:00:09,641
+[BLANK_AUDIO]
+
+2
+00:00:09,641 --> 00:00:12,368
+Hi, I'm Adam Porter and this is
+
+3
+00:00:12,368 --> 00:00:18,030
+Programming Mobile Applications for
+Android Handheld Systems.
+
+4
+00:00:20,205 --> 00:00:23,280
+Handheld devices allow users to create and
+
+5
+00:00:23,280 --> 00:00:27,870
+consume large amounts of rich multimedia
+content.
+
+6
+00:00:27,870 --> 00:00:31,850
+And this content includes audio content,
+like when
+
+7
+00:00:31,850 --> 00:00:35,230
+you listen to music or record voice notes.
+
+8
+00:00:35,230 --> 00:00:38,800
+Image content, like when you take and view
+photos.
+
+9
+00:00:38,800 --> 00:00:42,520
+And video content, like when you take and
+view movies.
+
+10
+00:00:44,310 --> 00:00:45,430
+In this lesson,
+
+11
+00:00:45,430 --> 00:00:49,440
+we'll talk about the multimedia classes
+that Android provides, and
+
+12
+00:00:49,440 --> 00:00:54,280
+we'll walk through the APIs and example
+applications that play
+
+13
+00:00:54,280 --> 00:00:59,400
+audio, that let you watch audio, let you
+record audio,
+
+14
+00:00:59,400 --> 00:01:04,530
+and, finally, that let you use the camera
+to capture images.
+
+15
+00:01:04,530 --> 00:01:05,410
+So, let's get started.
+
+16
+00:01:07,490 --> 00:01:12,530
+Android provides a number of classes and
+capabilities to support the encoding and
+
+17
+00:01:12,530 --> 00:01:17,870
+decoding of common media formats.
+Your application
+
+18
+00:01:17,870 --> 00:01:23,270
+can use these to play and record audio,
+still images, and video.
+
+19
+00:01:25,490 --> 00:01:28,040
+Some of the classes we'll talk about today
+will
+
+20
+00:01:28,040 --> 00:01:33,560
+be the AudioManager and SoundPool classes,
+which allow applications to
+
+21
+00:01:33,560 --> 00:01:37,200
+play sound effects and audio files, and to
+control a
+
+22
+00:01:37,200 --> 00:01:42,270
+device's audio-related hardware, such as
+its speakers and wireless headset.
+
+23
+00:01:43,590 --> 00:01:47,190
+We'll talk about the RingtoneManager and
+Ringtones.
+
+24
+00:01:47,190 --> 00:01:50,690
+And these are the sounds that you often
+hear when a phone call
+
+25
+00:01:50,690 --> 00:01:54,820
+arrives, when a notification is received,
+and when alarms go off.
+
+26
+00:01:55,920 --> 00:02:00,650
+And the MediaPlayer, which lets
+applications play audio and video files.
+
+27
+00:02:01,670 --> 00:02:06,926
+The MediaRecorder, which allows
+applications to record audio and video.
+
+28
+00:02:06,926 --> 00:02:10,814
+And, finally, we'll finish up by looking
+at the Camera
+
+29
+00:02:10,814 --> 00:02:15,755
+class, which lets applications control
+hard, the hardware cameras on
+
+30
+00:02:15,755 --> 00:02:16,549
+a device.
+
+31
+00:02:19,330 --> 00:02:22,700
+The first class I'll talk about is the
+AudioManager.
+
+32
+00:02:22,700 --> 00:02:24,940
+This class manages basic audio
+
+33
+00:02:24,940 --> 00:02:27,480
+capabilities, like manipulating the
+device's
+
+34
+00:02:27,480 --> 00:02:33,090
+volume, playing system sound effects, and
+changing the device's ringer mode.
+
+35
+00:02:34,160 --> 00:02:39,358
+Applications acquire a reference to the
+AudioManager
+
+36
+00:02:39,358 --> 00:02:44,443
+by calling Context.getSystemService,
+passing in
+
+37
+00:02:44,443 --> 00:02:48,206
+the value Context.AUDIO_SERVICE.
+
+38
+00:02:48,206 --> 00:02:51,609
+And once it has a reference to the
+AudioManager,
+
+39
+00:02:51,609 --> 00:02:55,842
+an application can load and then play
+sound effects, adjust
+
+40
+00:02:55,842 --> 00:03:00,905
+the device's volume, and control device
+hardware, for instance, by
+
+41
+00:03:00,905 --> 00:03:05,550
+muting the microphone, or by turning on
+the Bluetooth headset.
+
+42
+00:03:07,710 --> 00:03:13,830
+Another related class that can be used to
+play complex audio is the SoundPool class.
+
+43
+00:03:13,830 --> 00:03:18,560
+A SoundPool represents a collection of
+audio samples or streams.
+
+44
+00:03:18,560 --> 00:03:21,740
+And the SoundPool allows you to mix
+together
+
+45
+00:03:21,740 --> 00:03:25,000
+and play multiple samples at the same
+time.
+
+46
+00:03:27,490 --> 00:03:30,930
+Let's take a look at our first example
+application for this lesson.
+
+47
+00:03:32,590 --> 00:03:37,260
+That application is called
+AudioVideoAudioManager.
+
+48
+00:03:37,260 --> 00:03:42,230
+And when it runs, this application
+presents two buttons labeled Up and
+
+49
+00:03:42,230 --> 00:03:47,620
+Down that are used to increase and
+decrease the device's volume.
+
+50
+00:03:48,700 --> 00:03:53,370
+The application also displays a button
+labeled Play
+
+51
+00:03:53,370 --> 00:04:00,500
+that, when pressed, plays a bubble popping
+sound at the current volume level.
+
+52
+00:04:00,500 --> 00:04:01,830
+Let's run the application now.
+
+53
+00:04:04,280 --> 00:04:10,998
+So, here's my device, and now I'll start
+up the AudioVideoAudioManager application.
+
+54
+00:04:12,520 --> 00:04:18,300
+And, as promised, displays three buttons.
+Up, down, and play.
+
+55
+00:04:20,330 --> 00:04:25,780
+The application also shows the current
+volume level on a scale from zero
+
+56
+00:04:25,780 --> 00:04:30,499
+to ten.
+Right now, the volume level is set to six.
+
+57
+00:04:31,750 --> 00:04:36,301
+Let me press the play button, so you can
+hear the bubble popping sound.
+
+58
+00:04:36,301 --> 00:04:39,350
+Here goes.
+[SOUND]
+
+59
+00:04:39,350 --> 00:04:44,000
+And now, I'll press the up button a few
+times, to go to maximum volume.
+
+60
+00:04:45,780 --> 00:04:50,308
+And now I'll press the play button again.
+>> [SOUND]
+
+61
+00:04:50,308 --> 00:04:54,436
+Now, I'll press the down button, and play
+button
+
+62
+00:04:54,436 --> 00:04:58,372
+a few times, and you should hear the
+bubble pop at
+
+63
+00:04:58,372 --> 00:05:02,310
+increasingly lower volumes.
+Here goes.
+
+64
+00:05:02,310 --> 00:05:12,310
+[SOUND] Let's look at the source code for
+this application.
+
+65
+00:05:13,703 --> 00:05:20,844
+Here's the AudioVideoAudioManager
+application open in the IDE.
+
+66
+00:05:20,844 --> 00:05:22,780
+Now I'll open the Main Activity.
+
+67
+00:05:24,920 --> 00:05:28,749
+Here, the onCreate method gets a reference
+to the AudioManager.
+
+68
+00:05:30,340 --> 00:05:33,350
+Next, it begins to set up its user
+interface.
+
+69
+00:05:34,530 --> 00:05:39,710
+First, there's the text view for
+displaying the current volume level.
+
+70
+00:05:39,710 --> 00:05:42,280
+Next, there's the up button.
+
+71
+00:05:42,280 --> 00:05:46,720
+And when clicked, this code plays a key
+clicking sound, and
+
+72
+00:05:46,720 --> 00:05:51,160
+then tries to increase the volume level
+and update the level display.
+
+73
+00:05:52,990 --> 00:05:55,850
+Next, we see the down button.
+
+74
+00:05:55,850 --> 00:05:59,596
+And this is almost the same as the code
+for the up button.
+
+75
+00:05:59,596 --> 00:06:03,530
+But it decreases rather than increases the
+volume level.
+
+76
+00:06:06,570 --> 00:06:08,850
+Next, the code gets a reference to the
+
+77
+00:06:08,850 --> 00:06:13,280
+play button, and then disables the button
+for now.
+
+78
+00:06:14,790 --> 00:06:18,840
+After that, the code creates a SoundPool
+object, which
+
+79
+00:06:18,840 --> 00:06:21,210
+it will use to play the bubble popping
+sound.
+
+80
+00:06:21,210 --> 00:06:26,810
+The parameters for this SoundPool logic
+indicate that it will have only one
+
+81
+00:06:26,810 --> 00:06:32,140
+audio stream, and that the stream is
+played on the audio
+
+82
+00:06:32,140 --> 00:06:33,360
+music stream.
+
+83
+00:06:35,540 --> 00:06:40,830
+Next, the code loads the bubble pop sound.
+Loading the sound is an
+
+84
+00:06:40,830 --> 00:06:46,042
+asynchronous operation, so the code sets
+an onLoadComplete
+
+85
+00:06:46,042 --> 00:06:50,740
+listener, which will be called when the
+sound is finally loaded.
+
+86
+00:06:52,130 --> 00:06:54,470
+And when the onLoadComplete method is
+called,
+
+87
+00:06:55,610 --> 00:06:59,150
+the code checks whether the operation was
+successful.
+
+88
+00:06:59,150 --> 00:07:01,110
+And if so, it enables
+
+89
+00:07:01,110 --> 00:07:01,890
+the play button.
+
+90
+00:07:03,220 --> 00:07:07,720
+Earlier the code disabled the play button,
+and it did it to make sure
+
+91
+00:07:07,720 --> 00:07:12,070
+that it didn't try to play this sound
+until the sound was properly loaded.
+
+92
+00:07:13,870 --> 00:07:17,740
+Next, the code sets a listener on the play
+button.
+
+93
+00:07:17,740 --> 00:07:23,220
+When pressed, this code plays the bubble
+popping sound at the current volume level.
+
+94
+00:07:24,890 --> 00:07:26,390
+And, after that, the code
+
+95
+00:07:26,390 --> 00:07:29,910
+requests audio focus, which means that it
+essentially wants to
+
+96
+00:07:29,910 --> 00:07:33,380
+be in charge of the audio being played by
+the device.
+
+97
+00:07:35,300 --> 00:07:38,579
+There's also some code in the onResume and
+onPause methods.
+
+98
+00:07:40,042 --> 00:07:45,520
+The onResume method turns on the device's
+speakerphone and then loads the
+
+99
+00:07:45,520 --> 00:07:50,010
+system's sound effects, like the key click
+sound effect that we used above.
+
+100
+00:07:52,200 --> 00:07:58,329
+The onPause method begins by unloading the
+SoundPool and releasing it's resources.
+
+101
+00:07:59,620 --> 00:08:01,090
+And then it turns off the device's
+
+102
+00:08:01,090 --> 00:08:05,220
+speakerphone, and unloads the system sound
+effects.
+
+103
+00:08:10,190 --> 00:08:14,842
+The next classes we'll talk about are
+Ringtone and the RingtoneManager.
+
+104
+00:08:14,842 --> 00:08:18,622
+The RingtoneManager provides access to the
+audio
+
+105
+00:08:18,622 --> 00:08:21,772
+clips that you hear, for example, when a
+
+106
+00:08:21,772 --> 00:08:28,391
+phone call arrives, when you receive a new
+email message, or when an alarm goes off.
+
+107
+00:08:28,391 --> 00:08:32,063
+And through the RingtoneManager,
+applications can get and set
+
+108
+00:08:32,063 --> 00:08:36,405
+various ringtones, and they can play and
+stop playing them.
+
+109
+00:08:36,405 --> 00:08:40,005
+Let's see an example application that uses
+the RingtoneManager.
+
+110
+00:08:41,420 --> 00:08:46,570
+Now, this application is called
+AudioVideoRingtoneManager.
+
+111
+00:08:46,570 --> 00:08:50,370
+And this application presents three
+buttons,
+
+112
+00:08:50,370 --> 00:08:55,460
+respectively labeled Ringtone,
+Notification, and Alarm.
+
+113
+00:08:55,460 --> 00:09:00,800
+Pressing one of these buttons causes the
+associated default ringtone to play.
+
+114
+00:09:01,990 --> 00:09:04,860
+Let's give it a try.
+So, here's my device.
+
+115
+00:09:06,020 --> 00:09:11,570
+Now I'll start up the
+AudioVideoRingtoneManager application.
+
+116
+00:09:11,570 --> 00:09:15,570
+As you can see, it displays the three
+buttons:
+
+117
+00:09:15,570 --> 00:09:20,180
+Ringtone, Notification, and Alarm.
+Let me press some of these buttons.
+
+118
+00:09:21,480 --> 00:09:28,755
+First, let's listen to the default
+ringtone as I press the ringtone button.
+
+119
+00:09:28,755 --> 00:09:33,598
+[SOUND] Now, let's try the default
+
+120
+00:09:33,598 --> 00:09:39,722
+notification ringtone.
+[SOUND] And finally,
+
+121
+00:09:39,722 --> 00:09:45,250
+let's try the default alarm ringtone.
+
+122
+00:09:45,250 --> 00:09:50,605
+[SOUND] After this segment is over, try
+downloading,
+
+123
+00:09:50,605 --> 00:09:55,008
+installing, and running this application
+
+124
+00:09:55,008 --> 00:09:57,983
+on your device, and then go to
+
+125
+00:09:57,983 --> 00:10:04,510
+your settings application and change your
+default ringtones.
+
+126
+00:10:05,800 --> 00:10:09,180
+When you then re-run this application, you
+should see
+
+127
+00:10:09,180 --> 00:10:12,740
+that it plays your new ringtones, not your
+old ones.
+
+128
+00:10:13,910 --> 00:10:16,760
+So, let's look at the source code for this
+application.
+
+129
+00:10:20,150 --> 00:10:25,000
+Here's the AudioVideoRingtoneManager
+application open in the IDE.
+
+130
+00:10:26,460 --> 00:10:28,170
+Now, I'll open the main activity.
+
+131
+00:10:29,590 --> 00:10:34,130
+In the onCreate method, the code creates
+three buttons.
+
+132
+00:10:34,130 --> 00:10:38,020
+Let's look at the ringtone button as an
+example.
+
+133
+00:10:38,020 --> 00:10:40,690
+Now here, we see that when this button is
+
+134
+00:10:40,690 --> 00:10:45,430
+clicked, the code uses the RingtoneManager
+to get the URI
+
+135
+00:10:45,430 --> 00:10:51,598
+for the default phone ringer ringtone.
+Next,
+
+136
+00:10:51,598 --> 00:10:56,718
+the code gets the ringtone associated with
+that
+
+137
+00:10:56,718 --> 00:11:02,222
+URI by calling the
+ringtoneManager.getRingtone
+
+138
+00:11:02,222 --> 00:11:06,849
+method, passing in the URI.
+The result of all
+
+139
+00:11:06,849 --> 00:11:11,450
+this is then passed into a method called
+playRingtone.
+
+140
+00:11:11,450 --> 00:11:13,560
+Let's scroll down to that method.
+
+141
+00:11:17,120 --> 00:11:21,220
+Now, this method checks to see whether the
+ringtone is currently playing.
+
+142
+00:11:22,280 --> 00:11:24,540
+And if one is, then that ringtone is
+
+143
+00:11:24,540 --> 00:11:29,066
+stopped by calling the ringtone class's
+stop method.
+
+144
+00:11:30,480 --> 00:11:36,380
+A current ringtone is then set in the
+mCurrentRingtone variable, and
+
+145
+00:11:36,380 --> 00:11:42,406
+if the current ringtone is not null then
+the code will start playing it.
+
+146
+00:11:42,406 --> 00:11:47,440
+[BLANK_AUDIO]
+

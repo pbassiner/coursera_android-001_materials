@@ -1,0 +1,750 @@
+1
+00:00:09,880 --> 00:00:13,950
+Hi.
+I'm Adam Porter, and this is Programming
+
+2
+00:00:13,950 --> 00:00:18,030
+Mobile Applications for Android Handheld
+Systems.
+
+3
+00:00:19,300 --> 00:00:23,920
+If you want to draw more complex graphics
+and you want to update those graphics
+
+4
+00:00:23,920 --> 00:00:29,140
+frequently, then you can do your drawing
+with a canvas.
+
+5
+00:00:29,140 --> 00:00:35,020
+Now as I said earlier, a canvas is a kind
+of context or mechanism for drawing to
+
+6
+00:00:35,020 --> 00:00:40,020
+an underlying bitmap.
+And you can access a canvas either through
+
+7
+00:00:40,020 --> 00:00:45,220
+a generic view object or through a special
+view subclass called SurfaceView.
+
+8
+00:00:47,000 --> 00:00:53,190
+Usually, you'll draw through a generic
+view when your updates are less frequent,
+
+9
+00:00:53,190 --> 00:00:55,040
+and if you take this approach, your
+
+10
+00:00:55,040 --> 00:00:59,480
+application should create a custom view
+subclass.
+
+11
+00:00:59,480 --> 00:01:00,430
+And then the system
+
+12
+00:01:00,430 --> 00:01:08,030
+will provide the canvas to your view
+through a call to its onDraw method.
+
+13
+00:01:08,030 --> 00:01:11,550
+If, instead, your application needs to
+frequently update its
+
+14
+00:01:11,550 --> 00:01:16,650
+graphics, then you might consider drawing
+through a SurfaceView.
+
+15
+00:01:16,650 --> 00:01:23,220
+With this approach, the application
+creates a custom, SurfaceView subclass.
+
+16
+00:01:23,220 --> 00:01:26,680
+And it will also create a secondary thread
+with
+
+17
+00:01:26,680 --> 00:01:30,610
+which drawing operations on that
+SurfaceView, will be performed.
+
+18
+00:01:31,780 --> 00:01:36,290
+At run time, the application can then
+acquire its own canvas, And
+
+19
+00:01:36,290 --> 00:01:41,410
+therefore, exercise more control over how
+and when drawing
+
+20
+00:01:41,410 --> 00:01:46,100
+occurs.
+This next example application is called
+
+21
+00:01:46,100 --> 00:01:52,330
+GraphicsCanvasBubble.
+And the idea behind this application
+
+22
+00:01:52,330 --> 00:01:56,810
+is that it will draw a view and then
+update that view.
+
+23
+00:01:56,810 --> 00:02:01,330
+But the updates are somewhat infrequent,
+about every second or so.
+
+24
+00:02:01,330 --> 00:02:05,290
+So this application has an internal thread
+that wakes
+
+25
+00:02:05,290 --> 00:02:09,120
+up once every second or so, and moves the
+view.
+
+26
+00:02:10,220 --> 00:02:15,800
+And then uses a canvas as it redraws the
+view in its new location.
+
+27
+00:02:15,800 --> 00:02:16,800
+Let's see that in action.
+
+28
+00:02:24,350 --> 00:02:26,100
+So here's my device.
+
+29
+00:02:26,100 --> 00:02:30,600
+And now, I'll start up the
+GraphicsCanvasBubble application.
+
+30
+00:02:32,150 --> 00:02:37,220
+The application starts up with a bubble
+drawn at a randomly selected location.
+
+31
+00:02:38,670 --> 00:02:44,290
+And every second or so, you can see that
+the bubble is erased, moved
+
+32
+00:02:44,290 --> 00:02:50,200
+and then redrawn in it's new location.
+Let's look at the source code
+
+33
+00:02:50,200 --> 00:02:51,120
+for this application.
+
+34
+00:02:53,500 --> 00:02:58,440
+So here's the GraphicsCanvasBubble
+application open in the IDE.
+
+35
+00:02:59,830 --> 00:03:01,760
+Now, I'll open the main activity.
+
+36
+00:03:05,400 --> 00:03:07,420
+Here you can see that the application
+
+37
+00:03:07,420 --> 00:03:11,440
+loads a bitmap from the resources
+directory.
+
+38
+00:03:11,440 --> 00:03:13,810
+And then it uses that bitmap to create an
+
+39
+00:03:13,810 --> 00:03:17,565
+instance of a custom view class called the
+BubbleView.
+
+40
+00:03:19,230 --> 00:03:23,910
+Next, the code adds the BubbleView
+instance to the layout.
+
+41
+00:03:25,370 --> 00:03:28,020
+And then it creates and starts a new
+thread.
+
+42
+00:03:29,440 --> 00:03:30,540
+And that thread goes into
+
+43
+00:03:30,540 --> 00:03:36,850
+a loop and on each iteration, it calls the
+BubbleView's move method.
+
+44
+00:03:38,830 --> 00:03:44,500
+Now as we'll see in a second, this method
+changes the BubbleViews location.
+
+45
+00:03:44,500 --> 00:03:48,820
+And then, returns true or false depending
+on whether the BubbleViews
+
+46
+00:03:48,820 --> 00:03:53,740
+new location is or is not still visible on
+the display.
+
+47
+00:03:55,620 --> 00:03:59,720
+Next the code calls the view classes post
+invalidate method.
+
+48
+00:04:01,250 --> 00:04:07,950
+This message tells android to redraw this
+view and after that the thread
+
+49
+00:04:07,950 --> 00:04:13,980
+goes to sleep for a second before waking
+up and starting the process one more time.
+
+50
+00:04:15,700 --> 00:04:20,810
+Now I'll skip over most of the details of
+how the BubbleView moves itself.
+
+51
+00:04:20,810 --> 00:04:24,440
+And I'll focus instead on how it gets
+redrawn.
+
+52
+00:04:26,070 --> 00:04:30,650
+So when the drawing thread calls the post
+invalidate method, this
+
+53
+00:04:30,650 --> 00:04:35,340
+tells Android that the BubbleView thinks
+it needs to be redrawn.
+
+54
+00:04:36,580 --> 00:04:41,230
+If so, then Android will eventually call
+BubbleViews onDraw method.
+
+55
+00:04:42,240 --> 00:04:46,510
+Passing in the canvas, with which the
+BubbleView is drawn.
+
+56
+00:04:47,790 --> 00:04:48,770
+Let's look at that method.
+
+57
+00:04:50,240 --> 00:04:56,300
+And as you can see, this method takes the
+canvas passed into it and calls
+
+58
+00:04:56,300 --> 00:05:02,480
+its DrawBitmap method, passing in the
+bitmap to draw.
+
+59
+00:05:02,480 --> 00:05:07,580
+Passing in the top and left coordinates of
+the position at which to draw the bit map.
+
+60
+00:05:08,770 --> 00:05:13,860
+And finally, passing in a paint object
+that defines style parameters
+
+61
+00:05:13,860 --> 00:05:15,430
+for this drawing operation.
+
+62
+00:05:17,900 --> 00:05:21,920
+Now, if we'd like to really increase the
+frequency.
+
+63
+00:05:21,920 --> 00:05:24,860
+With which we're redrawing the bubble to
+
+64
+00:05:24,860 --> 00:05:28,380
+make it more smoothly glide across the
+display.
+
+65
+00:05:28,380 --> 00:05:34,300
+Then, we might want to use a canvas and a
+SurfaceView in order to do that.
+
+66
+00:05:34,300 --> 00:05:37,320
+And as I mentioned earlier, SurfaceViews
+need a
+
+67
+00:05:37,320 --> 00:05:41,360
+separate, non-UI thread in which to do
+their work.
+
+68
+00:05:41,360 --> 00:05:43,980
+So that SurfaceView operations
+
+69
+00:05:43,980 --> 00:05:48,220
+won't interfere with UI thread operations.
+
+70
+00:05:48,220 --> 00:05:52,350
+So, let's talk more about the SurfaceView
+class.
+
+71
+00:05:52,350 --> 00:05:57,960
+A SurfaceView manages a low-level drawing
+area called a Surface.
+
+72
+00:05:57,960 --> 00:06:02,978
+And this Surface is a dedicated drawing
+area, that is positioned within the
+
+73
+00:06:02,978 --> 00:06:09,360
+applications view hierarchy.
+To define a SurfaceView,
+
+74
+00:06:09,360 --> 00:06:15,040
+you need to create a custom class, which
+is a subclass of SurfaceView.
+
+75
+00:06:15,040 --> 00:06:17,050
+And this custom class must,
+
+76
+00:06:17,050 --> 00:06:22,119
+must also implement the
+SurfaceHolder.Callback interface.
+
+77
+00:06:24,370 --> 00:06:26,636
+To use this new SurfaceView, you need to
+do two things.
+
+78
+00:06:26,636 --> 00:06:27,136
+One, you need to
+
+79
+00:06:30,270 --> 00:06:32,650
+setup the SurfaceView.
+
+80
+00:06:32,650 --> 00:06:38,270
+And two, you need to draw to the
+SurfaceView that you just setup.
+
+81
+00:06:38,270 --> 00:06:40,800
+Let's talk about each of those steps, one
+at a time.
+
+82
+00:06:42,640 --> 00:06:48,870
+To set up the SurfaceView, you first use
+the SurfaceViews getHolder method to
+
+83
+00:06:48,870 --> 00:06:55,530
+acquire the SurfaceView's SurfaceHolder.
+Next,
+
+84
+00:06:55,530 --> 00:07:01,180
+you register the SurfaceView for
+SurfaceHolder callbacks.
+
+85
+00:07:01,180 --> 00:07:04,860
+By calling the SurfaceHolder's addCallback
+method.
+
+86
+00:07:04,860 --> 00:07:09,652
+Now these methods are one, surfaceCreated
+
+87
+00:07:09,652 --> 00:07:14,970
+which is called when the SurfaceView's
+surface has been created.
+
+88
+00:07:16,020 --> 00:07:20,690
+Until this method is called you can't draw
+on the surface.
+
+89
+00:07:20,690 --> 00:07:25,210
+It's not ready.
+Two, surfaceChanged.
+
+90
+00:07:25,210 --> 00:07:28,440
+This method is called whenever structural
+changes,
+
+91
+00:07:28,440 --> 00:07:31,600
+such as changing the surface's size,
+occurs.
+
+92
+00:07:32,630 --> 00:07:35,530
+And three, surfaceDestroyed.
+
+93
+00:07:35,530 --> 00:07:40,240
+And this method is called right before a
+surface is destroyed.
+
+94
+00:07:40,240 --> 00:07:45,930
+Once this method returns, you can no
+longer call operations that will draw
+
+95
+00:07:45,930 --> 00:07:46,680
+on the surface.
+
+96
+00:07:49,020 --> 00:07:52,280
+And the last setup step is to create the
+thread
+
+97
+00:07:52,280 --> 00:07:57,170
+that will be used for executing drawing
+operations on this SurfaceView.
+
+98
+00:07:57,170 --> 00:08:02,120
+And remember, that the SurfaceHolder
+callback methods
+
+99
+00:08:02,120 --> 00:08:07,670
+will usually be called from the main
+thread not from the SurfaceView's thread.
+
+100
+00:08:07,670 --> 00:08:10,630
+So you'll have to make sure that you
+synchronize
+
+101
+00:08:10,630 --> 00:08:14,150
+access to any data that is needed by both
+threads.
+
+102
+00:08:16,880 --> 00:08:20,780
+So once you've setup the SurfaceView you
+can start drawing on it.
+
+103
+00:08:22,000 --> 00:08:24,880
+To draw, you'll first acquire a lock
+
+104
+00:08:24,880 --> 00:08:30,222
+on the canvas by calling the lockCanvas
+method.
+
+105
+00:08:30,222 --> 00:08:35,160
+Next, you do whatever drawing operations
+that you want to do on the canvas.
+
+106
+00:08:35,160 --> 00:08:40,380
+For example, by calling a canvas method,
+such as drawBitmap.
+
+107
+00:08:40,380 --> 00:08:42,220
+And last, you unlock
+
+108
+00:08:42,220 --> 00:08:46,470
+the canvas, allowing Android to update the
+display.
+
+109
+00:08:46,470 --> 00:08:47,240
+And you'll do this by
+
+110
+00:08:47,240 --> 00:08:51,760
+calling the SurfaceHolder's
+unlockCanvasAndPost method.
+
+111
+00:08:52,800 --> 00:08:56,240
+So let's look at a different
+implementation of
+
+112
+00:08:56,240 --> 00:09:02,019
+our last example application, called
+GraphicsBubbleCanvas Surface View.
+
+113
+00:09:02,019 --> 00:09:04,648
+[BLANK_AUDIO]
+
+114
+00:09:04,648 --> 00:09:07,123
+So here's my device.
+
+115
+00:09:07,123 --> 00:09:09,042
+And in a moment, I'll
+
+116
+00:09:09,042 --> 00:09:09,749
+start up
+
+117
+00:09:09,749 --> 00:09:14,524
+the GraphicsCanvasBubbleSurfaceView
+application.
+
+118
+00:09:14,524 --> 00:09:19,100
+And when I do, the application will start
+up and
+
+119
+00:09:19,100 --> 00:09:24,060
+draw the bubble at a randomly selected
+location on the display.
+
+120
+00:09:24,060 --> 00:09:29,950
+But this time, instead of updating every
+second or so, this application
+
+121
+00:09:29,950 --> 00:09:35,270
+will try to do as many updates as it can.
+In addition,
+
+122
+00:09:35,270 --> 00:09:40,390
+the application will also rotate the
+bubble view to give the appearance
+
+123
+00:09:40,390 --> 00:09:45,110
+that the bubble is twirling through space.
+So here goes.
+
+124
+00:09:47,260 --> 00:09:50,210
+And as you can see, the bubble is smoothly
+
+125
+00:09:50,210 --> 00:09:54,660
+animating both moving and rotating as it
+floats along.
+
+126
+00:09:55,700 --> 00:09:58,050
+Let's look at the source code for this
+application.
+
+127
+00:10:01,600 --> 00:10:04,670
+So here's the
+GraphicsCanvasBubbleSurfaceView
+
+128
+00:10:04,670 --> 00:10:07,150
+application open in the IDE.
+
+129
+00:10:08,720 --> 00:10:10,460
+Now I'll open the main activity.
+
+130
+00:10:12,060 --> 00:10:17,900
+And in onCreate, this code again loads a
+bitmap from the resources directory.
+
+131
+00:10:19,710 --> 00:10:21,650
+And then uses that bitmap to create an
+
+132
+00:10:21,650 --> 00:10:25,760
+instance of a custom view class called
+BubbleView.
+
+133
+00:10:26,990 --> 00:10:33,676
+Let's look at the BubbleView class.
+The BubbleView class extends SurfaceView
+
+134
+00:10:33,676 --> 00:10:39,580
+and implements the SurfaceHolder.Callback
+interface.
+
+135
+00:10:39,580 --> 00:10:43,170
+The constructive for this class does a lot
+of housekeeping.
+
+136
+00:10:43,170 --> 00:10:46,020
+And then down at the end of the method,
+there's
+
+137
+00:10:46,020 --> 00:10:52,480
+a call to the getHolder method, which
+returns a SurfaceHolder.
+
+138
+00:10:52,480 --> 00:10:57,967
+The code takes that SurfaceHolder and then
+registers this BubbleView
+
+139
+00:10:57,967 --> 00:11:02,370
+for callbacks.
+Let's look at what happens when these
+
+140
+00:11:02,370 --> 00:11:07,430
+callbacks finally arrive.
+First, we see that
+
+141
+00:11:07,430 --> 00:11:12,520
+when the surface for the SurfaceView is
+created, this code creates
+
+142
+00:11:12,520 --> 00:11:18,560
+a new thread, and then starts it.
+And that thread's run method
+
+143
+00:11:18,560 --> 00:11:21,970
+then goes into a loop.
+And on each iteration of the loop,
+
+144
+00:11:24,270 --> 00:11:27,520
+it checks to see whether the thread's been
+interrupted.
+
+145
+00:11:27,520 --> 00:11:34,200
+And if not, it then calls the move method,
+which like before moves the bubble view
+
+146
+00:11:34,200 --> 00:11:39,900
+and returns a Boolean indicating whether
+or not the BubbleView has left the screen.
+
+147
+00:11:41,250 --> 00:11:44,180
+If these checks evaluate to true, then
+
+148
+00:11:44,180 --> 00:11:49,050
+the code attempts to lock the
+SurfaceHolder's canvas.
+
+149
+00:11:49,050 --> 00:11:49,280
+And if
+
+150
+00:11:49,280 --> 00:11:51,720
+successful, the code then calls the
+
+151
+00:11:51,720 --> 00:11:55,770
+drawBubble method passing in the locked
+canvas.
+
+152
+00:11:57,080 --> 00:12:00,560
+And then finally, the application unlocks
+the
+
+153
+00:12:00,560 --> 00:12:04,246
+canvas and allows Android to update the
+display.
+
+154
+00:12:04,246 --> 00:12:07,652
+Let's go back for one second and look at
+the drawBubble method.
+
+155
+00:12:09,290 --> 00:12:14,802
+Now, this method, first redraws the
+canvas's background,
+
+156
+00:12:14,802 --> 00:12:21,106
+then it rotates the canvas and then it
+redraws the bubble on the canvas.
+
+157
+00:12:21,106 --> 00:12:21,995
+[BLANK_AUDIO].
+

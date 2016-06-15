@@ -1,0 +1,756 @@
+1
+00:00:00,000 --> 00:00:09,653
+[BLANK_AUDIO]
+
+2
+00:00:09,653 --> 00:00:12,228
+Hi I'm Adam Porter and this is
+
+3
+00:00:12,228 --> 00:00:18,830
+Programming Mobile Applications for
+Android Handheld Systems.
+
+4
+00:00:18,830 --> 00:00:23,100
+Android provides a class called Gesture
+Detector, that
+
+5
+00:00:23,100 --> 00:00:27,320
+applications can use to recognize common
+touch gestures.
+
+6
+00:00:28,400 --> 00:00:35,220
+This class can recognize gestures, such as
+a confirmed single tap, a double tap.
+
+7
+00:00:35,220 --> 00:00:38,320
+Which is essentially two single taps in
+rapid succession.
+
+8
+00:00:38,320 --> 00:00:39,510
+And a fling.
+
+9
+00:00:39,510 --> 00:00:42,200
+Which is a press, followed by a drag,
+
+10
+00:00:42,200 --> 00:00:45,490
+and release motion that has a reasonably
+high velocity.
+
+11
+00:00:47,620 --> 00:00:52,240
+To use a gesture detector, your activity
+will have to create an instance of the
+
+12
+00:00:52,240 --> 00:00:57,235
+GestureDetector class and will have to
+give it an object that implements the
+
+13
+00:00:57,235 --> 00:01:02,390
+GestureDetector.OnGestureListener
+interface.
+
+14
+00:01:03,460 --> 00:01:08,830
+And then the activity will need to
+override it's onTouchEvent method, which
+
+15
+00:01:08,830 --> 00:01:13,730
+is the method that gets called when the
+activity receives a touch event.
+
+16
+00:01:13,730 --> 00:01:16,030
+And this method will then delegate the
+
+17
+00:01:16,030 --> 00:01:21,450
+motion event to the gesture detectors
+onTouchEvent method.
+
+18
+00:01:24,100 --> 00:01:26,810
+Let's look at an example application that
+uses
+
+19
+00:01:26,810 --> 00:01:30,240
+a gesture detector to recognize a fling
+gesture.
+
+20
+00:01:31,260 --> 00:01:33,030
+This application is called
+
+21
+00:01:33,030 --> 00:01:37,760
+TouchGestureViewFlipper and when it
+starts,
+
+22
+00:01:37,760 --> 00:01:41,630
+it presents a text view that displays a
+number.
+
+23
+00:01:41,630 --> 00:01:45,560
+If the user performs a right to left fling
+gesture, then
+
+24
+00:01:45,560 --> 00:01:48,880
+the text view will scroll off the left
+side of the screen.
+
+25
+00:01:48,880 --> 00:01:50,300
+And while
+
+26
+00:01:50,300 --> 00:01:55,290
+it does it, a new text view, displaying a
+new number
+
+27
+00:01:55,290 --> 00:02:00,330
+will scroll in behind it, from the right.
+Let's see that application in action.
+
+28
+00:02:02,880 --> 00:02:03,710
+So here's my device.
+
+29
+00:02:05,230 --> 00:02:09,410
+Now I'll start up the touch gesture, view
+flipper application.
+
+30
+00:02:11,020 --> 00:02:16,890
+When it starts up, the screen shows a text
+view displaying the number zero.
+
+31
+00:02:16,890 --> 00:02:21,790
+Now, if I perform a fling gesture that is
+if I press and hold the view.
+
+32
+00:02:21,790 --> 00:02:28,270
+And then quickly swipe towards the left
+side of the screen and finally lift
+
+33
+00:02:28,270 --> 00:02:30,410
+my finger off the screen.
+
+34
+00:02:30,410 --> 00:02:33,880
+Then we'll see the animation that I
+mentioned earlier.
+
+35
+00:02:33,880 --> 00:02:34,750
+Let me do that now.
+
+36
+00:02:37,040 --> 00:02:43,190
+And as you can see the text view with the
+number zero slid off the screen.
+
+37
+00:02:43,190 --> 00:02:46,680
+Going towards the left, and the new text
+view, displaying
+
+38
+00:02:46,680 --> 00:02:50,640
+the number 1, slid into the screen from
+the right.
+
+39
+00:02:50,640 --> 00:02:51,140
+Let
+
+40
+00:02:53,650 --> 00:02:55,050
+me do that a few more times.
+And
+
+41
+00:02:59,060 --> 00:03:04,840
+notice that this gesture only works if I
+swipe from right to left.
+
+42
+00:03:04,840 --> 00:03:08,560
+If I try it in the other direction,
+nothing will happen.
+
+43
+00:03:12,480 --> 00:03:14,860
+Let's take a look at the source code for
+this application.
+
+44
+00:03:14,860 --> 00:03:15,360
+So
+
+45
+00:03:17,130 --> 00:03:22,359
+here's the application open in the IDE.
+Now, I'll open the main activity.
+
+46
+00:03:23,740 --> 00:03:26,230
+First of all, this application uses the
+
+47
+00:03:26,230 --> 00:03:30,320
+view flipper class to handle the
+animations.
+
+48
+00:03:30,320 --> 00:03:33,530
+Now I won't go into that much here, but
+feel
+
+49
+00:03:33,530 --> 00:03:36,200
+free to study the code, after we finish
+the segment.
+
+50
+00:03:37,680 --> 00:03:42,350
+For now, let's focus on how this
+application detects the fling gesture.
+
+51
+00:03:43,810 --> 00:03:49,860
+So, in on create, you can see that the
+code creates a new gesture detector.
+
+52
+00:03:49,860 --> 00:03:52,000
+And in the constructor for this object,
+the
+
+53
+00:03:52,000 --> 00:03:56,700
+code passes in a new simple on gesture
+listener.
+
+54
+00:03:57,860 --> 00:04:01,280
+And this object defines an on fling
+method.
+
+55
+00:04:02,430 --> 00:04:08,260
+When a GestureDetector detects a fling
+gesture, this method will be called.
+
+56
+00:04:08,260 --> 00:04:09,530
+And we'll
+
+57
+00:04:09,530 --> 00:04:12,550
+come back to that, to this method in a few
+seconds.
+
+58
+00:04:12,550 --> 00:04:17,890
+Right now, let's look at the OnTouch event
+method for this activity.
+
+59
+00:04:17,890 --> 00:04:21,430
+This method gets called when a touch event
+occurs.
+
+60
+00:04:21,430 --> 00:04:24,260
+And no view in the activity handles it.
+
+61
+00:04:25,580 --> 00:04:27,520
+When this method is called, it will
+
+62
+00:04:27,520 --> 00:04:30,840
+simply delegate the call, to the gesture
+detector,
+
+63
+00:04:33,840 --> 00:04:40,090
+if the gesture detector eventually decides
+that it has seen a complete fling gesture.
+
+64
+00:04:40,090 --> 00:04:44,200
+The on fling method that I just showed you
+will be called.
+
+65
+00:04:44,200 --> 00:04:48,070
+And this on fling method receives a
+parameter.
+
+66
+00:04:48,070 --> 00:04:51,890
+In this case, it's called velocity x, that
+tells how
+
+67
+00:04:51,890 --> 00:04:56,390
+fast, and in which direction the swipe
+gesture was performed.
+
+68
+00:04:59,220 --> 00:05:04,310
+In this example, if the swipe was moving
+from right to left, at a speed of
+
+69
+00:05:04,310 --> 00:05:07,200
+more than ten pixels per second, then the
+
+70
+00:05:07,200 --> 00:05:11,560
+code invokes a method called switch layout
+state two.
+
+71
+00:05:11,560 --> 00:05:15,850
+Which causes the animation of the text
+views to start.
+
+72
+00:05:17,480 --> 00:05:20,700
+If the velocity does not meet that
+criteria, for
+
+73
+00:05:20,700 --> 00:05:24,260
+instance, if it's a slow drag instead of a
+fling,
+
+74
+00:05:24,260 --> 00:05:27,470
+or if it's traveling in the wrong
+direction, left to right,
+
+75
+00:05:27,470 --> 00:05:31,540
+instead of right to left, then the fling
+gesture is ignored.
+
+76
+00:05:34,390 --> 00:05:38,170
+To recognize more complex gestures, you
+can use Android's
+
+77
+00:05:38,170 --> 00:05:44,520
+Gesture Builder application to create and
+then save custom gestures.
+
+78
+00:05:44,520 --> 00:05:47,050
+This application comes bundled with the
+SDK.
+
+79
+00:05:48,640 --> 00:05:53,840
+At runtime, you can use the gesture
+libraries class to load your custom
+
+80
+00:05:53,840 --> 00:05:59,179
+gestures and to recognize when a user
+performs one of those gestures.
+
+81
+00:06:00,990 --> 00:06:07,350
+To make this work, you include a
+GestureOverlayView in your application.
+
+82
+00:06:07,350 --> 00:06:12,180
+And this view essentially intercepts user
+gestures.
+
+83
+00:06:12,180 --> 00:06:17,700
+And then, it invokes your application code
+to handle those gestures.
+
+84
+00:06:19,950 --> 00:06:22,990
+Here's a screenshot of the gesture builder
+application.
+
+85
+00:06:22,990 --> 00:06:28,020
+As you can see, I've created four custom
+gestures.
+
+86
+00:06:28,020 --> 00:06:32,750
+Next, which is a horizontal swipe, from
+left to right,
+
+87
+00:06:32,750 --> 00:06:38,810
+no, which looks a bit like an, an X that
+you make using a single stroke.
+
+88
+00:06:38,810 --> 00:06:44,810
+Prev, or previous, which is a horizontal
+swipe from right to left, and yes,
+
+89
+00:06:44,810 --> 00:06:45,980
+which looks like a check mark.
+
+90
+00:06:48,200 --> 00:06:53,440
+On the emulator, GestureBuilder saves your
+custom gestures to a file
+
+91
+00:06:53,440 --> 00:06:58,292
+called /mnt/sdcard/gestures.
+
+92
+00:06:59,660 --> 00:07:04,005
+To use these gestures you'll need to copy
+this file into your applications
+
+93
+00:07:04,005 --> 00:07:09,010
+/res/raw directory.
+Let's
+
+94
+00:07:09,010 --> 00:07:13,260
+look at the TouchGestures application.
+This application
+
+95
+00:07:13,260 --> 00:07:15,200
+displays a small view with a
+
+96
+00:07:15,200 --> 00:07:19,770
+candidate color for the entire
+applications background.
+
+97
+00:07:19,770 --> 00:07:22,760
+The background color for the whole
+application
+
+98
+00:07:22,760 --> 00:07:26,110
+is initially set to gray, and the user
+
+99
+00:07:26,110 --> 00:07:28,260
+can use these four custom gestures that
+
+100
+00:07:28,260 --> 00:07:32,630
+I showed earlier to interact with this
+application.
+
+101
+00:07:32,630 --> 00:07:34,220
+For example, if the user performs the
+
+102
+00:07:34,220 --> 00:07:38,000
+next gesture the background color will
+cycle forward.
+
+103
+00:07:38,000 --> 00:07:38,590
+If the user
+
+104
+00:07:38,590 --> 00:07:43,960
+performs the previous gesture, the
+background color cycles back.
+
+105
+00:07:43,960 --> 00:07:47,400
+If the user performs the yes gesture, the
+application
+
+106
+00:07:47,400 --> 00:07:50,750
+sets the whole application's background to
+the current color.
+
+107
+00:07:51,860 --> 00:07:54,090
+And if the user performs the no gesture,
+
+108
+00:07:54,090 --> 00:07:57,740
+the application's background color is
+reset to gray.
+
+109
+00:07:58,805 --> 00:08:02,290
+Let's see the running application.
+So here's my device.
+
+110
+00:08:04,020 --> 00:08:04,215
+Now
+
+111
+00:08:04,215 --> 00:08:06,920
+I'll start up the TouchGestures
+application.
+
+112
+00:08:06,920 --> 00:08:12,800
+And when it starts up, the application's
+background is generally gray.
+
+113
+00:08:12,800 --> 00:08:16,230
+But there's a colored square in the middle
+of the screen.
+
+114
+00:08:16,230 --> 00:08:19,400
+If I swipe the screen from left to right.
+
+115
+00:08:19,400 --> 00:08:23,190
+The color of that square in the middle
+changes.
+
+116
+00:08:23,190 --> 00:08:25,810
+And if I do it again, the color changes
+again.
+
+117
+00:08:26,860 --> 00:08:29,920
+And I can go back to the previous color,
+by swiping,
+
+118
+00:08:29,920 --> 00:08:32,950
+this time, from right to left, instead of
+left to right.
+
+119
+00:08:34,290 --> 00:08:38,840
+If I decide that I like the current color,
+I can perform the yes gesture.
+
+120
+00:08:40,450 --> 00:08:40,980
+Like so.
+
+121
+00:08:42,680 --> 00:08:48,080
+And as you see the whole application now
+has a background of that color,
+
+122
+00:08:48,080 --> 00:08:53,680
+but if I change my mind I can perform the
+no gesture, like so.
+
+123
+00:08:54,990 --> 00:09:00,450
+And as you can see, the application's
+background goes back to its initial grey.
+
+124
+00:09:00,450 --> 00:09:03,600
+The color square reappears in the middle
+of the layout and
+
+125
+00:09:04,660 --> 00:09:08,240
+I can keep this issuing gestures to look
+at new candidate colors.
+
+126
+00:09:08,240 --> 00:09:08,840
+Let's
+
+127
+00:09:10,940 --> 00:09:13,680
+take a look at the source code for this
+application.
+
+128
+00:09:16,160 --> 00:09:21,230
+Here's the application open in the IDE and
+now I'll open the main activity.
+
+129
+00:09:22,660 --> 00:09:26,790
+And you notice that this activity
+implements the on gesture performed
+
+130
+00:09:26,790 --> 00:09:33,320
+listener interface, which means that it
+provides an on gesture performed method.
+
+131
+00:09:34,690 --> 00:09:37,140
+In on create, the code gets a reference to
+the
+
+132
+00:09:37,140 --> 00:09:42,230
+frame layout, which it stores in a
+variable called m frame.
+
+133
+00:09:42,230 --> 00:09:45,140
+And this is where the candidate background
+colors appear.
+
+134
+00:09:46,490 --> 00:09:48,830
+The code also gets a reference to a
+relative
+
+135
+00:09:48,830 --> 00:09:53,490
+layout, which it stores in a variable
+called m layout.
+
+136
+00:09:53,490 --> 00:09:56,270
+And this is the layout for the entire
+application.
+
+137
+00:09:57,950 --> 00:10:03,640
+Now here's the code that reads the
+gestures file from the res/ raw directory.
+
+138
+00:10:03,640 --> 00:10:07,400
+Using the gesture libraries from raw
+
+139
+00:10:07,400 --> 00:10:08,570
+resource method.
+
+140
+00:10:11,230 --> 00:10:15,970
+This method returns a gesture library
+object, and the code then
+
+141
+00:10:15,970 --> 00:10:20,010
+goes on to call the load method for the
+gesture library.
+
+142
+00:10:21,210 --> 00:10:25,670
+After that, the code finds the gesture
+overlay view.
+
+143
+00:10:25,670 --> 00:10:30,970
+Which is in the layout, and adds the
+current activity as a listener
+
+144
+00:10:30,970 --> 00:10:35,940
+for gestures that are intercepted by the
+gesture overlay view.
+
+145
+00:10:37,940 --> 00:10:40,020
+When the gesture overlay view detects a
+
+146
+00:10:40,020 --> 00:10:44,990
+gesture, it calls the onGesturePerformed
+method, shown here.
+
+147
+00:10:47,130 --> 00:10:52,220
+And this method first calls the recognize
+method, which analyzes the detected
+
+148
+00:10:52,220 --> 00:10:57,820
+gesture, and then scores each custom
+gesture as to how much the detected
+
+149
+00:10:57,820 --> 00:11:03,240
+gesture resembles the custom gestures
+recorded in the gesture file.
+
+150
+00:11:04,350 --> 00:11:07,160
+And next the code gets the highest ranked
+prediction.
+
+151
+00:11:09,380 --> 00:11:13,798
+And then if that prediction has a high
+enough score, the
+
+152
+00:11:13,798 --> 00:11:19,066
+code carries out the action that is
+associated with that gesture.
+
+153
+00:11:19,066 --> 00:11:23,280
+For example, if the gesture was the yes
+gesture, then the
+
+154
+00:11:23,280 --> 00:11:28,796
+code sets the layout's background color to
+the current candidate color.
+
+155
+00:11:28,796 --> 00:11:32,683
+[BLANK_AUDIO]
+
+156
+00:11:32,683 --> 00:11:37,220
+So that's all for our lesson on
+multi-touch, and gestures.
+
+157
+00:11:37,220 --> 00:11:40,790
+Please join me next time, when we'll
+discuss multimedia.
+
+158
+00:11:40,790 --> 00:11:40,990
+Thanks.
+
