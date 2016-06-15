@@ -1,0 +1,906 @@
+1
+00:00:00,000 --> 00:00:09,570
+[BLANK_AUDIO]
+
+2
+00:00:09,570 --> 00:00:12,615
+Hi, I'm Adam Porter, and this is
+
+3
+00:00:12,615 --> 00:00:18,528
+Programming Mobile Applications for
+Android Handheld Systems.
+
+4
+00:00:18,528 --> 00:00:24,291
+A few years ago my family spent some time
+in Montreal, Canada
+
+5
+00:00:24,291 --> 00:00:29,746
+and right as we arrived it began to snow
+and snow and snow.
+
+6
+00:00:29,746 --> 00:00:32,158
+And of course we, quickly found out that
+my
+
+7
+00:00:32,158 --> 00:00:35,290
+two daughters had forgotten to pack their
+snow boots.
+
+8
+00:00:37,220 --> 00:00:39,830
+So, we needed to buy boots and we needed
+to
+
+9
+00:00:39,830 --> 00:00:42,710
+buy them from a store that was close to
+us.
+
+10
+00:00:43,770 --> 00:00:45,460
+So I whipped out my mobile phone.
+
+11
+00:00:45,460 --> 00:00:50,090
+And I ran a search for boots in the local
+area.
+
+12
+00:00:50,090 --> 00:00:53,930
+The application came back with a list of
+shoe stores plotted on a map.
+
+13
+00:00:55,120 --> 00:00:57,080
+The application also allowed me to get
+
+14
+00:00:57,080 --> 00:01:01,750
+directions from my current location to the
+stores.
+
+15
+00:01:02,870 --> 00:01:07,850
+We followed those directions, bought some
+boots and saved our vacation.
+
+16
+00:01:07,850 --> 00:01:11,680
+Now I'm sure many of you could recount
+similar experiences.
+
+17
+00:01:11,680 --> 00:01:16,160
+Sometimes the information we need depends
+critically on where
+
+18
+00:01:16,160 --> 00:01:19,010
+we are at the time we need that
+information.
+
+19
+00:01:19,010 --> 00:01:25,530
+To help out in these situations, Android
+includes support for location and maps.
+
+20
+00:01:26,920 --> 00:01:28,270
+In today's lesson,
+
+21
+00:01:28,270 --> 00:01:30,340
+I'll talk about some of the support.
+
+22
+00:01:30,340 --> 00:01:34,320
+I'll talk about what location information
+is, and I'll go over
+
+23
+00:01:34,320 --> 00:01:39,260
+the classes that your applications will
+use to get that information.
+
+24
+00:01:39,260 --> 00:01:42,550
+I talk about maps, which allow you to take
+
+25
+00:01:42,550 --> 00:01:47,484
+location information and display it
+visually to your users.
+
+26
+00:01:47,484 --> 00:01:53,458
+And I'll finish up by going over the
+classes that Android provides,
+
+27
+00:01:53,458 --> 00:01:56,756
+to let you display and customize map.
+
+28
+00:01:56,756 --> 00:02:02,500
+So generally speaking, mobile applications
+can benefit from being location aware.
+
+29
+00:02:02,500 --> 00:02:05,480
+That is no where bay, and other things
+are,
+
+30
+00:02:05,480 --> 00:02:08,250
+at a partic, at a particular moment in
+time.
+
+31
+00:02:09,400 --> 00:02:11,790
+And so Android allows applications
+
+32
+00:02:11,790 --> 00:02:15,750
+to determine and manipulate location
+information.
+
+33
+00:02:16,920 --> 00:02:18,770
+Now earlier I gave an example
+
+34
+00:02:18,770 --> 00:02:23,620
+of using location capabilities, to find
+stores near my current location.
+
+35
+00:02:24,770 --> 00:02:31,160
+And then to get directions from my current
+location to one of those stores.
+
+36
+00:02:31,160 --> 00:02:35,460
+In addition, applications can also use
+this capability to
+
+37
+00:02:35,460 --> 00:02:40,600
+do things like define a geographical area
+or geofence.
+
+38
+00:02:40,600 --> 00:02:44,560
+And then to initiate actions when the user
+enters.
+
+39
+00:02:44,560 --> 00:02:50,690
+Or exits the Geofence.
+Android provides several support classes
+
+40
+00:02:50,690 --> 00:02:56,963
+to make all of this possible.
+One of our classes is the location class.
+
+41
+00:02:56,963 --> 00:03:01,403
+A location represents a position on the
+Earth.
+
+42
+00:03:01,403 --> 00:03:05,855
+A location instance contains information
+such as
+
+43
+00:03:05,855 --> 00:03:10,519
+latitude, longitude, a time stamp and
+optionally
+
+44
+00:03:10,519 --> 00:03:15,660
+an estimated accuracy, altitude, speed and
+bearing.
+
+45
+00:03:17,650 --> 00:03:21,800
+Location information comes from location
+providers and
+
+46
+00:03:21,800 --> 00:03:27,020
+devices can have access to multiple
+location providers.
+
+47
+00:03:27,020 --> 00:03:30,400
+Now the actual data may come from sources
+such
+
+48
+00:03:30,400 --> 00:03:36,270
+as GPS satellites, cell phone towers and
+WiFi access points.
+
+49
+00:03:37,930 --> 00:03:43,190
+Specifically, applications can request
+information from the network
+
+50
+00:03:43,190 --> 00:03:48,520
+provider, the GPS provider and passive
+provider.
+
+51
+00:03:49,520 --> 00:03:51,580
+Let's look at each of these, one at a
+time.
+
+52
+00:03:53,440 --> 00:03:58,590
+The network provider, determines location
+based on cell tower and
+
+53
+00:03:58,590 --> 00:04:03,699
+WiFi access points.
+If you want to use this provider,
+
+54
+00:04:03,699 --> 00:04:09,666
+then you must declare either the
+ACCESS_COARSE_LOCATION
+
+55
+00:04:09,666 --> 00:04:15,614
+permission.
+Or the ACCESS_FINE_LOCATION
+
+56
+00:04:15,614 --> 00:04:20,550
+permission.
+GPS provider gets its location permission
+
+57
+00:04:20,550 --> 00:04:25,085
+from GPS satellites.
+To use this provider, you must declare the
+
+58
+00:04:25,085 --> 00:04:29,630
+ACCESS_FINE_LOCATION permission.
+
+59
+00:04:31,570 --> 00:04:35,180
+The passive provider doesn't actually turn
+on any devices.
+
+60
+00:04:35,180 --> 00:04:38,220
+It just returns locations that happen to
+have
+
+61
+00:04:38,220 --> 00:04:43,060
+been calculated through the requests of
+other applications.
+
+62
+00:04:43,060 --> 00:04:45,290
+So using this provider requires
+
+63
+00:04:45,290 --> 00:04:51,588
+that you declare the ACCESS_FINE_LOCATION
+permission.
+
+64
+00:04:51,588 --> 00:04:56,490
+Now while you can get location information
+from each of these different sources,
+
+65
+00:04:56,490 --> 00:05:00,886
+each one offers a different set of trade
+offs with respect to cost.
+
+66
+00:05:00,886 --> 00:05:07,960
+Accuracy, availability, and timeliness of
+the data it provides.
+
+67
+00:05:07,960 --> 00:05:11,070
+Let's look at some of the providers,
+available in Android.
+
+68
+00:05:13,480 --> 00:05:18,360
+The GPS provider relies on communicating
+with a satellite.
+
+69
+00:05:18,360 --> 00:05:20,890
+And so, this provider is generally the
+
+70
+00:05:20,890 --> 00:05:25,480
+most expensive but gives the most accurate
+readings.
+
+71
+00:05:25,480 --> 00:05:28,030
+It also takes the longest amount of time
+
+72
+00:05:28,030 --> 00:05:32,170
+to provide that very accurate reading, and
+the
+
+73
+00:05:32,170 --> 00:05:33,600
+user needs to have a clear view of
+
+74
+00:05:33,600 --> 00:05:37,560
+the sky when they're communicating with
+the GPS satellite.
+
+75
+00:05:38,620 --> 00:05:42,490
+The network provider is cheaper than the
+GPS provider.
+
+76
+00:05:42,490 --> 00:05:45,230
+But, it may give less accurate readings.
+
+77
+00:05:45,230 --> 00:05:50,190
+It takes less time to return location
+information, but it's only useful
+
+78
+00:05:50,190 --> 00:05:53,480
+when you're in the range of a cell tower
+or WiFi access point.
+
+79
+00:05:54,760 --> 00:05:57,880
+The passive provider is the cheapest to
+use.
+
+80
+00:05:57,880 --> 00:06:02,000
+You're essentially just reusing
+measurements that already have been taken.
+
+81
+00:06:02,000 --> 00:06:03,580
+So it's fast,
+
+82
+00:06:03,580 --> 00:06:05,330
+but it may turn out that there are no
+
+83
+00:06:05,330 --> 00:06:09,700
+recent readings when your application asks
+for that information.
+
+84
+00:06:12,440 --> 00:06:18,028
+One way to access location information is
+to use the location manager class.
+
+85
+00:06:18,028 --> 00:06:23,430
+The location manager is a system service
+for accessing location data.
+
+86
+00:06:23,430 --> 00:06:28,622
+You acquire a reference to the location
+manager by calling the context
+
+87
+00:06:28,622 --> 00:06:33,926
+classes get system service method, passing
+in an ID for the service.
+
+88
+00:06:33,926 --> 00:06:41,481
+Context.LOCATION_SERVICE.
+Once you have a reference
+
+89
+00:06:41,481 --> 00:06:47,864
+to the location manager, you can use it to
+get and use location information.
+
+90
+00:06:47,864 --> 00:06:52,880
+For instance, you can determine the last
+reading taken by a particular provider.
+
+91
+00:06:53,910 --> 00:06:56,350
+You can register for location updates to
+
+92
+00:06:56,350 --> 00:07:00,670
+find out when new location information is
+acquired.
+
+93
+00:07:00,670 --> 00:07:03,900
+And you can also register to receive
+intents.
+
+94
+00:07:03,900 --> 00:07:08,550
+When the device nears or moves away from a
+given geographic region.
+
+95
+00:07:09,960 --> 00:07:12,210
+If you want to be informed when new
+locations
+
+96
+00:07:12,210 --> 00:07:17,360
+are determined, you can implement and use
+a location listener.
+
+97
+00:07:17,360 --> 00:07:20,570
+The location listener interface defines
+the callback
+
+98
+00:07:20,570 --> 00:07:24,610
+methods that are called when location
+changes.
+
+99
+00:07:24,610 --> 00:07:25,760
+Or, when the status of
+
+100
+00:07:25,760 --> 00:07:27,930
+a location provider changes.
+
+101
+00:07:27,930 --> 00:07:32,580
+A location listener interface includes the
+following methods.
+
+102
+00:07:33,610 --> 00:07:35,650
+On location changed.
+
+103
+00:07:35,650 --> 00:07:38,590
+Which gets called when a new location was
+determined.
+
+104
+00:07:39,700 --> 00:07:44,560
+onProviderDisabled and onProviderEnabled,
+which are called when
+
+105
+00:07:44,560 --> 00:07:48,360
+the user disables or enables a particular
+provider.
+
+106
+00:07:49,460 --> 00:07:51,190
+And onStatusChanged,
+
+107
+00:07:51,190 --> 00:07:54,460
+which is called when a provider's status
+changes.
+
+108
+00:07:56,580 --> 00:07:59,410
+If your application can't get a recent
+reading from the
+
+109
+00:07:59,410 --> 00:08:03,040
+system, it will then need to acquire its
+own reading.
+
+110
+00:08:03,040 --> 00:08:08,380
+And to do this, your application will
+normally perform the following steps.
+
+111
+00:08:08,380 --> 00:08:11,390
+First, it will start listening for updates
+
+112
+00:08:11,390 --> 00:08:15,420
+from location providers by registering a
+location listener.
+
+113
+00:08:16,540 --> 00:08:21,810
+Next, it should maintain and update a
+current best estimate,
+
+114
+00:08:21,810 --> 00:08:27,720
+as it begins to receive location updates.
+And as this process unfolds,
+
+115
+00:08:27,720 --> 00:08:33,100
+the application should determine when the
+current best estimate is good enough.
+
+116
+00:08:33,100 --> 00:08:36,160
+And at that point it should stop listening
+
+117
+00:08:36,160 --> 00:08:41,020
+for location updates by unregistering the
+location listener.
+
+118
+00:08:41,020 --> 00:08:45,700
+And finally, it can use that best estimate
+as the current location.
+
+119
+00:08:48,790 --> 00:08:51,230
+Now when you're determining whether your
+location is good
+
+120
+00:08:51,230 --> 00:08:54,626
+enough, there are several factors that you
+might want to consider.
+
+121
+00:08:55,720 --> 00:08:58,510
+For example, for how long should you keep
+measuring?
+
+122
+00:08:59,540 --> 00:09:05,210
+For instance, a navigation system might
+need continuous measurement.
+
+123
+00:09:05,210 --> 00:09:10,230
+While a restaurant finder application
+might just need a single measurement.
+
+124
+00:09:11,470 --> 00:09:13,960
+Another question is, how accurate
+
+125
+00:09:13,960 --> 00:09:15,190
+a measurement do you actually need?
+
+126
+00:09:15,190 --> 00:09:19,340
+And again, a navigation system needs to
+know
+
+127
+00:09:19,340 --> 00:09:22,650
+your location to say, within ten meters or
+so.
+
+128
+00:09:24,240 --> 00:09:27,530
+A restaurant application, might just need
+to know what city you're in.
+
+129
+00:09:27,530 --> 00:09:30,790
+And in that case, you'd only need to know,
+you're
+
+130
+00:09:30,790 --> 00:09:34,410
+location to say, within a kilometer, or
+maybe even less.
+
+131
+00:09:35,800 --> 00:09:39,500
+And of course, the choices you make here,
+clearly impact,
+
+132
+00:09:39,500 --> 00:09:44,690
+battery usage.
+The example application is called,
+
+133
+00:09:44,690 --> 00:09:50,150
+location, get location.
+This application, first acquires and
+
+134
+00:09:50,150 --> 00:09:56,040
+displays, a, the last known location, from
+all the providers on the device.
+
+135
+00:09:57,220 --> 00:10:01,540
+If these readings are too old, or have too
+low accuracy.
+
+136
+00:10:01,540 --> 00:10:05,230
+Then the application acquires and displays
+new readings
+
+137
+00:10:05,230 --> 00:10:12,158
+from all the providers on the device.
+Let's give the application a run.
+
+138
+00:10:12,158 --> 00:10:13,971
+So here's my device.
+
+139
+00:10:13,971 --> 00:10:17,830
+Now, I'll start the location GetLocation
+application.
+
+140
+00:10:19,100 --> 00:10:21,810
+When the application starts up, it
+displays
+
+141
+00:10:21,810 --> 00:10:25,180
+the best previous location estimate from
+the device.
+
+142
+00:10:26,180 --> 00:10:29,640
+This information is then displayed using
+red text.
+
+143
+00:10:31,250 --> 00:10:34,930
+Since this reading is either not recent
+enough
+
+144
+00:10:34,930 --> 00:10:38,190
+or doesn't have enough accuracy, the
+application goes on
+
+145
+00:10:38,190 --> 00:10:41,540
+to acquire new location estimates, and you
+can see
+
+146
+00:10:41,540 --> 00:10:44,810
+that these new readings are displayed
+using grey text.
+
+147
+00:10:47,590 --> 00:10:49,660
+Let's look at the source code for this
+application.
+
+148
+00:10:49,660 --> 00:10:56,390
+So here's the application open in the IDE,
+now I'll open up the main activity.
+
+149
+00:10:58,150 --> 00:11:00,380
+And let's scroll down to the on create
+method.
+
+150
+00:11:00,380 --> 00:11:05,900
+And here we see that the code acquires a
+reference to the location manager.
+
+151
+00:11:07,240 --> 00:11:11,000
+Next, it calls a method called best last
+known location.
+
+152
+00:11:12,130 --> 00:11:13,090
+This method
+
+153
+00:11:13,090 --> 00:11:18,660
+will find the last known location from
+every location provider, and then
+
+154
+00:11:18,660 --> 00:11:20,570
+will return the most accurate of
+
+155
+00:11:20,570 --> 00:11:24,070
+these measurements that also meets certain
+criteria.
+
+156
+00:11:25,430 --> 00:11:29,480
+If no readings meets those criteria, and
+the method returns null.
+
+157
+00:11:31,120 --> 00:11:34,610
+Next, the code displays information about
+the last reading.
+
+158
+00:11:36,340 --> 00:11:38,104
+After this, the code
+
+159
+00:11:38,104 --> 00:11:41,878
+continues by defining a location listener.
+
+160
+00:11:41,878 --> 00:11:46,318
+And in the listener's on location change
+method, the code determines
+
+161
+00:11:46,318 --> 00:11:51,400
+whether the new location is better than
+the current best estimate.
+
+162
+00:11:51,400 --> 00:11:57,040
+If so, the code then updates the best
+estimate, and then updates the display.
+
+163
+00:11:58,610 --> 00:12:03,070
+Now, if the accuracy is less than
+min_accuracy,
+
+164
+00:12:03,070 --> 00:12:05,850
+then the current location is considered
+good enough.
+
+165
+00:12:07,170 --> 00:12:09,640
+And so the code unregisters the location
+listener.
+
+166
+00:12:11,950 --> 00:12:15,040
+Now, scrolling down, you see the on resume
+method.
+
+167
+00:12:16,070 --> 00:12:19,720
+This method checks to see whether the
+current best estimate, is
+
+168
+00:12:19,720 --> 00:12:23,670
+of low accuracy, or was taken more than
+two minutes ago.
+
+169
+00:12:24,940 --> 00:12:28,080
+If so, the code registers listeners for
+both
+
+170
+00:12:28,080 --> 00:12:31,010
+the network provider, and for the GPS
+provider.
+
+171
+00:12:32,110 --> 00:12:38,100
+After that, the code schedules a runnable,
+that will unregister the listeners after
+
+172
+00:12:38,100 --> 00:12:39,160
+a fixed period of time.
+
+173
+00:12:40,560 --> 00:12:43,332
+The code will also unregister the location
+
+174
+00:12:43,332 --> 00:12:47,170
+listener, if the activity's onPause method
+is called.
+
+175
+00:12:47,170 --> 00:12:52,846
+[BLANK_AUDIO]
+
+176
+00:12:52,846 --> 00:12:54,900
+Here are some tips you can use to
+
+177
+00:12:54,900 --> 00:12:59,874
+save battery power when you're creating
+location aware applications.
+
+178
+00:12:59,874 --> 00:13:02,830
+First, always check the last known
+measurement.
+
+179
+00:13:02,830 --> 00:13:06,780
+If that's good enough, then there's no
+need to take new measurements.
+
+180
+00:13:08,440 --> 00:13:12,640
+Return updates as infrequently as possible
+and limit the total measurement time.
+
+181
+00:13:13,840 --> 00:13:18,190
+Some applications, such as an application
+that tracks a jogger.
+
+182
+00:13:18,190 --> 00:13:21,230
+Need to update more frequently and need to
+keep measuring
+
+183
+00:13:21,230 --> 00:13:26,080
+while the application is running because
+the user's location is changing.
+
+184
+00:13:27,260 --> 00:13:30,940
+Applications like the one we just saw
+though will need a
+
+185
+00:13:30,940 --> 00:13:35,130
+single good measurement so they can
+measure infrequently and for less time.
+
+186
+00:13:36,500 --> 00:13:39,590
+Use the least accurate measurement
+necessary, and
+
+187
+00:13:39,590 --> 00:13:41,880
+only use GPS if you really need too.
+
+188
+00:13:43,740 --> 00:13:45,997
+Turn off the updates in OnPause.
+
+189
+00:13:45,997 --> 00:13:50,060
+[BLANK_AUDIO]
+

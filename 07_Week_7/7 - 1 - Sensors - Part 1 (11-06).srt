@@ -1,0 +1,688 @@
+1
+00:00:00,000 --> 00:00:09,589
+[BLANK_AUDIO]
+
+2
+00:00:09,589 --> 00:00:12,953
+Hi, I'm Adam Porter, and this is
+
+3
+00:00:12,953 --> 00:00:19,499
+programming mobile applications for
+Android handheld systems.
+
+4
+00:00:19,499 --> 00:00:24,690
+Handheld devices allow for context aware
+computing.
+
+5
+00:00:24,690 --> 00:00:30,060
+And that means that applications can
+respond or behave differently
+
+6
+00:00:30,060 --> 00:00:34,620
+based on contextual factors, such as the
+location at which they're
+
+7
+00:00:34,620 --> 00:00:38,350
+being used, how they're being held by
+their user.
+
+8
+00:00:39,360 --> 00:00:41,630
+How much ambient light there is.
+
+9
+00:00:41,630 --> 00:00:44,110
+Or how fast the user is traveling.
+
+10
+00:00:44,110 --> 00:00:48,570
+To do this, applications read information
+from the wide range
+
+11
+00:00:48,570 --> 00:00:53,090
+of sensors that come built in with today's
+hand-held devices.
+
+12
+00:00:54,410 --> 00:00:56,470
+In this lesson, I'll talk about the
+
+13
+00:00:56,470 --> 00:01:00,230
+sensors that Android devices can support
+And I'll
+
+14
+00:01:00,230 --> 00:01:04,680
+discuss how applications can access these
+sensors.
+
+15
+00:01:04,680 --> 00:01:08,170
+Next, I'll discuss SensorEvents, the class
+
+16
+00:01:08,170 --> 00:01:12,300
+that Android uses to represent sensor
+readings.
+
+17
+00:01:12,300 --> 00:01:15,730
+And I'll discuss SensorEventListeners,
+which are
+
+18
+00:01:15,730 --> 00:01:19,300
+used to transfer information from a
+sensor.
+
+19
+00:01:19,300 --> 00:01:20,350
+To your application.
+
+20
+00:01:21,430 --> 00:01:25,240
+After that, I'll discuss some common
+techniques that are used to
+
+21
+00:01:25,240 --> 00:01:30,210
+smooth out or filter sensor values, so
+that applications
+
+22
+00:01:30,210 --> 00:01:34,540
+can use the values in a variety of
+different ways.
+
+23
+00:01:34,540 --> 00:01:37,960
+And, as we go through the lesson, I'll
+demonstrate
+
+24
+00:01:37,960 --> 00:01:42,160
+several example applications that make use
+of common sensors.
+
+25
+00:01:44,010 --> 00:01:46,760
+Sensors are hardware components that
+measure
+
+26
+00:01:46,760 --> 00:01:50,200
+the physical environment around the
+device.
+
+27
+00:01:50,200 --> 00:01:55,740
+And these sensors come in three flavors.
+There are sensors that measure motion.
+
+28
+00:01:55,740 --> 00:01:57,620
+For example, how fast you're moving.
+
+29
+00:01:58,650 --> 00:02:02,940
+There are sensors that measure the
+position of the device.
+
+30
+00:02:02,940 --> 00:02:08,020
+For instance where you are in the world or
+what the orientation of the device is.
+
+31
+00:02:09,230 --> 00:02:11,870
+And there are sensors that measure the
+environment,
+
+32
+00:02:11,870 --> 00:02:16,070
+such as the amount of light, pressure, or
+humidity
+
+33
+00:02:16,070 --> 00:02:21,370
+around the device.
+For example, my device has a three axis
+
+34
+00:02:21,370 --> 00:02:27,280
+accelerometer, which measures the forces
+exerted on the device.
+
+35
+00:02:27,280 --> 00:02:29,840
+For example, when I shake it.
+
+36
+00:02:29,840 --> 00:02:32,770
+It also has a 3-axis magnetic field.
+
+37
+00:02:32,770 --> 00:02:35,500
+Which can be used to measure it's position
+
+38
+00:02:35,500 --> 00:02:40,580
+or orientation relative to the earth's
+magnetic field.
+
+39
+00:02:40,580 --> 00:02:41,120
+And we'll see that
+
+40
+00:02:41,120 --> 00:02:44,260
+in action later on, in one of the example
+application.
+
+41
+00:02:45,620 --> 00:02:50,270
+Lastly, my device has a barometer that
+measures atmospheric pressure.
+
+42
+00:02:53,140 --> 00:02:55,810
+In order for an application to user
+sensor, it
+
+43
+00:02:55,810 --> 00:02:58,950
+first needs to get a reference to the
+sensormanager.
+
+44
+00:03:00,100 --> 00:03:03,509
+The sensormanager is the system service
+that manages sensors.
+
+45
+00:03:04,510 --> 00:03:10,000
+Application, get a reference to the sensor
+manager by calling the getSystemService
+
+46
+00:03:10,000 --> 00:03:17,280
+method, passing in the value
+Context.SENSOR_SERVICE.
+
+47
+00:03:17,280 --> 00:03:18,290
+In order to access
+
+48
+00:03:18,290 --> 00:03:24,210
+a specific sensor, applications use the
+sensor manager's getDefaultSensor
+
+49
+00:03:24,210 --> 00:03:29,560
+method Passing in a constant corresponding
+to the desired sensor.
+
+50
+00:03:32,200 --> 00:03:38,955
+Some of those sensor type constants
+include sensor.type_accelerometer for
+
+51
+00:03:38,955 --> 00:03:46,390
+the accelerometer.
+Sensor.type_magnetic_field.
+
+52
+00:03:46,390 --> 00:03:51,484
+For the magnetic field sensor.
+Or sensor.type_pressure
+
+53
+00:03:51,484 --> 00:03:53,345
+for the barometer.
+
+54
+00:03:53,345 --> 00:03:55,263
+[BLANK_AUDIO]
+
+55
+00:03:55,263 --> 00:03:58,863
+If an application wants to receive
+information from a
+
+56
+00:03:58,863 --> 00:04:03,270
+sensor, then it will have to implement a
+SensorEventListener.
+
+57
+00:04:04,350 --> 00:04:07,630
+And this interface defines callback method
+that
+
+58
+00:04:07,630 --> 00:04:11,590
+are invoked when a sensor's accuracy
+changes.
+
+59
+00:04:11,590 --> 00:04:14,150
+And when the sensor acquires a new
+reading.
+
+60
+00:04:16,360 --> 00:04:23,110
+When a sensor's accuracy changes, Android
+calls the onAccuracyChanged method.
+
+61
+00:04:23,110 --> 00:04:25,600
+Passing in the sensor that changed.
+
+62
+00:04:27,360 --> 00:04:29,470
+And passing in it's new accuracy.
+
+63
+00:04:31,200 --> 00:04:36,220
+When a sensor has a new reading, the
+onSensorChanged method is
+
+64
+00:04:36,220 --> 00:04:41,310
+called, passing in the sensor event
+corresponding to the new reading.
+
+65
+00:04:43,480 --> 00:04:46,760
+Before your application can receive
+SensorEvents however,
+
+66
+00:04:46,760 --> 00:04:51,260
+it will need to register a
+SensorEventListener.
+
+67
+00:04:51,260 --> 00:04:55,580
+And once it's done with the sensor, you'll
+also want to unregister
+
+68
+00:04:55,580 --> 00:05:00,450
+the sensor, the sensor listener, in order
+to avoid wasting battery power.
+
+69
+00:05:02,470 --> 00:05:04,660
+To register a SensorEventListener for a
+
+70
+00:05:04,660 --> 00:05:09,150
+given sensor you call the registerListener
+method.
+
+71
+00:05:09,150 --> 00:05:15,220
+Passing in the SensorEventListener that
+will be called back to for the
+
+72
+00:05:15,220 --> 00:05:21,300
+sensor you want to listen too and the rate
+at which you want the sensor to be polled.
+
+73
+00:05:23,600 --> 00:05:26,610
+To unregister a listener for all sensors
+with which
+
+74
+00:05:26,610 --> 00:05:32,650
+it's registered you can, for instance,
+call the unregisterListener method
+
+75
+00:05:32,650 --> 00:05:37,000
+passing in the sensorEventListener, and
+passing in a bitmask
+
+76
+00:05:37,000 --> 00:05:39,740
+indicating the sensors you no longer want
+to listen to.
+
+77
+00:05:43,070 --> 00:05:49,220
+Sensor readings, are represented, as
+instances, of the sensorEvent class.
+
+78
+00:05:49,220 --> 00:05:53,040
+The data this class holds, will of course
+depend on the specific
+
+79
+00:05:53,040 --> 00:05:55,550
+kind of sensor, that generated the
+
+80
+00:05:55,550 --> 00:05:59,740
+reading, but will include, the sensor
+type.
+
+81
+00:05:59,740 --> 00:06:04,120
+A time-stamp, the accuracy of the reading,
+and
+
+82
+00:06:04,120 --> 00:06:07,050
+the measurement data associated with that
+new reading.
+
+83
+00:06:08,680 --> 00:06:11,010
+In order to make sense of the data, you'll
+need
+
+84
+00:06:11,010 --> 00:06:15,830
+to know how measurements are interpreted
+for the specific sensor.
+
+85
+00:06:16,840 --> 00:06:21,990
+For instance, many sensors use a
+three-dimensional coordinate system.
+
+86
+00:06:21,990 --> 00:06:26,875
+When the default orientation is portrait
+and when the device is lying flat
+
+87
+00:06:26,875 --> 00:06:32,070
+face-up on a table, the axis of to
+coordinate system are as shown here.
+
+88
+00:06:34,050 --> 00:06:34,170
+The
+
+89
+00:06:34,170 --> 00:06:40,490
+X axis runs from right to left.
+The Y axis runs top to bottom.
+
+90
+00:06:40,490 --> 00:06:43,710
+And the Z axis.
+Runs down to up.
+
+91
+00:06:45,940 --> 00:06:48,430
+And don't forget that the coordinate
+system
+
+92
+00:06:48,430 --> 00:06:53,450
+is oriented around the device's default
+orientation.
+
+93
+00:06:53,450 --> 00:06:55,256
+And that doesn't change even if the device
+changes its current orientation.
+
+94
+00:06:55,256 --> 00:06:56,660
+For instance, even if the device
+
+95
+00:07:02,560 --> 00:07:05,530
+moves from portrait mode To landscape
+mode.
+
+96
+00:07:06,780 --> 00:07:09,210
+The coordinate system doesn't change.
+
+97
+00:07:11,810 --> 00:07:18,070
+Our first example application for this
+lesson is called Sensor Raw Accelerometer.
+
+98
+00:07:18,070 --> 00:07:21,920
+This application simply displays the raw
+values
+
+99
+00:07:21,920 --> 00:07:26,030
+that it receives from the device's
+accelerometer.
+
+100
+00:07:26,030 --> 00:07:27,010
+Let's see it in action.
+So
+
+101
+00:07:32,170 --> 00:07:32,860
+here's my device.
+
+102
+00:07:34,570 --> 00:07:39,540
+Now, I'll start up the sensor raw
+accelerometer application.
+
+103
+00:07:39,540 --> 00:07:45,410
+As you can see, this application displays
+three text views.
+
+104
+00:07:45,410 --> 00:07:50,940
+With number in them.
+And these number correspond to the X,
+
+105
+00:07:50,940 --> 00:07:56,090
+Y, and Z values being read from this
+device's accelerometer.
+
+106
+00:07:56,090 --> 00:07:57,760
+As you
+
+107
+00:07:57,760 --> 00:08:02,820
+can see the greatest force is now being
+exerted on the Y axis.
+
+108
+00:08:04,420 --> 00:08:09,390
+While I'm doing this demonstration, but
+obviously not succeeding
+
+109
+00:08:09,390 --> 00:08:13,150
+to hold the device perfectly straight up
+and down.
+
+110
+00:08:13,150 --> 00:08:18,160
+But of course, my hand shakes a bit and so
+the numbers will dance around a bit.
+
+111
+00:08:19,680 --> 00:08:23,698
+I will now rotate the device counter
+clockwise 90 degrees.
+
+112
+00:08:23,698 --> 00:08:29,440
+Around z-axis.
+And you'll see that now the greatest force
+
+113
+00:08:29,440 --> 00:08:34,740
+is being exerted on the x-axis.
+
+114
+00:08:34,740 --> 00:08:40,260
+Let's rotate the device another 90
+degrees, and now you see again,
+
+115
+00:08:40,260 --> 00:08:44,720
+that the greatest force is being exerted
+on the y-axis.
+
+116
+00:08:44,720 --> 00:08:49,550
+But this time that force is negative, and
+that's because the y axis
+
+117
+00:08:49,550 --> 00:08:51,090
+is now upside down.
+
+118
+00:08:52,750 --> 00:08:56,440
+And finally, i'll rotate the device
+another 90
+
+119
+00:08:56,440 --> 00:08:59,250
+degrees, and again you'll see that the
+greatest
+
+120
+00:08:59,250 --> 00:09:02,340
+force is exerted on the x axis, and
+
+121
+00:09:02,340 --> 00:09:05,610
+that that force is operating in the
+negative direction.
+
+122
+00:09:07,260 --> 00:09:09,710
+Let's look at the source code for this
+application.
+
+123
+00:09:12,840 --> 00:09:18,320
+Here's the sensor raw accelerometer
+application open in the IDE.
+
+124
+00:09:18,320 --> 00:09:20,910
+Now, I'll open the main activity.
+
+125
+00:09:23,270 --> 00:09:28,360
+Notice that this class implements the
+sensor eventListener interface.
+
+126
+00:09:28,360 --> 00:09:31,650
+So we can receive callbacks from the
+sensor manager.
+
+127
+00:09:33,560 --> 00:09:37,960
+Now, non create the application gets a
+reference to the sensor manager.
+
+128
+00:09:40,080 --> 00:09:42,435
+Next, it gets a reference to the device's
+
+129
+00:09:42,435 --> 00:09:49,060
+accelerom- by calling sensor manager dot
+get default sensor.
+
+130
+00:09:49,060 --> 00:09:53,110
+Passing in the type [UNKNOWN] that
+corresponds.
+
+131
+00:09:53,110 --> 00:09:54,266
+To the accelerometer.
+
+132
+00:09:54,266 --> 00:10:00,503
+In the [UNKNOWN] method, the application
+registers this class as a listener
+
+133
+00:10:00,503 --> 00:10:06,440
+for accelerometer event, by calling the
+registerListener method.
+
+134
+00:10:06,440 --> 00:10:16,680
+The last parameter.
+SensorManager.sensor_delay_UI.
+
+135
+00:10:16,680 --> 00:10:21,220
+And this corresponds to a relatively low
+frequency holding rate.
+
+136
+00:10:23,430 --> 00:10:26,999
+Next, the one pause method unregisters
+this class
+
+137
+00:10:26,999 --> 00:10:30,040
+as a listener for any and all sensors.
+
+138
+00:10:30,040 --> 00:10:31,210
+To which it may be listening.
+
+139
+00:10:33,130 --> 00:10:37,624
+Scrolling down, we now come to the
+unSensorChanged method.
+
+140
+00:10:39,390 --> 00:10:44,130
+This method first checks to make sure that
+this event is an accelerometer reading.
+
+141
+00:10:45,380 --> 00:10:49,100
+Next, it checks that a certain amount of
+time has passed
+
+142
+00:10:49,100 --> 00:10:53,510
+since the last reading was displayed.
+And if so.
+
+143
+00:10:53,510 --> 00:10:57,670
+The code records the accelerometer's x, y
+and z
+
+144
+00:10:57,670 --> 00:11:02,060
+values, and then it displays those values
+on the screen.
+

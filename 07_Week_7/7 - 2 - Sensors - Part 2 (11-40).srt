@@ -1,0 +1,707 @@
+1
+00:00:00,000 --> 00:00:09,607
+[BLANK_AUDIO]
+
+2
+00:00:09,607 --> 00:00:12,797
+Hi, I'm Adam Porter, and this is
+
+3
+00:00:12,797 --> 00:00:19,038
+Programming Mobile Applications for
+Android Handheld Systems.
+
+4
+00:00:19,038 --> 00:00:22,134
+In the example application that we just
+looked at,
+
+5
+00:00:22,134 --> 00:00:26,000
+I tried to hold the device perfectly
+straight up.
+
+6
+00:00:26,000 --> 00:00:29,000
+And if I'd been able to do that, the
+
+7
+00:00:29,000 --> 00:00:34,800
+accelerometer would ideally have reported
+values around x equals 0
+
+8
+00:00:34,800 --> 00:00:39,600
+meters per second squared, y equals 9.81
+meters per
+
+9
+00:00:39,600 --> 00:00:44,590
+second squared and Z equals 0 meters per
+second squared.
+
+10
+00:00:45,810 --> 00:00:52,200
+But as you saw in the example application,
+the accelerometers values fluctuated.
+
+11
+00:00:52,200 --> 00:00:55,270
+All applications will experience this kind
+of thing
+
+12
+00:00:55,270 --> 00:00:59,960
+due to natural user movement, non flat
+surfaces,
+
+13
+00:00:59,960 --> 00:01:01,990
+electrical noise and so forth.
+
+14
+00:01:04,710 --> 00:01:09,150
+When creating sensor enabled applications,
+developers will often apply
+
+15
+00:01:09,150 --> 00:01:13,350
+transforms to the raw data to smooth it
+out.
+
+16
+00:01:13,350 --> 00:01:19,590
+2 common kinds of transforms are called
+low-pass filters and high-pass filters.
+
+17
+00:01:19,590 --> 00:01:22,275
+Let's talk about each one of those one at
+a time.
+
+18
+00:01:22,275 --> 00:01:30,310
+Low-pass filters are used to deemphasize
+small transient force changes while
+
+19
+00:01:30,310 --> 00:01:34,044
+emphasizing the long-term constant forces.
+
+20
+00:01:35,200 --> 00:01:37,420
+You might use a low-pass filter when your
+
+21
+00:01:37,420 --> 00:01:41,090
+application needs to pay attention to the
+constant force
+
+22
+00:01:41,090 --> 00:01:43,360
+of gravity for example, and you don't
+want to
+
+23
+00:01:43,360 --> 00:01:46,110
+be affected just because your hands shakes
+a little.
+
+24
+00:01:46,110 --> 00:01:51,040
+A real life example of this would be
+something like a carpenter's level.
+
+25
+00:01:51,040 --> 00:01:55,100
+The bubble needs to move based on gravity,
+
+26
+00:01:55,100 --> 00:01:57,240
+not based on small hand twitches.
+
+27
+00:01:58,350 --> 00:02:02,870
+In contrast, you use a high-pass filter
+when you want to emphasize
+
+28
+00:02:02,870 --> 00:02:05,030
+the transient force changes, and you
+
+29
+00:02:05,030 --> 00:02:08,280
+want to deemphasize the constant force
+components.
+
+30
+00:02:09,760 --> 00:02:12,360
+You might use a high-pass filter when
+
+31
+00:02:12,360 --> 00:02:14,590
+your application should ignore the
+constant force
+
+32
+00:02:14,590 --> 00:02:20,660
+of gravity for example, but should respond
+to the specific moves that the user makes.
+
+33
+00:02:20,660 --> 00:02:23,020
+A real life example of this might be
+
+34
+00:02:23,020 --> 00:02:26,390
+a percussion instrument like a set or
+maracas.
+
+35
+00:02:26,390 --> 00:02:28,780
+You don't really care about gravity here,
+you
+
+36
+00:02:28,780 --> 00:02:32,070
+care about how the user is shaking the
+instrument.
+
+37
+00:02:34,160 --> 00:02:39,480
+The next application is called sensor
+filtered accelerometer.
+
+38
+00:02:39,480 --> 00:02:44,570
+This application applies both a low pass,
+and a high pass filter to the raw
+
+39
+00:02:44,570 --> 00:02:49,890
+accelerometer values and then, it displays
+the filtered values.
+
+40
+00:02:49,890 --> 00:02:50,670
+Let's run it.
+So
+
+41
+00:02:53,580 --> 00:02:55,240
+here's my device.
+
+42
+00:02:55,240 --> 00:02:59,560
+Now I'll start up the Sensor Filtered
+Accelerometer application.
+
+43
+00:03:00,650 --> 00:03:06,380
+As you can see, this application displays
+9 text views with numbers in them.
+
+44
+00:03:07,420 --> 00:03:13,010
+These numbers correspond to the x, y, and
+z values being read
+
+45
+00:03:13,010 --> 00:03:18,750
+from the device's accelerometer.
+The raw values, after applying a
+
+46
+00:03:18,750 --> 00:03:24,490
+low pass filter and those raw values after
+applying a high pass filter.
+
+47
+00:03:25,810 --> 00:03:31,450
+If we let the application run for a while,
+we'll see that the low pass values begin
+
+48
+00:03:31,450 --> 00:03:37,280
+to approximate our ideal accelerometer
+readings roughly 0
+
+49
+00:03:37,280 --> 00:03:43,180
+for the x and z axes, and roughly 9.81 for
+the y axis.
+
+50
+00:03:44,210 --> 00:03:50,130
+At the same time, you can see that the
+high-pass values all tend toward 0.
+
+51
+00:03:50,130 --> 00:03:57,770
+If I rotate the device counterclockwise,
+you see the high pass x value go positive.
+
+52
+00:03:57,770 --> 00:04:00,640
+And if I rotate the device clockwise,
+you'll
+
+53
+00:04:00,640 --> 00:04:02,980
+see the high pass x value go negative.
+
+54
+00:04:04,910 --> 00:04:07,680
+Let's look at the source code for this
+application.
+
+55
+00:04:10,600 --> 00:04:15,370
+Here's the sensor filter accelerometer
+application open in the IDE.
+
+56
+00:04:16,480 --> 00:04:19,430
+Now I'll open the main activity.
+
+57
+00:04:19,430 --> 00:04:21,030
+And notice again that this class
+
+58
+00:04:21,030 --> 00:04:24,810
+implements the sensor event listener
+interface.
+
+59
+00:04:24,810 --> 00:04:28,240
+So it can receive callbacks from the
+sensor manager.
+
+60
+00:04:31,930 --> 00:04:36,050
+Now and on create the application gets a
+reference to the sensor manager.
+
+61
+00:04:37,120 --> 00:04:42,708
+Next, it gets a reference to the device's
+accelerometer by calling sensor
+
+62
+00:04:42,708 --> 00:04:47,120
+manager.get default sensor passing in the
+
+63
+00:04:47,120 --> 00:04:50,810
+type constant that corresponds to the
+accelerometer.
+
+64
+00:04:52,380 --> 00:04:57,700
+In the on resume method, the application
+registers this class as a listener
+
+65
+00:04:57,700 --> 00:05:02,220
+for accelerometer events by calling the
+register listener method.
+
+66
+00:05:03,450 --> 00:05:08,170
+And next, the on pause method unregisters
+this class as
+
+67
+00:05:08,170 --> 00:05:11,870
+a listener for any sensors to which it may
+be listening.
+
+68
+00:05:13,730 --> 00:05:17,800
+Scrolling down, we now come to the on
+sensor changed method.
+
+69
+00:05:18,860 --> 00:05:22,790
+And as before, this method first checks to
+make sure that this
+
+70
+00:05:22,790 --> 00:05:25,980
+event is an accelerometer reading.
+
+71
+00:05:25,980 --> 00:05:28,030
+And then it checks that a certain amount
+of
+
+72
+00:05:28,030 --> 00:05:31,550
+time has passed since the last reading was
+displayed.
+
+73
+00:05:33,220 --> 00:05:37,120
+If it has, the code records the
+accelerometer's x,
+
+74
+00:05:37,120 --> 00:05:40,690
+y and z values, and then applies the low
+
+75
+00:05:40,690 --> 00:05:44,390
+pass filter to each of the raw values
+after
+
+76
+00:05:44,390 --> 00:05:48,060
+which the code applies at the high-pass
+filter to each
+
+77
+00:05:48,060 --> 00:05:52,428
+of the raw values.
+Let's look at the code for the 2 filters.
+
+78
+00:05:52,428 --> 00:06:00,490
+Here's the low-pass method, which computes
+the low-pass filter.
+
+79
+00:06:00,490 --> 00:06:06,160
+This method takes 2 parameters: the
+current reading and the long term average.
+
+80
+00:06:07,250 --> 00:06:12,330
+It then computes the filter value, as, as
+a kind of weighted average.
+
+81
+00:06:12,330 --> 00:06:13,410
+In this case,
+
+82
+00:06:13,410 --> 00:06:16,740
+the filtered value equals 80% of the long
+
+83
+00:06:16,740 --> 00:06:20,550
+term average plus 20% of the current
+reading.
+
+84
+00:06:21,770 --> 00:06:25,090
+Over time, this calculation moves towards
+the
+
+85
+00:06:25,090 --> 00:06:27,250
+ideal values that we talked about earlier.
+
+86
+00:06:29,030 --> 00:06:32,260
+Scrolling down, here's the high pass
+method
+
+87
+00:06:32,260 --> 00:06:35,780
+which computes the high pass filtered
+values.
+
+88
+00:06:35,780 --> 00:06:38,640
+And this method also takes 2 parameters -
+
+89
+00:06:38,640 --> 00:06:42,990
+the current reading, and the long term
+average which is actually
+
+90
+00:06:42,990 --> 00:06:46,450
+computed by the low pass method, that we
+just talked about.
+
+91
+00:06:47,720 --> 00:06:53,100
+This code then subtracts the long-term
+average from the current reading and
+
+92
+00:06:53,100 --> 00:06:57,530
+therefore represents the part of the
+reading that is not due to gravity.
+
+93
+00:07:01,270 --> 00:07:05,450
+This example application is called
+SensorCompass
+
+94
+00:07:05,450 --> 00:07:07,700
+and this application uses the device's
+
+95
+00:07:07,700 --> 00:07:12,200
+accelerometer and its magnetometer to
+orient
+
+96
+00:07:12,200 --> 00:07:15,280
+a compass arrow towards magnetic north.
+
+97
+00:07:16,740 --> 00:07:17,860
+So here's my device.
+
+98
+00:07:19,060 --> 00:07:23,380
+Now I'll start up the sensor compass
+application.
+
+99
+00:07:23,380 --> 00:07:26,540
+As you can see, this application displays
+a green
+
+100
+00:07:26,540 --> 00:07:31,600
+circle with a white arrow.
+Right now, this arrow
+
+101
+00:07:31,600 --> 00:07:36,446
+points towards magnetic north.
+However if I begin to
+
+102
+00:07:36,446 --> 00:07:41,550
+rotate the device, you see that the arrow
+continues to point towards
+
+103
+00:07:41,550 --> 00:07:46,400
+the north which of course is exactly what
+a compass should do.
+
+104
+00:07:46,400 --> 00:07:52,490
+Let's look at the source
+
+105
+00:07:52,490 --> 00:07:59,470
+code for this application.
+
+106
+00:08:01,850 --> 00:08:05,179
+Here's the sensor compass application open
+in the IDE.
+
+107
+00:08:07,320 --> 00:08:12,610
+Now I'll open the main activity.
+Lets scroll down to the on create method.
+
+108
+00:08:14,390 --> 00:08:19,540
+As with the other applications, this one
+begins by setting up the user interface,
+
+109
+00:08:19,540 --> 00:08:25,040
+and in particular, it creates a custom
+view that holds
+
+110
+00:08:25,040 --> 00:08:30,630
+the compass arrow and then it adds that
+view to the activities main view.
+
+111
+00:08:32,050 --> 00:08:32,380
+It then
+
+112
+00:08:32,380 --> 00:08:34,450
+gets a reference to the sensor manager.
+
+113
+00:08:36,090 --> 00:08:40,500
+After that, it gets a reference to the
+device's accelerometer and
+
+114
+00:08:40,500 --> 00:08:44,785
+it gets a reference to the device's
+magnetometer by calling sensor
+
+115
+00:08:44,785 --> 00:08:51,160
+manager.getdefaultsensor and by passing in
+the appropriate type constants.
+
+116
+00:08:53,960 --> 00:08:59,450
+In the onResume method, the code registers
+this class a listener for accelerometer
+
+117
+00:08:59,450 --> 00:09:04,850
+events and for magnetometer events, by
+calling the registerListener method.
+
+118
+00:09:06,180 --> 00:09:11,080
+The onPause method unregisters this class
+as a listener for all sensors.
+
+119
+00:09:13,450 --> 00:09:18,830
+The onSensor change method processes the
+incoming sensor events.
+
+120
+00:09:18,830 --> 00:09:22,460
+This method first checks whether the event
+is an accelerometer or
+
+121
+00:09:22,460 --> 00:09:27,340
+a magnatometer event and then copies the
+appropriate event data.
+
+122
+00:09:28,500 --> 00:09:34,024
+Next, if there are readings from each of
+the 2 sensors, the code called
+
+123
+00:09:34,024 --> 00:09:39,120
+the sensormanager.getrotationmatrix method
+
+124
+00:09:39,120 --> 00:09:42,810
+passing in the sensor readings and an
+
+125
+00:09:42,810 --> 00:09:46,579
+array in which to store the rotation
+matrix.
+
+126
+00:09:47,850 --> 00:09:53,620
+If that method was successful, then the
+code called the get sensor manager.
+
+127
+00:09:53,620 --> 00:09:59,500
+get orientation method passing in the
+rotation matrix that we just acquired
+
+128
+00:09:59,500 --> 00:10:04,254
+from the call to get rotation matrix.
+It also passes in
+
+129
+00:10:04,254 --> 00:10:07,259
+another array called orientation matrix.
+
+130
+00:10:08,530 --> 00:10:12,130
+When this method returns, orientation
+matrix
+
+131
+00:10:12,130 --> 00:10:15,730
+will hold the information the application
+needs
+
+132
+00:10:15,730 --> 00:10:18,570
+to determine how the device is oriented
+
+133
+00:10:18,570 --> 00:10:21,580
+with respect to the earth's magnetic
+north.
+
+134
+00:10:23,370 --> 00:10:25,370
+The code then grabs this value from the
+
+135
+00:10:25,370 --> 00:10:29,540
+orientation matrix and since this value is
+measured
+
+136
+00:10:29,540 --> 00:10:33,910
+in radians, the code then converts the
+radian value
+
+137
+00:10:34,990 --> 00:10:39,480
+to degrees.
+After that, the code invalidates the
+
+138
+00:10:39,480 --> 00:10:45,629
+compass arrow view and then it clears the
+arrays that holds the sensor readings.
+
+139
+00:10:46,810 --> 00:10:49,900
+Let's look at the compass arrow view to
+
+140
+00:10:49,900 --> 00:10:53,260
+see how it uses the new orientation
+information.
+
+141
+00:10:56,000 --> 00:11:00,870
+Scrolling down to the on draw method, the
+code first saves the current canvas
+
+142
+00:11:01,960 --> 00:11:06,680
+and then it rotates this view on the
+canvas by an amount
+
+143
+00:11:06,680 --> 00:11:11,450
+equal to minus 1 times m rotation
+
+144
+00:11:11,450 --> 00:11:15,670
+in degrees.
+So basically, the idea here is that if the
+
+145
+00:11:15,670 --> 00:11:21,390
+device is pointing say 90 degrees away
+from north, then the compass arrow
+
+146
+00:11:21,390 --> 00:11:26,720
+must rotate back 90 degrees in order for
+the compass arrow to keep pointing north.
+
+147
+00:11:30,740 --> 00:11:32,690
+That's all for this lesson on sensors.
+
+148
+00:11:32,690 --> 00:11:38,560
+See you next time when we'll talk about
+location and maps.
+
+149
+00:11:38,560 --> 00:11:38,920
+Thank you.
+
