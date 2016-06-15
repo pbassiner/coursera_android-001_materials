@@ -1,0 +1,1097 @@
+1
+00:00:08,880 --> 00:00:12,270
+Hi, I'm Adam Porter and this is
+
+2
+00:00:12,270 --> 00:00:18,269
+Programming Mobile Applications, for
+Android Handheld Systems.
+
+3
+00:00:19,970 --> 00:00:23,240
+So let's take a deeper look, at these life
+cycle methods.
+
+4
+00:00:23,240 --> 00:00:26,730
+The first method that gets called, is
+onCreate.
+
+5
+00:00:26,730 --> 00:00:29,780
+onCreate gets called, when the activity is
+first created.
+
+6
+00:00:29,780 --> 00:00:34,190
+Now typically, onCreate is used to
+initialize the activity, and will
+
+7
+00:00:34,190 --> 00:00:36,960
+carry out the following four functions.
+
+8
+00:00:36,960 --> 00:00:42,230
+It will call super.onCreate, so Android
+can do some of its own initialization.
+
+9
+00:00:42,230 --> 00:00:45,000
+It will set the activity's content view,
+which
+
+10
+00:00:45,000 --> 00:00:48,220
+tells Android, what the activity's user
+interface should be.
+
+11
+00:00:49,630 --> 00:00:53,040
+Next, it will capture and retain any
+references it needs,
+
+12
+00:00:53,040 --> 00:00:55,979
+to the various views or elements of the
+user interface.
+
+13
+00:00:57,160 --> 00:00:59,470
+And finally, it will configure the user
+interface
+
+14
+00:00:59,470 --> 00:01:02,240
+views and elements, as required.
+
+15
+00:01:02,240 --> 00:01:05,446
+So, let's take a look at map locations
+onCreate method.
+
+16
+00:01:07,550 --> 00:01:10,110
+Here, I've opened up the map location
+application
+
+17
+00:01:10,110 --> 00:01:13,650
+in Eclipse, and now I'll open up the map
+
+18
+00:01:13,650 --> 00:01:18,040
+location activity, and here, as you can
+see,
+
+19
+00:01:18,040 --> 00:01:21,580
+the map location class, is a subclass of
+activity.
+
+20
+00:01:21,580 --> 00:01:25,460
+And it overrides activity.onCreate.
+
+21
+00:01:25,460 --> 00:01:29,840
+Inside the onCreate method, you see the
+four functions, we just talked about.
+
+22
+00:01:29,840 --> 00:01:32,800
+First, there's a call to super.onCreate.
+
+23
+00:01:34,220 --> 00:01:39,220
+Next, there's a call to set content view,
+passing in the ID of a layout
+
+24
+00:01:39,220 --> 00:01:44,310
+file, as a parameter.
+After that, the activity stores references
+
+25
+00:01:44,310 --> 00:01:49,380
+to an edit text view and to a button,
+which appear in the user interface.
+
+26
+00:01:50,460 --> 00:01:54,180
+And finally, onCreate attaches a listener
+to the button.
+
+27
+00:01:55,190 --> 00:01:59,240
+Android calls this listener code, every
+time the user presses
+
+28
+00:01:59,240 --> 00:02:00,640
+this button.
+
+29
+00:02:00,640 --> 00:02:05,300
+So, this listener code is listening, for
+presses of the button.
+
+30
+00:02:07,410 --> 00:02:09,960
+OnRestart is another life cycle method.
+
+31
+00:02:09,960 --> 00:02:11,950
+It gets called, if the activity that has
+
+32
+00:02:11,950 --> 00:02:15,310
+been stopped, but is about to be started
+again.
+
+33
+00:02:15,310 --> 00:02:20,080
+And you can use onRestart to handle, any
+special processing that you need that, or
+
+34
+00:02:20,080 --> 00:02:23,980
+that is needed only after the activity's
+been stopped, but is about to start again.
+
+35
+00:02:25,520 --> 00:02:29,270
+onStart is called, when the activity is
+about to become visible.
+
+36
+00:02:29,270 --> 00:02:32,560
+And some typical applications for this
+method include,
+
+37
+00:02:32,560 --> 00:02:36,990
+starting when visible-only behaviors, like
+requesting location sensor
+
+38
+00:02:36,990 --> 00:02:42,220
+updates or loading or resetting persistent
+application state.
+
+39
+00:02:42,220 --> 00:02:44,860
+Things like, updating the unwritten
+messages
+
+40
+00:02:44,860 --> 00:02:46,650
+queue, for an email reader application.
+
+41
+00:02:49,192 --> 00:02:51,560
+The onResume method gets called, when the
+activity is
+
+42
+00:02:51,560 --> 00:02:54,630
+visible and about to start interacting
+with the user.
+
+43
+00:02:54,630 --> 00:02:59,470
+And some things you do in this method, are
+to start foreground only behaviors.
+
+44
+00:02:59,470 --> 00:03:03,460
+Things like starting animations, or
+playing a background soundtrack.
+
+45
+00:03:05,180 --> 00:03:08,730
+onPause is called, when your activity's
+about to lose focus.
+
+46
+00:03:08,730 --> 00:03:10,310
+In this method, you can shut down
+
+47
+00:03:10,310 --> 00:03:14,690
+foreground only behaviors, things like
+killing animations.
+
+48
+00:03:14,690 --> 00:03:18,130
+And you should also save any persistent
+state, that the user has edited.
+
+49
+00:03:19,690 --> 00:03:23,600
+onStop is called, when the activity is no
+longer visible to the user.
+
+50
+00:03:23,600 --> 00:03:27,400
+At this point, it's possible, that the
+activity may be started later.
+
+51
+00:03:27,400 --> 00:03:31,580
+So some typical things to do here, include
+caching activity state, that
+
+52
+00:03:31,580 --> 00:03:37,270
+you'll want to restore, when the activity
+is later restarting, an onStart is called.
+
+53
+00:03:37,270 --> 00:03:39,870
+And remember, onStop is not always called,
+
+54
+00:03:39,870 --> 00:03:41,950
+when an activity terminates.
+
+55
+00:03:41,950 --> 00:03:43,920
+For instance, it may not be called, if
+
+56
+00:03:43,920 --> 00:03:48,640
+Android kills the application's process,
+due to low memory.
+
+57
+00:03:48,640 --> 00:03:52,690
+So, don't wait to save persistent data in
+this method, go do that back in onPause.
+
+58
+00:03:55,200 --> 00:03:58,490
+onDestroy is called, when the activity is
+about to be destroyed.
+
+59
+00:03:58,490 --> 00:04:03,340
+And some typical actions to do here,
+include releasing activity resources.
+
+60
+00:04:03,340 --> 00:04:05,580
+For example, shutting down private
+threads,
+
+61
+00:04:05,580 --> 00:04:07,870
+that were started by this activity.
+
+62
+00:04:07,870 --> 00:04:11,220
+And again remember, onDestroy may not be
+called at all.
+
+63
+00:04:11,220 --> 00:04:13,490
+For example, when Android kills an
+application,
+
+64
+00:04:13,490 --> 00:04:15,210
+due to low memory on the device.
+
+65
+00:04:20,040 --> 00:04:25,412
+So, we're turning back to map location.
+You'll see that I've also
+
+66
+00:04:25,412 --> 00:04:31,236
+overridden, most of the activity life
+cycle methods, including
+
+67
+00:04:31,236 --> 00:04:37,710
+onStart, onRestart, onResume, onPause,
+onStop, and onDestroy.
+
+68
+00:04:39,220 --> 00:04:41,290
+In each of these methods, you'll see that
+I've
+
+69
+00:04:41,290 --> 00:04:45,150
+placed a method call, that logs some
+information about
+
+70
+00:04:45,150 --> 00:04:47,170
+the method being called.
+
+71
+00:04:47,170 --> 00:04:52,040
+And I encourage you to run the map
+location application yourself, and
+
+72
+00:04:52,040 --> 00:04:56,640
+to watch the log cat view, to see exactly
+what's being written.
+
+73
+00:04:56,640 --> 00:04:59,160
+And I want you to try pressing different
+buttons,
+
+74
+00:04:59,160 --> 00:05:01,460
+like the back-button and the home button,
+and different
+
+75
+00:05:01,460 --> 00:05:05,090
+keys, to verify for yourself, that the
+life-cycle method
+
+76
+00:05:05,090 --> 00:05:09,190
+calls, are following the graphic depiction
+that we saw earlier.
+
+77
+00:05:10,560 --> 00:05:13,520
+So now that we've seen the activity
+life-cycle in action, let's
+
+78
+00:05:13,520 --> 00:05:17,960
+take a look, at how one activity can
+programmatically, start another activity.
+
+79
+00:05:19,010 --> 00:05:22,190
+To start an activity programmatically, you
+first create an
+
+80
+00:05:22,190 --> 00:05:26,900
+intent object, that specifies the
+activity, that you want to start.
+
+81
+00:05:28,170 --> 00:05:31,330
+And then, you pass this newly created
+intent to
+
+82
+00:05:31,330 --> 00:05:35,770
+methods such as start activity, or start
+activity, for result.
+
+83
+00:05:36,950 --> 00:05:39,930
+Start activity will start up the desired
+activity,
+
+84
+00:05:39,930 --> 00:05:42,010
+pushing the current activity out of the
+foreground.
+
+85
+00:05:43,080 --> 00:05:48,400
+Start activity for result, will also start
+up the desired activity, but it will do so
+
+86
+00:05:48,400 --> 00:05:51,760
+with the expectation, that the start of
+activity
+
+87
+00:05:51,760 --> 00:05:55,740
+will provide a result back to that calling
+activity.
+
+88
+00:05:55,740 --> 00:05:58,490
+And in this case, the result is
+communicated
+
+89
+00:05:58,490 --> 00:06:02,410
+back, by a call to that activity's
+onActivity
+
+90
+00:06:02,410 --> 00:06:03,350
+result method.
+
+91
+00:06:04,560 --> 00:06:06,090
+And we'll come back to that in a few
+minutes.
+
+92
+00:06:07,130 --> 00:06:09,930
+So, for now, let's go back into Eclipse,
+and look
+
+93
+00:06:09,930 --> 00:06:14,590
+at how map location actually starts up the
+Google Maps activity.
+
+94
+00:06:23,070 --> 00:06:25,010
+Here I'm showing where map location has
+
+95
+00:06:25,010 --> 00:06:28,680
+attached a listener, to the show map
+button.
+
+96
+00:06:28,680 --> 00:06:34,580
+Whenever the user clicks this button, the
+listener's onClick method, will be called.
+
+97
+00:06:34,580 --> 00:06:37,930
+And as you can see, that code creates an
+intent called
+
+98
+00:06:37,930 --> 00:06:43,520
+geo intent, and then passes geo intent to
+the start activity method.
+
+99
+00:06:43,520 --> 00:06:48,450
+And the end result of this is that, a
+Google Maps activity will open up,
+
+100
+00:06:48,450 --> 00:06:52,060
+showing a map, centered on the address,
+that the user entered.
+
+101
+00:06:53,470 --> 00:06:57,690
+Now you remember, that entering an address
+in Map Location was pretty slow.
+
+102
+00:06:57,690 --> 00:07:01,180
+Well, here I'm going to show you a
+different application, that instead of
+
+103
+00:07:01,180 --> 00:07:05,600
+asking the user to enter an address
+through the keyboard, we'll allow him
+
+104
+00:07:05,600 --> 00:07:09,740
+or her to select a contact from the
+contacts application, and allow
+
+105
+00:07:09,740 --> 00:07:13,690
+him or her to use the address of that
+contact, as the address
+
+106
+00:07:13,690 --> 00:07:14,810
+to center the map on.
+
+107
+00:07:15,870 --> 00:07:19,810
+Let's take a look at this application,
+called MapLocation from Contacts.
+
+108
+00:07:19,810 --> 00:07:20,310
+So,
+
+109
+00:07:22,790 --> 00:07:24,970
+here's my device running.
+
+110
+00:07:24,970 --> 00:07:27,500
+I'll launch the MapLocation from Contacts
+application.
+
+111
+00:07:27,500 --> 00:07:30,910
+And now you see a button, that will allow
+
+112
+00:07:30,910 --> 00:07:34,019
+me to select an address from an existing
+contact.
+
+113
+00:07:35,290 --> 00:07:38,420
+When I click on that button, a new
+activity is started.
+
+114
+00:07:40,050 --> 00:07:44,900
+Now this activity is actually part of the
+contacts application, which will
+
+115
+00:07:44,900 --> 00:07:48,230
+show me my contacts, and allow me to
+select one of them.
+
+116
+00:07:50,310 --> 00:07:53,359
+So here, I'll do that and I'll select my
+own name, Adam Porter.
+
+117
+00:07:54,760 --> 00:07:57,520
+Now, the context application had no idea,
+what
+
+118
+00:07:57,520 --> 00:07:59,610
+I want to do with this selected contact.
+
+119
+00:08:00,990 --> 00:08:05,990
+In particular, it can't start or show the
+map itself, based on this contact.
+
+120
+00:08:05,990 --> 00:08:08,280
+It just wasn't designed to do that.
+
+121
+00:08:08,280 --> 00:08:11,330
+So what I've actually got happening here,
+is that
+
+122
+00:08:11,330 --> 00:08:15,580
+map location from contacts, has asked the
+context application
+
+123
+00:08:15,580 --> 00:08:20,850
+to return the data to it, once the user
+selects the contact.
+
+124
+00:08:20,850 --> 00:08:24,810
+And it does that by starting the contacts
+application via
+
+125
+00:08:24,810 --> 00:08:29,870
+start activity for result, rather than, by
+using start activity.
+
+126
+00:08:30,870 --> 00:08:32,655
+Now once the contact is selected,
+
+127
+00:08:32,655 --> 00:08:35,550
+MapLocation from contacts will then
+receive
+
+128
+00:08:35,550 --> 00:08:41,440
+the selected data, and it will call Google
+Maps, to display that information.
+
+129
+00:08:41,440 --> 00:08:42,450
+So, let's see that in the code.
+
+130
+00:08:42,450 --> 00:08:48,340
+Now here, I'm opening the map location
+from contacts application, in Eclipse.
+
+131
+00:08:48,340 --> 00:08:50,570
+And the structure of the main activity, is
+
+132
+00:08:50,570 --> 00:08:53,980
+pretty similar to what we saw in map
+location.
+
+133
+00:08:53,980 --> 00:08:55,280
+But you'll notice that the code in
+
+134
+00:08:55,280 --> 00:08:58,240
+the button listener, is a little bit
+different.
+
+135
+00:08:58,240 --> 00:09:02,120
+In particular, this code creates a
+slightly different intent, and then
+
+136
+00:09:02,120 --> 00:09:06,320
+passes that intent as a parameter, to
+start activity for result.
+
+137
+00:09:07,580 --> 00:09:11,840
+We'll look at intent in more detail in the
+next lesson, but you can also
+
+138
+00:09:11,840 --> 00:09:14,350
+see here, that start activity for result
+takes
+
+139
+00:09:14,350 --> 00:09:18,210
+a second parameter, which represents a
+request code.
+
+140
+00:09:18,210 --> 00:09:20,340
+And this will come in handy later, when
+
+141
+00:09:20,340 --> 00:09:23,180
+the result is returned back to the started
+activity.
+
+142
+00:09:26,230 --> 00:09:29,400
+Once the new activity is started, it is
+responsible for setting
+
+143
+00:09:29,400 --> 00:09:33,310
+the result, that should be returned back
+to the calling activity.
+
+144
+00:09:33,310 --> 00:09:37,780
+And it does this, by calling
+Activity.SetResult, passing in
+
+145
+00:09:37,780 --> 00:09:41,300
+a result code, and optionally, patching in
+some result data.
+
+146
+00:09:41,300 --> 00:09:47,330
+Now, these result codes include some
+built-in codes such as result canceled,
+
+147
+00:09:47,330 --> 00:09:51,240
+which indicates that the user chose not to
+complete the activity, normally.
+
+148
+00:09:51,240 --> 00:09:53,570
+They probably hit the back button, for
+example.
+
+149
+00:09:53,570 --> 00:09:58,190
+And result OK, indicating that the
+activity in fact, completed normally.
+
+150
+00:09:59,310 --> 00:10:02,510
+Developers can also add custom result
+codes, after
+
+151
+00:10:02,510 --> 00:10:05,230
+the the built-in result code, Result First
+User.
+
+152
+00:10:06,990 --> 00:10:11,705
+Now before the activity ends, the activity
+must set its result, by calling
+
+153
+00:10:11,705 --> 00:10:14,460
+set result, and this result will
+eventually
+
+154
+00:10:14,460 --> 00:10:17,240
+be transmitted back to the calling
+activity
+
+155
+00:10:17,240 --> 00:10:23,362
+via the call to, on activity Result.
+So, let's take a look at that code in the
+
+156
+00:10:23,362 --> 00:10:28,330
+map location, from contacts application.
+Here's, on activity result.
+
+157
+00:10:29,510 --> 00:10:31,990
+As you can see, its parameters include the
+initial request
+
+158
+00:10:31,990 --> 00:10:35,290
+code, that was passed in to start activity
+for result.
+
+159
+00:10:36,840 --> 00:10:40,650
+The result code used by the started
+activity, when it called set result.
+
+160
+00:10:41,780 --> 00:10:42,470
+And an intent
+
+161
+00:10:42,470 --> 00:10:45,790
+object, if it was passed in, when Set
+Result was called.
+
+162
+00:10:46,880 --> 00:10:50,690
+On Activity Result usually starts off, by
+checking the result code
+
+163
+00:10:50,690 --> 00:10:55,820
+and request codes, to determine what to
+do, with that particular result.
+
+164
+00:10:55,820 --> 00:11:00,360
+In this example, the next steps are to
+retrieve the underlying contact data,
+
+165
+00:11:00,360 --> 00:11:05,500
+and to parse it to extract, just the
+postal address of the contact.
+
+166
+00:11:05,500 --> 00:11:07,540
+Now, the details aren't important now, so
+I'll skip
+
+167
+00:11:07,540 --> 00:11:07,980
+over them.
+
+168
+00:11:07,980 --> 00:11:11,780
+But once the postal address has been
+extracted, map
+
+169
+00:11:11,780 --> 00:11:15,270
+location from context, operates just like
+map location did.
+
+170
+00:11:16,500 --> 00:11:21,650
+It processes the data, so that it's in a
+format that Google maps expects, puts that
+
+171
+00:11:21,650 --> 00:11:26,980
+data into an intent object, and then calls
+start activity, passing in that intent.
+
+172
+00:11:30,090 --> 00:11:33,790
+The last topic I'll discuss today, is
+handling configuration changes.
+
+173
+00:11:33,790 --> 00:11:37,590
+A device's configuration, refers to device
+
+174
+00:11:37,590 --> 00:11:42,520
+and application characteristics, related
+to application resources.
+
+175
+00:11:42,520 --> 00:11:45,110
+Things like languages used, screen
+
+176
+00:11:45,110 --> 00:11:49,700
+size, keyboard availability and device
+orientation.
+
+177
+00:11:49,700 --> 00:11:52,660
+Now, these characteristics can change at
+run time and
+
+178
+00:11:52,660 --> 00:11:55,340
+when they do, Android will usually kill
+the current
+
+179
+00:11:55,340 --> 00:11:57,870
+activity and then restart it, with
+
+180
+00:11:57,870 --> 00:12:01,848
+the appropriate resources, for the changed
+configuration.
+
+181
+00:12:01,848 --> 00:12:05,950
+Now since configuration changes can happen
+frequently while using an application,
+
+182
+00:12:05,950 --> 00:12:09,760
+you want to make sure, that your life
+cycle method code, is fast.
+
+183
+00:12:09,760 --> 00:12:12,580
+Consider a device orientation changes, for
+example.
+
+184
+00:12:12,580 --> 00:12:17,200
+If you move the device, from portrait mode
+to landscape mode and
+
+185
+00:12:17,200 --> 00:12:20,390
+back to portrait mode, that will cause the
+current activity to be
+
+186
+00:12:20,390 --> 00:12:22,650
+killed and restarted, twice.
+
+187
+00:12:23,670 --> 00:12:26,080
+So, if your start-up code is slow, that's
+really
+
+188
+00:12:26,080 --> 00:12:29,900
+going to affect your user's experience
+with the your application.
+
+189
+00:12:29,900 --> 00:12:32,950
+So, to improve the speed of configuration
+changes, if
+
+190
+00:12:32,950 --> 00:12:36,060
+you need it, Android allows you to do two
+things.
+
+191
+00:12:36,060 --> 00:12:38,960
+One, as the change is occurring, you can
+create and
+
+192
+00:12:38,960 --> 00:12:41,720
+save an arbitrary Java object,
+
+193
+00:12:41,720 --> 00:12:44,850
+that essentially caches important state
+information.
+
+194
+00:12:44,850 --> 00:12:45,640
+And two,
+
+195
+00:12:45,640 --> 00:12:48,330
+you can manually handle the configuration
+change,
+
+196
+00:12:48,330 --> 00:12:51,745
+avoiding the whole shutdown and restart
+sequence, altogether.
+
+197
+00:12:51,745 --> 00:12:53,720
+Let's talk about each one of those, one at
+a time.
+
+198
+00:12:54,880 --> 00:12:57,310
+So, to speed up reconfiguration, I said
+you can cache
+
+199
+00:12:57,310 --> 00:13:01,210
+hard to recompute data and store it in a
+Java object.
+
+200
+00:13:01,210 --> 00:13:03,100
+And one way to do this, is by overriding
+
+201
+00:13:03,100 --> 00:13:07,750
+the onRetainNonConfigurationInstance
+method, which
+
+202
+00:13:07,750 --> 00:13:10,735
+would be called sometime between,
+
+203
+00:13:10,735 --> 00:13:13,580
+onStop and onDestroy.
+
+204
+00:13:13,580 --> 00:13:18,617
+And the object that you build and return,
+in onRetainNonConfiguration instance
+
+205
+00:13:18,617 --> 00:13:20,880
+can be retrieved, when the activity
+
+206
+00:13:20,880 --> 00:13:25,600
+is recreated by calling
+getLastNonConfiguration instance.
+
+207
+00:13:25,600 --> 00:13:27,180
+And that's usually done during the call to
+
+208
+00:13:27,180 --> 00:13:31,550
+the activity's onCreate method, when you
+recreate the activity.
+
+209
+00:13:31,550 --> 00:13:34,040
+Now, note that these methods have been
+deprecated
+
+210
+00:13:34,040 --> 00:13:36,160
+in favor of other methods in the fragment
+
+211
+00:13:36,160 --> 00:13:39,850
+class, and we haven't discussed fragments
+yet, but we'll come
+
+212
+00:13:39,850 --> 00:13:41,940
+back to it in a later lesson, when we do.
+
+213
+00:13:42,970 --> 00:13:46,010
+And the second thing you can do to speed
+up reconfiguration, is
+
+214
+00:13:46,010 --> 00:13:46,950
+to avoid the whole kill and
+
+215
+00:13:46,950 --> 00:13:51,770
+restart sequence altogether, for specific
+configuration changes.
+
+216
+00:13:51,770 --> 00:13:54,823
+And to do this, you declare those specific
+changes
+
+217
+00:13:54,823 --> 00:14:00,200
+that the, your activity will handle, in
+the androidmanifest.xml file.
+
+218
+00:14:00,200 --> 00:14:01,190
+For example,
+
+219
+00:14:01,190 --> 00:14:05,830
+this xml snippet indicates, that my
+activity will manually handle
+
+220
+00:14:05,830 --> 00:14:10,720
+changes in device orientation and screen
+size, and keyboard accessibility.
+
+221
+00:14:11,950 --> 00:14:14,660
+So, if you do handle come configuration
+changes
+
+222
+00:14:14,660 --> 00:14:18,575
+manually, then when those configuration
+changes occur at
+
+223
+00:14:18,575 --> 00:14:21,170
+run-time, your activity will receive a
+call to
+
+224
+00:14:21,170 --> 00:14:26,250
+onConfigurationChanged, and as a
+parameter, this method will
+
+225
+00:14:26,250 --> 00:14:30,780
+receive a configuration object, which
+details the new configuration.
+
+226
+00:14:30,780 --> 00:14:34,670
+So, your code can then read this object,
+and make whatever changes it needs to.
+
+227
+00:14:37,360 --> 00:14:40,250
+So, that's all for today's discussion of
+the activity class.
+
+228
+00:14:40,250 --> 00:14:45,010
+Please join me next time, when we'll
+discuss the intent class, in detail.
+
+229
+00:14:45,010 --> 00:14:45,390
+Thanks.
+
