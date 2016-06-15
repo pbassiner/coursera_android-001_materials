@@ -1,0 +1,1045 @@
+1
+00:00:09,880 --> 00:00:13,190
+Hi, I'm Adam Porter, and this is
+
+2
+00:00:13,190 --> 00:00:18,030
+Programming Mobile Applications for
+Android Handheld Systems.
+
+3
+00:00:19,430 --> 00:00:23,500
+Some services work independently of other
+components.
+
+4
+00:00:23,500 --> 00:00:26,440
+They get started, they do their work, and
+they quit.
+
+5
+00:00:27,610 --> 00:00:30,350
+Other services are instead meant to
+receive
+
+6
+00:00:30,350 --> 00:00:34,630
+requests and to provide responses to other
+components.
+
+7
+00:00:35,770 --> 00:00:39,360
+Sometimes those components are running in
+the same application
+
+8
+00:00:39,360 --> 00:00:44,120
+or process as the service and sometimes,
+you're not.
+
+9
+00:00:44,120 --> 00:00:48,660
+In these cases, components will need to
+bind to the service.
+
+10
+00:00:48,660 --> 00:00:51,740
+That is, they need to open and maintain a
+
+11
+00:00:51,740 --> 00:00:55,480
+connection to the service, so they can
+interact with it.
+
+12
+00:00:56,950 --> 00:01:01,040
+If the component and the service are
+running in different processes, then there
+
+13
+00:01:01,040 --> 00:01:06,960
+are two common approaches for designing a
+service and for binding to that service.
+
+14
+00:01:06,960 --> 00:01:09,720
+The first approach is to use the messenger
+class.
+
+15
+00:01:10,840 --> 00:01:13,720
+The second is to define a remote interface
+
+16
+00:01:13,720 --> 00:01:19,630
+to the service using the AIDL language and
+tools.
+
+17
+00:01:19,630 --> 00:01:21,640
+Let's talk about each of these one at a
+time.
+
+18
+00:01:23,490 --> 00:01:26,570
+The messenger class manages a handler.
+
+19
+00:01:26,570 --> 00:01:29,860
+Using a messenger allows messages to be
+sent
+
+20
+00:01:29,860 --> 00:01:34,450
+from one component to another component
+across process boundaries.
+
+21
+00:01:35,510 --> 00:01:38,360
+Once sent, messages are then queued
+
+22
+00:01:38,360 --> 00:01:41,770
+and processed sequentially by the
+receiving component.
+
+23
+00:01:43,010 --> 00:01:45,570
+So you should use this approach only
+
+24
+00:01:45,570 --> 00:01:48,590
+if your service can tolerate sequential
+access.
+
+25
+00:01:50,040 --> 00:01:53,410
+Now for this approach to work, you'll have
+to implement the client
+
+26
+00:01:53,410 --> 00:01:59,040
+components and the service so that they
+can send and receive messenger messages.
+
+27
+00:02:00,080 --> 00:02:02,430
+On the service side, your service will
+have to
+
+28
+00:02:02,430 --> 00:02:08,130
+create a handler for receiving and
+processing specific messages.
+
+29
+00:02:08,130 --> 00:02:12,130
+And the service will also have to create a
+messenger that provides
+
+30
+00:02:12,130 --> 00:02:17,190
+a binder object back to any client, that
+binds to this service.
+
+31
+00:02:18,970 --> 00:02:23,440
+On the client side, the client binds to
+the service and eventually gets back a
+
+32
+00:02:23,440 --> 00:02:29,860
+binder object; the client then uses this
+binder object to create its own messenger.
+
+33
+00:02:29,860 --> 00:02:32,900
+Which essentially knows how to send
+messages to
+
+34
+00:02:32,900 --> 00:02:35,780
+the handler that we set up inside the
+service.
+
+35
+00:02:36,780 --> 00:02:41,150
+The client then uses that messenger to
+actually send messages
+
+36
+00:02:41,150 --> 00:02:44,540
+to the handler, where they are then
+processed by the service.
+
+37
+00:02:47,020 --> 00:02:50,500
+Our next example applications are called
+Logging Service
+
+38
+00:02:50,500 --> 00:02:55,040
+with Messenger Client and Logging Service
+with Messenger.
+
+39
+00:02:55,040 --> 00:02:58,940
+With these applications, a client sends
+log messages to a
+
+40
+00:02:58,940 --> 00:03:04,850
+remote logging service, which is
+implemented in a separate application.
+
+41
+00:03:04,850 --> 00:03:10,000
+A remote logging service takes these
+messages and then writes them to the log.
+
+42
+00:03:10,000 --> 00:03:11,500
+Let's run these applications now.
+
+43
+00:03:11,500 --> 00:03:12,000
+So,
+
+44
+00:03:16,620 --> 00:03:17,800
+here's my device.
+
+45
+00:03:18,860 --> 00:03:23,439
+Now, I'll start the LoggingService with
+messenger client application.
+
+46
+00:03:24,640 --> 00:03:29,100
+Again, you can see that there's a single
+button, labeled Generate Log Message.
+
+47
+00:03:30,290 --> 00:03:31,150
+Lemme click on that now.
+
+48
+00:03:31,150 --> 00:03:31,650
+Let's
+
+49
+00:03:33,330 --> 00:03:35,170
+take a look at the log console to
+
+50
+00:03:35,170 --> 00:03:37,420
+make sure that the message was actually
+written.
+
+51
+00:03:37,420 --> 00:03:37,920
+So
+
+52
+00:03:40,020 --> 00:03:42,060
+here's my IDE.
+
+53
+00:03:42,060 --> 00:03:43,430
+Let me open the log cat view.
+
+54
+00:03:44,990 --> 00:03:50,000
+And here you can see the log message that
+was written by the log in service.
+
+55
+00:03:51,870 --> 00:03:53,750
+Let's look a the source code for this
+application.
+
+56
+00:03:56,500 --> 00:04:00,110
+So here are the applications open in the
+IDE.
+
+57
+00:04:00,110 --> 00:04:04,547
+Let's start by looking at the
+ServiceLoggingWithMessenger
+
+58
+00:04:04,547 --> 00:04:08,680
+application and now I'll open the
+LoggingService class.
+
+59
+00:04:10,680 --> 00:04:14,260
+As you can see, this class extends the
+Service class.
+
+60
+00:04:16,360 --> 00:04:18,000
+And here, the code creates a
+
+61
+00:04:18,000 --> 00:04:22,772
+Messenger object passing in a new
+IncomingMessageHandler.
+
+62
+00:04:22,772 --> 00:04:27,050
+The IncomingMessageHandler is defined
+here.
+
+63
+00:04:28,830 --> 00:04:34,880
+And the handle message method receives
+messages that are sent to this handler.
+
+64
+00:04:34,880 --> 00:04:42,105
+And in this case, if the message.what
+field is log_op.
+
+65
+00:04:42,105 --> 00:04:44,660
+Then this code writes the message to the
+log.
+
+66
+00:04:46,580 --> 00:04:50,300
+Lastly, this service defines an onBind
+method.
+
+67
+00:04:52,950 --> 00:04:59,300
+This method gets the binder associated
+with the mMessenger object and returns it.
+
+68
+00:04:59,300 --> 00:05:01,610
+And this value will eventually be passed
+
+69
+00:05:01,610 --> 00:05:05,370
+back to clients, that bind to this
+service.
+
+70
+00:05:05,370 --> 00:05:08,540
+So let's switch over and
+
+71
+00:05:08,540 --> 00:05:08,840
+look at
+
+72
+00:05:08,840 --> 00:05:12,508
+the ServiceLoggingWithMessengerClient
+application.
+
+73
+00:05:13,720 --> 00:05:16,550
+Now I'll open the LoggingServiceClient
+class.
+
+74
+00:05:19,140 --> 00:05:21,710
+This code starts by creating an Intent
+that
+
+75
+00:05:21,710 --> 00:05:24,950
+will be used for binding to the logging
+service.
+
+76
+00:05:26,090 --> 00:05:28,900
+Next, the code defines an object
+
+77
+00:05:28,900 --> 00:05:33,160
+that implements the ServiceConnection
+callback methods.
+
+78
+00:05:33,160 --> 00:05:37,090
+In particular, in the onServiceConnected
+method, the
+
+79
+00:05:37,090 --> 00:05:40,620
+code creates a Messenger object passing in
+the
+
+80
+00:05:40,620 --> 00:05:44,240
+binder that was returned from the logging
+service
+
+81
+00:05:44,240 --> 00:05:47,820
+when this class binds to the logging
+service.
+
+82
+00:05:49,570 --> 00:05:52,530
+This class will use this messenger to
+communicate
+
+83
+00:05:52,530 --> 00:05:57,100
+with the login service, now scrolling down
+to onCreate.
+
+84
+00:05:57,100 --> 00:05:59,950
+The code sets a Button listener that calls
+
+85
+00:05:59,950 --> 00:06:04,116
+the logMessageToService method, when this
+button is clicked.
+
+86
+00:06:04,116 --> 00:06:10,250
+And this logMessageToService method
+creates a new message object
+
+87
+00:06:10,250 --> 00:06:15,720
+containing a message code, and containing
+the text to be written to the log.
+
+88
+00:06:15,720 --> 00:06:17,880
+And then it sends that message to the
+
+89
+00:06:17,880 --> 00:06:22,520
+logging service using the messenger
+objects send method.
+
+90
+00:06:24,310 --> 00:06:29,750
+Continuing on, in onResume, the code calls
+bindService.
+
+91
+00:06:29,750 --> 00:06:35,010
+Passing in the right intent, the callback
+object, and
+
+92
+00:06:35,010 --> 00:06:40,510
+a flag that tells Android to create the
+service if it doesn't already exist.
+
+93
+00:06:40,510 --> 00:06:44,540
+Now in onPause, the code unbinds from the
+logging service.
+
+94
+00:06:47,410 --> 00:06:50,780
+So implementing bound services with a
+messenger
+
+95
+00:06:50,780 --> 00:06:53,170
+as we just did is often the simplest
+
+96
+00:06:53,170 --> 00:06:54,890
+way to go as long as you can
+
+97
+00:06:54,890 --> 00:06:58,300
+tolerate having only sequential access to
+the service.
+
+98
+00:06:59,320 --> 00:07:01,495
+When that doesn't work, though, then you
+will
+
+99
+00:07:01,495 --> 00:07:05,710
+want to develop an AIDL interface to your
+service.
+
+100
+00:07:07,440 --> 00:07:13,730
+AIDL stands for the Android Interface
+Definition Language.
+
+101
+00:07:13,730 --> 00:07:15,680
+When you use this language to implement
+
+102
+00:07:15,680 --> 00:07:19,750
+your service, you normally do the
+following things.
+
+103
+00:07:19,750 --> 00:07:25,890
+First, you'll define the service's remote
+interface using AIDL.
+
+104
+00:07:25,890 --> 00:07:30,040
+Next, you'll implement the methods of that
+remote interface.
+
+105
+00:07:31,130 --> 00:07:36,840
+After that, you'll implement the various
+service life cycle and callback methods.
+
+106
+00:07:36,840 --> 00:07:40,380
+And finally, you'll implement the client
+methods.
+
+107
+00:07:40,380 --> 00:07:41,470
+Let's talk about these steps.
+
+108
+00:07:43,020 --> 00:07:45,890
+To define the service's remote interface,
+you'll need
+
+109
+00:07:45,890 --> 00:07:51,550
+to create an interface definition using
+the AIDL language.
+
+110
+00:07:51,550 --> 00:07:54,380
+And this interface defines the methods
+through
+
+111
+00:07:54,380 --> 00:07:57,620
+which components can interact with your
+service.
+
+112
+00:07:59,080 --> 00:08:04,410
+Now as I said, this interface definition
+is written in the AIDL language.
+
+113
+00:08:05,580 --> 00:08:08,370
+AIDL is similar in many ways to the syntax
+
+114
+00:08:08,370 --> 00:08:12,370
+that you use in Java when you create
+interfaces.
+
+115
+00:08:12,370 --> 00:08:16,880
+For example, you can declare methods that
+need to be implemented
+
+116
+00:08:16,880 --> 00:08:21,050
+if an object wants to say that it conforms
+to that interface.
+
+117
+00:08:22,550 --> 00:08:24,440
+One way in which it differs however, is
+
+118
+00:08:24,440 --> 00:08:27,940
+that in AIDL, you can't declare static
+fields.
+
+119
+00:08:29,260 --> 00:08:33,760
+Another difference is that non-primitive
+parameters to methods
+
+120
+00:08:33,760 --> 00:08:37,960
+defined by the interface, require a
+directional tag.
+
+121
+00:08:39,130 --> 00:08:45,230
+And this indicates how data is copied into
+and out of the methods.
+
+122
+00:08:45,230 --> 00:08:49,540
+And the possibilities for this directional
+tag are In, which
+
+123
+00:08:49,540 --> 00:08:53,930
+means the data is only transferred into
+the remote method.
+
+124
+00:08:53,930 --> 00:08:58,280
+Out, which means the data is only returned
+out of the remote method.
+
+125
+00:08:58,280 --> 00:09:02,090
+And Inout, which means the data is
+transferred
+
+126
+00:09:02,090 --> 00:09:05,550
+both into and out of the remote method.
+
+127
+00:09:07,600 --> 00:09:09,790
+The parameters and return types of these
+
+128
+00:09:09,790 --> 00:09:13,880
+remote methods are limited to the
+following types.
+
+129
+00:09:13,880 --> 00:09:16,940
+You can have Java primitive types such as
+int, float,
+
+130
+00:09:16,940 --> 00:09:21,720
+and boolean, you can have a string or a
+character sequence.
+
+131
+00:09:23,570 --> 00:09:28,910
+If you define other AIDL interfaces you
+can also use those as well.
+
+132
+00:09:28,910 --> 00:09:33,560
+And you can use any class that implements
+the parcelable interface.
+
+133
+00:09:34,830 --> 00:09:37,650
+You can also have lists, whose elements
+are
+
+134
+00:09:37,650 --> 00:09:40,660
+any of those types that I just mentioned.
+
+135
+00:09:40,660 --> 00:09:45,190
+And these lists can be defined as generic
+classes that take a type parameter.
+
+136
+00:09:46,270 --> 00:09:51,780
+And finally, you can also use maps, of any
+of the types I've discussed.
+
+137
+00:09:51,780 --> 00:09:55,950
+However AIDL does not allow for generic
+map types.
+
+138
+00:09:57,820 --> 00:10:00,130
+So here's a simple example of an AIDL
+
+139
+00:10:00,130 --> 00:10:03,550
+interface from the example that we'll go
+over shortly.
+
+140
+00:10:04,570 --> 00:10:08,800
+This interface is called KeyGenerator and
+it defines a single
+
+141
+00:10:08,800 --> 00:10:14,080
+method called getKey it takes no
+parameters and returns a string.
+
+142
+00:10:15,980 --> 00:10:18,346
+Our next example applications
+
+143
+00:10:18,346 --> 00:10:23,120
+are called ServiceIDService and
+ServiceIDServiceClient.
+
+144
+00:10:24,190 --> 00:10:27,940
+In these applications, a client in one
+application
+
+145
+00:10:27,940 --> 00:10:32,180
+binds to a service hosted in another
+application.
+
+146
+00:10:32,180 --> 00:10:36,660
+The client then retrieves a unique ID from
+the service.
+
+147
+00:10:37,670 --> 00:10:41,290
+For this example, we're going to assume
+that, for whatever
+
+148
+00:10:41,290 --> 00:10:46,280
+reason, we want the service to handle ID
+requests concurrently.
+
+149
+00:10:46,280 --> 00:10:52,100
+And so we've decided to use AIDL to define
+a remote interface to the service.
+
+150
+00:10:53,170 --> 00:10:55,200
+Let's see these applications in action.
+
+151
+00:10:57,060 --> 00:11:03,996
+So here's my device, now I'll start the
+ServiceIDServiceClient application.
+
+152
+00:11:03,996 --> 00:11:10,116
+As you can see the application presents a
+single button labeled Get New ID, when I
+
+153
+00:11:10,116 --> 00:11:16,530
+press this button, this application will
+bind to a service to retrieve a unique ID.
+
+154
+00:11:17,910 --> 00:11:21,319
+This application will then display that
+new ID.
+
+155
+00:11:21,319 --> 00:11:23,365
+So here it goes.
+
+156
+00:11:23,365 --> 00:11:26,238
+And there's my new ID.
+
+157
+00:11:26,238 --> 00:11:28,840
+Let's look at the source code for these
+applications.
+
+158
+00:11:30,830 --> 00:11:34,420
+So here are the applications open in the
+IDE.
+
+159
+00:11:34,420 --> 00:11:37,960
+Let's start by looking at the
+ServiceIDService application.
+
+160
+00:11:39,780 --> 00:11:43,960
+Now I'll start by opening the
+keygenerator.aidl file.
+
+161
+00:11:45,660 --> 00:11:48,940
+As we saw earlier this file defines the
+interface
+
+162
+00:11:48,940 --> 00:11:53,040
+that clients can use to interact with this
+service.
+
+163
+00:11:53,040 --> 00:11:55,955
+That is they can call one method.
+
+164
+00:11:55,955 --> 00:11:59,320
+GetKey and then we'll get back a string.
+
+165
+00:12:00,530 --> 00:12:03,400
+Now let's look at the KeyGenerator import
+class.
+
+166
+00:12:04,600 --> 00:12:07,820
+This class implements the remote methods
+
+167
+00:12:07,820 --> 00:12:11,410
+defined in the AIDL KeyGenerator
+interface.
+
+168
+00:12:12,710 --> 00:12:18,240
+First, the class defines a set of IDs that
+it has already assigned.
+
+169
+00:12:19,590 --> 00:12:22,400
+And know that this code will not guarantee
+that all keys
+
+170
+00:12:22,400 --> 00:12:27,220
+are unique if this service happens to be
+killed and then restarted.
+
+171
+00:12:28,330 --> 00:12:32,830
+To do that, you would need to store and
+restore the already assigned keys.
+
+172
+00:12:34,540 --> 00:12:37,650
+Now, in order to implement this interface,
+you need to
+
+173
+00:12:37,650 --> 00:12:43,820
+implement the remote methods inside an
+abstract inner class called Stub.
+
+174
+00:12:43,820 --> 00:12:47,450
+And that's just the name choice that the
+AIDL
+
+175
+00:12:47,450 --> 00:12:50,640
+compiler makes, and you have to respect
+that choice.
+
+176
+00:12:53,110 --> 00:12:57,620
+Here the code makes a new
+KeyGenerator.Stub instance,
+
+177
+00:12:57,620 --> 00:13:00,330
+and then defines the getKey method in
+line.
+
+178
+00:13:01,630 --> 00:13:05,430
+The methods of this class need to be
+thread safe.
+
+179
+00:13:05,430 --> 00:13:09,219
+So this class first synchronizes on the
+mIDs object.
+
+180
+00:13:10,330 --> 00:13:13,540
+And then it generates new IDs, until
+
+181
+00:13:13,540 --> 00:13:16,840
+it finds one that hasn't already been
+assigned.
+
+182
+00:13:18,040 --> 00:13:22,670
+It then stores the ID, and returns a
+string version of it to the client.
+
+183
+00:13:23,990 --> 00:13:26,770
+And finally, down in the onbind method,
+the
+
+184
+00:13:26,770 --> 00:13:30,410
+code returns the Stub class just defined
+above.
+
+185
+00:13:30,410 --> 00:13:32,090
+Which will be eventually given to the
+
+186
+00:13:32,090 --> 00:13:35,100
+client so it can interact with this
+service.
+
+187
+00:13:36,410 --> 00:13:37,010
+Okay.
+
+188
+00:13:37,010 --> 00:13:43,522
+So now let's switch over and look at the
+ServiceIDServiceClient application.
+
+189
+00:13:47,460 --> 00:13:51,310
+Now, I'll open the main activity for this
+application.
+
+190
+00:13:51,310 --> 00:13:54,460
+In on create, the code sets up a button
+
+191
+00:13:54,460 --> 00:13:59,175
+that will make a call to the
+KeyGeneratorService.getKey method.
+
+192
+00:14:00,280 --> 00:14:03,050
+It will then display the result in a text
+view.
+
+193
+00:14:05,190 --> 00:14:09,510
+In onResume, the code binds to the
+KeyGenerator service
+
+194
+00:14:09,510 --> 00:14:14,590
+ended onPause, the code unbinds from the
+KeyGenerator service.
+
+195
+00:14:16,180 --> 00:14:21,200
+Scrolling down, the code creates the
+service connection object.
+
+196
+00:14:22,320 --> 00:14:28,370
+And in particular, in the
+onServiceConnected method, the code
+
+197
+00:14:28,370 --> 00:14:34,442
+takes the Stub that was returned from the
+KeyGenerator service.
+
+198
+00:14:34,442 --> 00:14:42,041
+And calls the KeyGenerator.Stub
+asInterface method.
+
+199
+00:14:42,041 --> 00:14:45,321
+This method returns an object that
+essentially
+
+200
+00:14:45,321 --> 00:14:49,371
+represents the connection to the
+KeyGenerator service.
+
+201
+00:14:49,371 --> 00:14:54,621
+[BLANK_AUDIO]
+
+202
+00:14:54,621 --> 00:14:58,626
+So that brings us to the end of our
+discussion on services.
+
+203
+00:14:58,626 --> 00:15:02,130
+And in fact, that brings us to the end of
+the course.
+
+204
+00:15:02,130 --> 00:15:03,100
+You did it.
+
+205
+00:15:03,100 --> 00:15:04,658
+Congratulations.
+
+206
+00:15:04,658 --> 00:15:08,630
+It's been my pleasure, indeed, my honor to
+be your instructor.
+
+207
+00:15:08,630 --> 00:15:11,070
+And I truly hope that you're leaving this
+class
+
+208
+00:15:11,070 --> 00:15:13,671
+with much, much more than what you brought
+to it.
+
+209
+00:15:13,671 --> 00:15:15,575
+I know I am.
+
+210
+00:15:15,575 --> 00:15:18,490
+Now if you remember back to the start of
+the class, I asked you to
+
+211
+00:15:18,490 --> 00:15:22,260
+write a note to yourself, spelling out
+what you hoped to learn from this course.
+
+212
+00:15:23,350 --> 00:15:25,190
+When you get a chance, take a look at
+
+213
+00:15:25,190 --> 00:15:27,970
+that note, and let us know how things
+turned out.
+
+214
+00:15:27,970 --> 00:15:28,670
+We'd love to hear.
+
+215
+00:15:30,200 --> 00:15:31,000
+So that's all for now.
+
+216
+00:15:32,020 --> 00:15:34,250
+Maybe our paths will cross again.
+
+217
+00:15:34,250 --> 00:15:36,140
+I certainly hope so.
+
+218
+00:15:36,140 --> 00:15:39,177
+Until then, however, keep on learning.
+
+219
+00:15:39,177 --> 00:15:40,594
+So long.
+
+220
+00:15:40,594 --> 00:15:44,540
+[BLANK_AUDIO]
+

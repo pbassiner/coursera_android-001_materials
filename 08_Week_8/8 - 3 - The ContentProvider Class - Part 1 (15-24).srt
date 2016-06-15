@@ -1,0 +1,976 @@
+1
+00:00:00,000 --> 00:00:09,564
+[BLANK_AUDIO]
+
+2
+00:00:09,564 --> 00:00:11,880
+Hi, I'm Adam Porter.
+
+3
+00:00:11,880 --> 00:00:18,030
+And this is Programming Mobile
+Applications for Android Handheld Systems.
+
+4
+00:00:19,340 --> 00:00:21,460
+So far in this course we've only talked in
+
+5
+00:00:21,460 --> 00:00:26,760
+detail about two of the four fundamental
+components of Android.
+
+6
+00:00:26,760 --> 00:00:31,430
+We've talked about activities and we've
+talked about broadcast receivers.
+
+7
+00:00:31,430 --> 00:00:33,980
+Well in this lesson, we'll discuss one
+
+8
+00:00:33,980 --> 00:00:38,210
+more of these fundamental components:
+content providers.
+
+9
+00:00:40,260 --> 00:00:42,710
+In Android content providers represent
+
+10
+00:00:42,710 --> 00:00:46,870
+centralized repositories of structured
+data.
+
+11
+00:00:46,870 --> 00:00:50,450
+They encapsulated different data sets and
+they specify
+
+12
+00:00:50,450 --> 00:00:54,490
+and enforce permissions needed to access
+that data.
+
+13
+00:00:56,580 --> 00:01:01,090
+In many ways the content provider class
+resembles the databases,
+
+14
+00:01:01,090 --> 00:01:05,020
+that we talked about in the lesson on data
+storage.
+
+15
+00:01:05,020 --> 00:01:08,950
+Content providers however, were
+specifically to allow
+
+16
+00:01:08,950 --> 00:01:12,380
+data to be shared across different
+applications.
+
+17
+00:01:13,570 --> 00:01:17,350
+Applications that want to access a
+particular content provider
+
+18
+00:01:17,350 --> 00:01:22,516
+do so by using a companion class called
+Content Resolver.
+
+19
+00:01:22,516 --> 00:01:29,420
+ContentResolvers present a database-style
+interface that lets applications
+
+20
+00:01:29,420 --> 00:01:32,770
+read and write the data that is stored
+
+21
+00:01:32,770 --> 00:01:35,910
+in a content provider, and it therefore,
+supports
+
+22
+00:01:35,910 --> 00:01:42,120
+methods such as query, insert, update,
+delete and more.
+
+23
+00:01:43,560 --> 00:01:48,540
+ContentResolvers also provide additional
+services such as notifying
+
+24
+00:01:48,540 --> 00:01:52,820
+registered observers when data in the
+content provider changes.
+
+25
+00:01:54,630 --> 00:01:59,220
+To use a content resolver, your
+application will first get a reference
+
+26
+00:01:59,220 --> 00:02:02,850
+to the current contexts, ContentResolver,
+by
+
+27
+00:02:02,850 --> 00:02:07,000
+calling the content class's
+getContentResolver method.
+
+28
+00:02:07,000 --> 00:02:11,230
+And the end result is that together,
+
+29
+00:02:11,230 --> 00:02:14,690
+the content provider and the content
+resolver Make
+
+30
+00:02:14,690 --> 00:02:17,170
+it possible for code running in one
+
+31
+00:02:17,170 --> 00:02:21,360
+process to access data managed in another
+process.
+
+32
+00:02:23,750 --> 00:02:25,140
+To give some examples.
+
+33
+00:02:25,140 --> 00:02:29,420
+Android comes with a number of standard
+content providers.
+
+34
+00:02:29,420 --> 00:02:32,850
+For instance, there's a content provider
+that stores browser
+
+35
+00:02:32,850 --> 00:02:36,660
+information such as your bookmarks and
+your browsing history.
+
+36
+00:02:37,800 --> 00:02:42,000
+There's one for keeping track of the
+telephone calls, that you make.
+
+37
+00:02:42,000 --> 00:02:45,730
+And there's one from one managing contact
+information, there's
+
+38
+00:02:45,730 --> 00:02:49,340
+another for keeping track of your
+pictures, songs and videos.
+
+39
+00:02:50,380 --> 00:02:54,380
+And yet another for keeping track of the
+words you type into various
+
+40
+00:02:54,380 --> 00:02:56,860
+applications So that your device can give
+
+41
+00:02:56,860 --> 00:03:00,070
+better and better predictive typing over
+time.
+
+42
+00:03:00,070 --> 00:03:02,190
+And of course there are many more.
+
+43
+00:03:04,770 --> 00:03:07,400
+Logically, the data managed by a content
+
+44
+00:03:07,400 --> 00:03:11,370
+provider is represented as a database
+table.
+
+45
+00:03:11,370 --> 00:03:16,200
+For example, a content provider for
+managing a list of artists.
+
+46
+00:03:16,200 --> 00:03:20,560
+Might have data elements or columns for
+each record.
+
+47
+00:03:20,560 --> 00:03:24,730
+For example, an ID field called _ID, and
+
+48
+00:03:24,730 --> 00:03:28,270
+an artist name field, in this case called
+artist.
+
+49
+00:03:30,370 --> 00:03:33,580
+Applications identify the data they want
+and the
+
+50
+00:03:33,580 --> 00:03:37,370
+content provider who has that data through
+a URI.
+
+51
+00:03:38,490 --> 00:03:42,890
+The specific content of that URI
+identifies a
+
+52
+00:03:42,890 --> 00:03:48,330
+specific data set that's managed by a
+specific ContentProvider.
+
+53
+00:03:48,330 --> 00:03:49,420
+Let's look at that format.
+
+54
+00:03:51,670 --> 00:03:57,256
+Content URIs start with the string
+content://.
+
+55
+00:03:58,480 --> 00:04:02,180
+And this is the URI's scheme and it
+indicates that the
+
+56
+00:04:02,180 --> 00:04:06,600
+URI refers to data that is managed by a
+content provider.
+
+57
+00:04:07,870 --> 00:04:12,740
+Next, the URI specifies it's authority
+which essentially names
+
+58
+00:04:12,740 --> 00:04:17,040
+the specific content provider who has the
+desired data.
+
+59
+00:04:18,150 --> 00:04:21,800
+After that the URI can contain 0 or more
+segments
+
+60
+00:04:22,890 --> 00:04:27,100
+which indicate the specific data set
+containing the desired data.
+
+61
+00:04:28,200 --> 00:04:32,640
+And finally URI can have a optional id
+which
+
+62
+00:04:32,640 --> 00:04:37,090
+would indicate a specific record within
+the desired data set.
+
+63
+00:04:39,320 --> 00:04:42,300
+For example, applications that want to
+access the
+
+64
+00:04:42,300 --> 00:04:46,870
+contacts content provider might use the
+following URI.
+
+65
+00:04:48,480 --> 00:04:51,028
+This URI specifies a content scheme.
+
+66
+00:04:51,028 --> 00:04:57,980
+It specifies com.android.contacts as it's
+authority.
+
+67
+00:04:59,360 --> 00:05:03,650
+Its path has the single string contacts,
+which basically
+
+68
+00:05:03,650 --> 00:05:08,620
+corresponds to a logical table within the
+content provider's database.
+
+69
+00:05:10,100 --> 00:05:15,620
+And in this case, there's no ID field, so
+that URI is interpreted as referring
+
+70
+00:05:15,620 --> 00:05:20,410
+to the entire table, not to a single
+record within the table.
+
+71
+00:05:23,180 --> 00:05:29,240
+An application can use this URI with a
+content resolver method, such as the query
+
+72
+00:05:29,240 --> 00:05:32,470
+method, to retrieve some or all of
+
+73
+00:05:32,470 --> 00:05:36,450
+the contact records managed by the content
+provider.
+
+74
+00:05:36,450 --> 00:05:39,090
+As you can see, the query method takes
+several
+
+75
+00:05:39,090 --> 00:05:42,970
+parameters, including a URI, something
+like what we just saw,
+
+76
+00:05:42,970 --> 00:05:47,980
+an array of strings which specifies the
+specific columns
+
+77
+00:05:47,980 --> 00:05:51,880
+within the database that should be
+retrieved from the ContentProvider.
+
+78
+00:05:51,880 --> 00:05:55,550
+And several more strings that are used to
+perform
+
+79
+00:05:55,550 --> 00:05:59,800
+the SQL query to be processed by the
+ContentProvider.
+
+80
+00:06:01,030 --> 00:06:04,320
+Now these strings can be used to retrieve
+particular subsets of
+
+81
+00:06:04,320 --> 00:06:09,590
+the data, and to specify an ordering
+criteria for the results.
+
+82
+00:06:09,590 --> 00:06:15,150
+Let's take a look at an application that
+uses this method, our
+
+83
+00:06:15,150 --> 00:06:19,850
+first example application is called
+ContentProvider with Cursor Adapter.
+
+84
+00:06:21,290 --> 00:06:23,480
+This application extracts contact
+
+85
+00:06:23,480 --> 00:06:26,900
+information from the contacts
+ContentProvider.
+
+86
+00:06:27,980 --> 00:06:34,980
+And then it displays each contact's name
+and photo, if they happen to have a photo.
+
+87
+00:06:34,980 --> 00:06:36,880
+Let's see that application in action.
+
+88
+00:06:39,020 --> 00:06:39,840
+So, here's my device.
+
+89
+00:06:41,060 --> 00:06:45,670
+Now I'll start the ContentProvider with
+Cursor Adapter application.
+
+90
+00:06:47,100 --> 00:06:50,120
+As you can see this application is now
+presenting
+
+91
+00:06:50,120 --> 00:06:54,960
+the names and photos of some of my
+contacts.
+
+92
+00:06:54,960 --> 00:06:57,140
+Let's look at the source code for this
+application,
+
+93
+00:06:59,610 --> 00:07:02,990
+so here's the application open in the IDE.
+
+94
+00:07:02,990 --> 00:07:05,110
+Now I open the main activity.
+
+95
+00:07:06,325 --> 00:07:08,700
+In on create the code first defines the
+
+96
+00:07:08,700 --> 00:07:13,550
+columns that it would request from the
+contact, ContentProvider.
+
+97
+00:07:14,660 --> 00:07:16,130
+Now there're of course many different
+
+98
+00:07:16,130 --> 00:07:20,230
+pieces of data associated with each
+contact.
+
+99
+00:07:20,230 --> 00:07:23,129
+But this application is only interested in
+the
+
+100
+00:07:23,129 --> 00:07:26,760
+contacts name and his or her thumbnail
+photo.
+
+101
+00:07:27,920 --> 00:07:33,460
+Next, the code gets a reference to to
+context's ContentResolver.
+
+102
+00:07:33,460 --> 00:07:38,930
+And after that, the code defines a string
+that it uses to filter out contacts
+
+103
+00:07:38,930 --> 00:07:44,350
+with missing or empty names, or if they
+are unstarred.
+
+104
+00:07:45,690 --> 00:07:51,290
+Now, the code creates a string that will
+define a sorting order for the resulting
+
+105
+00:07:51,290 --> 00:07:53,920
+data, and that means that records will be
+
+106
+00:07:53,920 --> 00:07:58,300
+sorted in ascending order of their _ID
+fields.
+
+107
+00:08:01,020 --> 00:08:04,254
+Next, the code issues a call to the query
+method.
+
+108
+00:08:04,254 --> 00:08:09,600
+And the parameters for this call, include
+the URI, which is
+
+109
+00:08:09,600 --> 00:08:14,990
+defined by contract class; called
+Contacts, the columns
+
+110
+00:08:14,990 --> 00:08:20,370
+to extract, the where clause to filter out
+specific contacts,
+
+111
+00:08:22,670 --> 00:08:24,820
+and the string defining the sort order.
+
+112
+00:08:26,640 --> 00:08:29,730
+And this method returns a cursor, which
+will allow
+
+113
+00:08:29,730 --> 00:08:33,350
+the application to iterate over the
+results of this query.
+
+114
+00:08:35,010 --> 00:08:39,380
+And finally the code creates and sets a
+new adapter which
+
+115
+00:08:39,380 --> 00:08:43,070
+will be used by the list view, to display
+the contact info.
+
+116
+00:08:44,120 --> 00:08:46,740
+In this case, the adapter is a contact
+
+117
+00:08:46,740 --> 00:08:51,480
+info list adapter which is defined by this
+application.
+
+118
+00:08:51,480 --> 00:08:52,710
+Let's open that class now.
+
+119
+00:08:56,100 --> 00:08:59,580
+In this class's constructor, the code
+finds and stores
+
+120
+00:08:59,580 --> 00:09:03,850
+a default image for contacts that have no
+thumbnail photo.
+
+121
+00:09:05,390 --> 00:09:09,320
+Now, when the List View needs views to
+display,
+
+122
+00:09:09,320 --> 00:09:12,570
+it will first call the newView method to
+get
+
+123
+00:09:12,570 --> 00:09:15,750
+a brand new view, and then it will call
+
+124
+00:09:15,750 --> 00:09:19,940
+the bindView method to add data to that
+view.
+
+125
+00:09:19,940 --> 00:09:22,310
+Let's look at each of these two methods,
+one at a time.
+
+126
+00:09:25,030 --> 00:09:29,150
+First, the newView method gets a reference
+to the LayoutInflater service.
+
+127
+00:09:31,100 --> 00:09:33,400
+And then, it calls the inflate method to
+
+128
+00:09:33,400 --> 00:09:37,020
+create the newView based on an XLM
+resource.
+
+129
+00:09:38,510 --> 00:09:42,390
+Now, down in the bindView method, the code
+fills in that view.
+
+130
+00:09:43,400 --> 00:09:47,010
+First, it displays the contact's name
+within a text view.
+
+131
+00:09:48,480 --> 00:09:52,070
+And next, it stores a reference to an
+image view within this
+
+132
+00:09:52,070 --> 00:09:57,610
+view, and it stores the default photo in
+the photo bitmap variable.
+
+133
+00:09:59,190 --> 00:10:05,030
+After that, the code checks whether the is
+an actual photo stored for this contact.
+
+134
+00:10:05,030 --> 00:10:09,820
+And if so, it gets the URI associated with
+that photo and
+
+135
+00:10:09,820 --> 00:10:14,230
+then opens an input stream to read the
+photo data into memory.
+
+136
+00:10:16,010 --> 00:10:18,880
+Next, it turns that data into a bitmap
+
+137
+00:10:18,880 --> 00:10:21,900
+which it stores in the photo bitmap
+variable.
+
+138
+00:10:23,100 --> 00:10:26,160
+And finally, the code sets the photo
+bitmap.
+
+139
+00:10:26,160 --> 00:10:30,540
+As the image bitmap for the image view
+object we saw earlier.
+
+140
+00:10:33,950 --> 00:10:37,090
+When an application queries a
+ContentProvider, that
+
+141
+00:10:37,090 --> 00:10:39,830
+operation can take a while to complete.
+
+142
+00:10:41,040 --> 00:10:45,020
+And as we've mentioned in other contexts,
+we typically want to avoid doing
+
+143
+00:10:45,020 --> 00:10:48,390
+intensive operations on the main thread,
+
+144
+00:10:48,390 --> 00:10:52,010
+because that can negatively affect
+application responsiveness.
+
+145
+00:10:53,320 --> 00:10:54,770
+To prevent this from happening when we
+
+146
+00:10:54,770 --> 00:11:01,350
+use ContentProviders, Android provides the
+CursorLoader class.
+
+147
+00:11:01,350 --> 00:11:05,060
+The CursorLoader uses an AsyncTask so that
+queries will be
+
+148
+00:11:05,060 --> 00:11:08,100
+performed on a background thread and not
+on the main thread.
+
+149
+00:11:10,320 --> 00:11:13,260
+To use a CursorLoader, your application
+will first need
+
+150
+00:11:13,260 --> 00:11:19,650
+to create an object that implements the
+LoaderManager's LoaderCallback interface.
+
+151
+00:11:19,650 --> 00:11:23,620
+And then, at run time, it will need to
+create and initialize
+
+152
+00:11:23,620 --> 00:11:25,760
+the CursorLoader with the help of
+
+153
+00:11:25,760 --> 00:11:28,980
+that object that implements the loader
+callbacks.
+
+154
+00:11:30,490 --> 00:11:33,530
+To do this, the application will call the
+
+155
+00:11:33,530 --> 00:11:38,650
+LoaderManager's initLoader method to
+create and initialize a loader.
+
+156
+00:11:39,740 --> 00:11:44,260
+That method takes several parameters,
+including an ID,
+
+157
+00:11:44,260 --> 00:11:48,550
+arguments, and the object that implements
+the LoaderCallbacks.
+
+158
+00:11:50,450 --> 00:11:54,710
+After initLoader was called, several
+callbacks will occur.
+
+159
+00:11:54,710 --> 00:11:59,010
+The first callback will be to the onCreate
+loader method.
+
+160
+00:11:59,010 --> 00:12:04,270
+In this method, we'll create and return a
+new loader for the specified ID.
+
+161
+00:12:04,270 --> 00:12:07,990
+And when that loader finishes loading its
+
+162
+00:12:07,990 --> 00:12:13,050
+data, Android calls the next callback
+method, onLoadFinished.
+
+163
+00:12:14,200 --> 00:12:17,440
+This method receives the newly created
+loader
+
+164
+00:12:17,440 --> 00:12:20,470
+and a cursor containing the relevant data.
+
+165
+00:12:22,250 --> 00:12:28,310
+When a previously created loader is reset,
+the onLoaderReset method is called.
+
+166
+00:12:28,310 --> 00:12:31,550
+In this method, applications will
+typically remove any
+
+167
+00:12:31,550 --> 00:12:35,150
+references they have to the previous
+loader's data.
+
+168
+00:12:37,360 --> 00:12:43,330
+Our next example application is called
+ContentProviderWithCursorLoader.
+
+169
+00:12:43,330 --> 00:12:47,540
+This application produces the same result
+as our previous example.
+
+170
+00:12:47,540 --> 00:12:52,930
+It extracts contact information from the
+Android Contacts ContentProvider
+
+171
+00:12:52,930 --> 00:12:58,770
+and it then displays each contact's name
+and photo if the photo is available.
+
+172
+00:12:58,770 --> 00:13:02,960
+However, this application performs the
+ContentProvider Query
+
+173
+00:13:02,960 --> 00:13:07,300
+in a background thread using the
+CursorLoader.
+
+174
+00:13:07,300 --> 00:13:08,910
+Let's see that application in action.
+
+175
+00:13:11,580 --> 00:13:14,390
+So here's my device, now I'll start
+
+176
+00:13:14,390 --> 00:13:18,150
+up the Content Provider with Cursor Loader
+Application.
+
+177
+00:13:19,900 --> 00:13:24,510
+And as promised we see the same data, that
+we did with the previous application.
+
+178
+00:13:25,640 --> 00:13:27,770
+Let's take a look at the source code for
+this application
+
+179
+00:13:30,090 --> 00:13:33,320
+So here's the application, open in the
+IDE.
+
+180
+00:13:34,820 --> 00:13:36,828
+Now, I'll open the main activity.
+
+181
+00:13:36,828 --> 00:13:40,860
+And so in on create, you'll see that this
+
+182
+00:13:40,860 --> 00:13:46,140
+application creates and sets an empty
+adapter, because there's no
+
+183
+00:13:46,140 --> 00:13:50,230
+data to show at this point Next, the code
+
+184
+00:13:50,230 --> 00:13:55,610
+gets loaderManager and then calls the
+initLoader method on it.
+
+185
+00:13:55,610 --> 00:13:58,500
+Passing in the id zero.
+
+186
+00:13:58,500 --> 00:14:01,580
+Passing in null for the arguments.
+
+187
+00:14:01,580 --> 00:14:04,940
+And passing in the reference this as the
+
+188
+00:14:04,940 --> 00:14:08,340
+object to call back as the loader
+progresses.
+
+189
+00:14:10,290 --> 00:14:13,440
+As we said before, the first call back
+method to be called will be the
+
+190
+00:14:13,440 --> 00:14:20,060
+on create loader method and this code sets
+up the same filters that we saw before.
+
+191
+00:14:21,260 --> 00:14:24,440
+We don't want contacts with empty or
+missing names
+
+192
+00:14:25,570 --> 00:14:28,610
+and we don't want contacts that are un
+stared.
+
+193
+00:14:28,610 --> 00:14:31,607
+We also want this date to be sorted in a
+ascending order.
+
+194
+00:14:31,607 --> 00:14:36,510
+By I.D. And then the code creates and
+returns a
+
+195
+00:14:36,510 --> 00:14:41,800
+new CursorLoader, passing in the
+information that we just set up.
+
+196
+00:14:45,060 --> 00:14:46,800
+The query that provides the data for this
+
+197
+00:14:46,800 --> 00:14:49,520
+loader will be performed on a background
+thread.
+
+198
+00:14:51,140 --> 00:14:55,740
+And when that query is finished, the
+onLoad finish method will be called.
+
+199
+00:14:57,250 --> 00:15:00,480
+This method takes the cursor that is
+passed in, and
+
+200
+00:15:00,480 --> 00:15:04,460
+swaps in into the list adapter, used by
+this application.
+
+201
+00:15:05,760 --> 00:15:07,610
+And finally, when the cursor is about to
+
+202
+00:15:07,610 --> 00:15:11,380
+be closed, the onLoader reset method is
+called.
+
+203
+00:15:12,640 --> 00:15:15,755
+In this case, that method simply swaps in
+
+204
+00:15:15,755 --> 00:15:19,321
+a null cursor to the list view's list
+adapter.
+
+205
+00:15:19,321 --> 00:15:24,690
+[BLANK_AUDIO]
+

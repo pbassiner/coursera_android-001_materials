@@ -1,0 +1,808 @@
+1
+00:00:00,000 --> 00:00:09,749
+[BLANK_AUDIO]
+
+2
+00:00:09,749 --> 00:00:15,461
+Hi, I'm Adam Porter and this is
+Programming Mobile Applications
+
+3
+00:00:15,461 --> 00:00:20,230
+for Android Handheld systems In addition
+
+4
+00:00:20,230 --> 00:00:23,200
+to the query method, some common content
+resolver
+
+5
+00:00:23,200 --> 00:00:27,690
+methods include: the delete, insert and
+update methods.
+
+6
+00:00:28,780 --> 00:00:33,920
+The delete method takes three parameters,
+a U.R.I. specifying the data to be
+
+7
+00:00:33,920 --> 00:00:39,560
+deleted, a string specifying a pattern for
+selecting which rows to delete.
+
+8
+00:00:40,610 --> 00:00:45,660
+And another array of strings, providing
+arguments for that selection pattern.
+
+9
+00:00:46,920 --> 00:00:50,890
+This method returns the number of rows
+that were deleted.
+
+10
+00:00:52,400 --> 00:00:56,090
+The insert method takes a URI indicating
+the data
+
+11
+00:00:56,090 --> 00:00:59,139
+set into which you want to insert a new
+row.
+
+12
+00:01:00,700 --> 00:01:04,300
+It also takes an object of the content
+values
+
+13
+00:01:04,300 --> 00:01:08,680
+type, which holds the fields for that new
+row.
+
+14
+00:01:08,680 --> 00:01:14,427
+And this method returns the URI of the
+newly inserted row.
+
+15
+00:01:14,427 --> 00:01:17,000
+And the update method also takes a URI
+
+16
+00:01:17,000 --> 00:01:21,410
+and a content values object, just like
+Insert did.
+
+17
+00:01:21,410 --> 00:01:27,040
+But like the delete method, it also takes
+a string selection pattern and an
+
+18
+00:01:27,040 --> 00:01:33,450
+array of selection string arguments; for
+indicating which specific rows to update.
+
+19
+00:01:33,450 --> 00:01:36,910
+And this method returns the number of rows
+that were updated
+
+20
+00:01:39,690 --> 00:01:45,690
+Our next example application is called
+content provider insert contacts.
+
+21
+00:01:45,690 --> 00:01:48,250
+This application reads several contacts
+
+22
+00:01:48,250 --> 00:01:52,110
+from the Android contacts content
+provider.
+
+23
+00:01:52,110 --> 00:01:56,880
+And it then inserts several new contacts
+into that content provider.
+
+24
+00:01:56,880 --> 00:01:59,080
+And then displays the old and the new
+contacts.
+
+25
+00:02:00,340 --> 00:02:04,780
+And finally, when the application exits,
+it deletes all these new contacts.
+
+26
+00:02:05,910 --> 00:02:07,135
+Let's run this application.
+
+27
+00:02:07,135 --> 00:02:08,590
+[SOUND].
+
+28
+00:02:08,590 --> 00:02:10,330
+So here's my device.
+
+29
+00:02:10,330 --> 00:02:15,252
+And now I'll start the content provider
+insert contacts application.
+
+30
+00:02:15,252 --> 00:02:16,164
+[BLANK_AUDIO]
+
+31
+00:02:16,164 --> 00:02:18,534
+As you can see, this application is
+
+32
+00:02:18,534 --> 00:02:22,190
+displaying a single button labeled Insert
+Contacts.
+
+33
+00:02:23,630 --> 00:02:27,100
+I'll hit the Home button now and start the
+People application.
+
+34
+00:02:28,420 --> 00:02:31,980
+Now here, you can see some contacts that I
+have on this device.
+
+35
+00:02:33,330 --> 00:02:39,050
+Okay, now let me quit out of this
+application And now I'll restart
+
+36
+00:02:39,050 --> 00:02:43,820
+our sample application, and again you can
+see the Insert Contacts button.
+
+37
+00:02:45,250 --> 00:02:47,970
+When I hit this button, some new contacts
+
+38
+00:02:47,970 --> 00:02:51,400
+will be inserted into the contacts content
+provider.
+
+39
+00:02:52,700 --> 00:02:53,430
+So, here it goes.
+
+40
+00:02:55,210 --> 00:02:57,982
+And here you can see that I've inserted
+
+41
+00:02:57,982 --> 00:03:01,979
+four new contacts into the contacts
+content provider.
+
+42
+00:03:01,979 --> 00:03:03,750
+Now just to be sure let me hit
+
+43
+00:03:03,750 --> 00:03:07,640
+the home button again and restart the
+people application.
+
+44
+00:03:09,890 --> 00:03:14,030
+Now as you can see, the application does
+indeed Show those
+
+45
+00:03:14,030 --> 00:03:16,750
+new contacts that we programmatically
+
+46
+00:03:16,750 --> 00:03:19,650
+inserted into the contacts content
+provider.
+
+47
+00:03:22,050 --> 00:03:23,860
+So that means that other applications can
+
+48
+00:03:23,860 --> 00:03:28,340
+see, display, and even modify these new
+contacts.
+
+49
+00:03:30,160 --> 00:03:32,240
+Let's look at the source code for this
+application.
+
+50
+00:03:34,500 --> 00:03:37,580
+So here's the application open in the IDE.
+
+51
+00:03:37,580 --> 00:03:39,670
+Now I'll open the main activity.
+
+52
+00:03:41,550 --> 00:03:44,400
+In OnCreate, the code first gets
+information
+
+53
+00:03:44,400 --> 00:03:47,150
+about the accounts registered on this
+device.
+
+54
+00:03:48,300 --> 00:03:51,240
+Next the code calls the insert all new
+
+55
+00:03:51,240 --> 00:03:55,290
+contacts method, which inserts the four
+new contacts.
+
+56
+00:03:57,150 --> 00:04:00,040
+And after this, the code sets up and uses
+a
+
+57
+00:04:00,040 --> 00:04:04,600
+Cursor Loader to get and display the
+appropriate contact information.
+
+58
+00:04:05,830 --> 00:04:09,150
+Let's look at how this application inserts
+the new contacts.
+
+59
+00:04:11,490 --> 00:04:16,970
+The Insert All New Contacts method sets up
+a batch operation.
+
+60
+00:04:16,970 --> 00:04:20,300
+In which it inserts all of the new
+contacts at once.
+
+61
+00:04:21,430 --> 00:04:27,827
+And so it starts by creating an array list
+of content provider operations.
+
+62
+00:04:27,827 --> 00:04:30,632
+And it then calls the Add Record to Batch
+
+63
+00:04:30,632 --> 00:04:34,620
+insert operation method for each of the
+new contacts.
+
+64
+00:04:35,970 --> 00:04:37,920
+Now in this method, the code first
+
+65
+00:04:37,920 --> 00:04:41,320
+adds some information to the raw contacts
+table,
+
+66
+00:04:42,410 --> 00:04:44,830
+such as the account's name and type, and
+
+67
+00:04:44,830 --> 00:04:47,890
+the fact that this contact should be
+starred.
+
+68
+00:04:47,890 --> 00:04:49,890
+Which means it's treated as a favorite
+contact.
+
+69
+00:04:51,980 --> 00:04:56,140
+Next, the method adds the new contact's
+name to the data table.
+
+70
+00:04:57,660 --> 00:05:03,400
+And after all the new contacts have been
+added to the batch operation, the insert
+
+71
+00:05:03,400 --> 00:05:07,110
+all new contacts method then called the
+applied
+
+72
+00:05:07,110 --> 00:05:11,440
+batch method to commit the entire batch
+operation.
+
+73
+00:05:14,430 --> 00:05:17,380
+Finally, if you want to create your own
+content
+
+74
+00:05:17,380 --> 00:05:21,000
+provider, then you'll need to do the
+following things.
+
+75
+00:05:21,000 --> 00:05:24,680
+First, implement a storage system for the
+data.
+
+76
+00:05:24,680 --> 00:05:27,930
+And you'll often do this by creating an
+SQL Lite database,
+
+77
+00:05:27,930 --> 00:05:31,720
+but as we'll see later, other approaches
+will adjust just as well.
+
+78
+00:05:32,900 --> 00:05:36,980
+Next, you 'll define what is called a
+Contract Class.
+
+79
+00:05:36,980 --> 00:05:41,450
+That defines constants and other
+information that other applications
+
+80
+00:05:41,450 --> 00:05:44,514
+will need in order to use your Content
+Provider.
+
+81
+00:05:45,560 --> 00:05:49,538
+After that, you going to define a Content
+Provider subclass,
+
+82
+00:05:49,538 --> 00:05:54,650
+implementing for example, methods such as
+delete and insert.
+
+83
+00:05:54,650 --> 00:05:59,111
+And finally, you'll declare and configure
+your Content Provider.
+
+84
+00:05:59,111 --> 00:06:03,736
+In the AndroidManifest.xml file for its
+application.
+
+85
+00:06:03,736 --> 00:06:05,283
+[BLANK_AUDIO]
+
+86
+00:06:05,283 --> 00:06:10,210
+Our next example application is called
+Content Provider Custom.
+
+87
+00:06:10,210 --> 00:06:15,420
+This application defines a content
+provider for simple ID and string pairs.
+
+88
+00:06:16,500 --> 00:06:19,963
+Let's first take a look at the source code
+for this application.
+
+89
+00:06:19,963 --> 00:06:25,380
+[BLANK_AUDIO]
+
+90
+00:06:25,380 --> 00:06:30,710
+So here's the content provider custom
+application open in the IDE.
+
+91
+00:06:30,710 --> 00:06:34,570
+First I'll open up the content provider
+itself.
+
+92
+00:06:34,570 --> 00:06:38,379
+And this is in the strings content
+provider.java file.
+
+93
+00:06:39,960 --> 00:06:44,158
+Here you can see that this class extends
+the content provider class.
+
+94
+00:06:44,158 --> 00:06:45,944
+[BLANK_AUDIO]
+
+95
+00:06:45,944 --> 00:06:48,644
+Now first you can see that the actual data
+is
+
+96
+00:06:48,644 --> 00:06:52,420
+stored in a simple data structure of the
+type SparseArray.
+
+97
+00:06:53,480 --> 00:06:58,340
+So your content provider doesn't always
+have to be implemented using a database.
+
+98
+00:06:59,490 --> 00:07:02,820
+Next the code defines a number of methods.
+
+99
+00:07:02,820 --> 00:07:05,280
+First, there's the delete method.
+
+100
+00:07:05,280 --> 00:07:07,660
+Now, this method removes either a single
+record from
+
+101
+00:07:07,660 --> 00:07:10,400
+the database or it removes all of the
+records.
+
+102
+00:07:11,710 --> 00:07:16,750
+In addition this method doesn't process
+any of the SQL constructs.
+
+103
+00:07:16,750 --> 00:07:19,970
+Now this method tests to see whether the
+URI.
+
+104
+00:07:19,970 --> 00:07:22,370
+That was passed in, refers to the whole
+
+105
+00:07:22,370 --> 00:07:25,320
+table or to a single record within the
+table.
+
+106
+00:07:26,350 --> 00:07:30,720
+And if it refers to the whole table, then
+the code clears the entire sparse array.
+
+107
+00:07:32,140 --> 00:07:35,290
+And if it refers to only a single record,
+then
+
+108
+00:07:35,290 --> 00:07:38,515
+the code removes that single record from
+the sparse array.
+
+109
+00:07:38,515 --> 00:07:41,070
+[SOUND].
+
+110
+00:07:41,070 --> 00:07:44,870
+And lastly the code returns the number of
+records that were deleted.
+
+111
+00:07:46,630 --> 00:07:52,540
+Next the code implements the get type
+method, this method uses the data
+
+112
+00:07:52,540 --> 00:07:57,940
+contract class to return the mime type of
+the data associated with a
+
+113
+00:07:57,940 --> 00:08:04,300
+given U.R.I. Next, the code implements the
+insert method.
+
+114
+00:08:04,300 --> 00:08:08,600
+This method extracts the data for a given
+record, puts it in the
+
+115
+00:08:08,600 --> 00:08:13,820
+data record object, and then stores the
+data record object in the sparse array.
+
+116
+00:08:15,060 --> 00:08:20,250
+Finally, it returns a new URI that can be
+used to retrieve this new record.
+
+117
+00:08:22,010 --> 00:08:24,880
+Next the code implements the query method.
+
+118
+00:08:26,460 --> 00:08:31,523
+This method begins by creating a matrix
+cursor object, now this is just a
+
+119
+00:08:31,523 --> 00:08:36,886
+simple cursor that will return all of the
+data associated with each record.
+
+120
+00:08:36,886 --> 00:08:41,911
+And continuing on, if the URI refers to
+all of the records, the code will insert
+
+121
+00:08:41,911 --> 00:08:47,090
+every record into this cursor If instead
+the URI refers to a
+
+122
+00:08:47,090 --> 00:08:52,538
+single record then the code will add only
+that record to the cursor.
+
+123
+00:08:52,538 --> 00:08:56,495
+And finally the code returns the cursor it
+just created.
+
+124
+00:08:56,495 --> 00:08:57,416
+[BLANK_AUDIO]
+
+125
+00:08:57,416 --> 00:09:00,204
+The last method is oncreate and normally
+
+126
+00:09:00,204 --> 00:09:04,670
+you would initialize the data storage
+system here.
+
+127
+00:09:04,670 --> 00:09:09,794
+But for this simple example, no
+initialization is necessary, the code
+
+128
+00:09:09,794 --> 00:09:15,547
+simply returns true to indicate that the
+initialization completed properly.
+
+129
+00:09:15,547 --> 00:09:18,213
+And before we move on, let's open up
+
+130
+00:09:18,213 --> 00:09:21,977
+the Android manifest xml file for this
+application.
+
+131
+00:09:21,977 --> 00:09:25,567
+[BLANK_AUDIO]
+
+132
+00:09:25,567 --> 00:09:28,410
+Here you can see that we've added a
+provider tag.
+
+133
+00:09:29,560 --> 00:09:32,790
+And within this tag, we've specified the
+name
+
+134
+00:09:32,790 --> 00:09:37,670
+of the class that implements this content
+provider.We've added
+
+135
+00:09:37,670 --> 00:09:40,700
+the authority portion of the URI that will
+
+136
+00:09:40,700 --> 00:09:44,469
+have to be used to access this content
+provider.
+
+137
+00:09:45,650 --> 00:09:48,110
+And we've set the exported attribute to
+true
+
+138
+00:09:48,110 --> 00:09:52,570
+to allow other applications to access this
+content provider.
+
+139
+00:09:54,620 --> 00:10:00,430
+Our last example application is called
+ContentProviderCustomUser.
+
+140
+00:10:00,430 --> 00:10:03,000
+This application is separate from the
+content
+
+141
+00:10:03,000 --> 00:10:06,520
+provider custom application that we just
+looked at.
+
+142
+00:10:06,520 --> 00:10:09,990
+However, it reads data from that content
+
+143
+00:10:09,990 --> 00:10:13,680
+provider and displays the records in a
+ListView.
+
+144
+00:10:13,680 --> 00:10:15,856
+Let's look at this application in action.
+
+145
+00:10:15,856 --> 00:10:17,188
+[BLANK_AUDIO]
+
+146
+00:10:17,188 --> 00:10:19,190
+So here's my device.
+
+147
+00:10:19,190 --> 00:10:23,270
+Now I'll start up the content provider
+custom user application.
+
+148
+00:10:24,830 --> 00:10:27,890
+And as you see, the application displays
+two data records.
+
+149
+00:10:29,030 --> 00:10:31,046
+Let's look at the source code for this
+
+150
+00:10:31,046 --> 00:10:33,504
+application to see where that data came
+from.
+
+151
+00:10:33,504 --> 00:10:36,132
+[BLANK_AUDIO]
+
+152
+00:10:36,132 --> 00:10:41,620
+So here's the content provider custom user
+application open in the IDE.
+
+153
+00:10:41,620 --> 00:10:43,350
+Now I'll open up the main activity.
+
+154
+00:10:44,822 --> 00:10:46,590
+The oncreate method begins by getting a
+
+155
+00:10:46,590 --> 00:10:49,990
+reference to the content resolver for this
+context.
+
+156
+00:10:51,290 --> 00:10:54,110
+Next, it creates a content values object.
+
+157
+00:10:56,840 --> 00:11:01,650
+After that, the code adds a value for
+record one.
+
+158
+00:11:01,650 --> 00:11:06,550
+And then calls the insert method to insert
+that record into the content provider.
+
+159
+00:11:07,890 --> 00:11:12,130
+The code then does the same thing for a
+second, and a third record.
+
+160
+00:11:14,150 --> 00:11:16,550
+And then, it deletes the first record that
+
+161
+00:11:16,550 --> 00:11:19,680
+it had previously inserted, by calling the
+delete method.
+
+162
+00:11:21,560 --> 00:11:24,483
+And after all of this, the code then
+queries
+
+163
+00:11:24,483 --> 00:11:27,801
+the content provider to extract all of the
+records
+
+164
+00:11:27,801 --> 00:11:31,356
+that are currently stored in the content
+provider and
+
+165
+00:11:31,356 --> 00:11:34,506
+then it displays those records in a list
+view.
+
+166
+00:11:34,506 --> 00:11:39,221
+[BLANK_AUDIO]
+
+167
+00:11:39,221 --> 00:11:43,190
+So that's all for our lesson on
+ContentProviders.
+
+168
+00:11:43,190 --> 00:11:45,540
+Please join me next time for a discussion
+of
+
+169
+00:11:45,540 --> 00:11:50,040
+the last fundamental component of Android,
+the service class.
+
+170
+00:11:50,040 --> 00:11:50,770
+Bye for now.
+
+171
+00:11:50,770 --> 00:11:55,480
+[BLANK_AUDIO]
+

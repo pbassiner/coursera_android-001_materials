@@ -1,0 +1,975 @@
+1
+00:00:00,000 --> 00:00:09,536
+[BLANK_AUDIO]
+
+2
+00:00:09,536 --> 00:00:12,581
+Hi, I'm Adam Porter, and this is
+
+3
+00:00:12,581 --> 00:00:18,505
+Programming Mobile Applications for
+Android Handheld Systems.
+
+4
+00:00:18,505 --> 00:00:23,580
+Handheld systems can generate and
+manipulate large amounts of data.
+
+5
+00:00:23,580 --> 00:00:27,040
+So Android provides a number of support
+classes that
+
+6
+00:00:27,040 --> 00:00:31,420
+allow you to manage data across multiple
+application sessions.
+
+7
+00:00:32,860 --> 00:00:37,630
+In today's lesson, I'll talk about several
+of these support classes.
+
+8
+00:00:37,630 --> 00:00:41,730
+I'll begin by talking about the
+SharedPreferences class, which allows
+
+9
+00:00:41,730 --> 00:00:46,120
+applications to store and manage small
+amounts of primitive data.
+
+10
+00:00:47,160 --> 00:00:52,790
+Next, I'll talk about writing files to
+both internal and external storage.
+
+11
+00:00:52,790 --> 00:00:55,100
+And, lastly, I'll finish up by discussing
+
+12
+00:00:55,100 --> 00:01:01,320
+the creation and use of complex SQLite
+databases.
+
+13
+00:01:01,320 --> 00:01:04,770
+Let's briefly discuss each of these
+storage options, one at a time.
+
+14
+00:01:07,230 --> 00:01:11,890
+Your applications will typically use the
+Shared Preferences class, when you want
+
+15
+00:01:11,890 --> 00:01:16,140
+to store small amounts of primitive data,
+such as a user name.
+
+16
+00:01:18,160 --> 00:01:21,760
+Your applications will typically use
+internal device storage, when
+
+17
+00:01:21,760 --> 00:01:25,110
+you need to manage small to medium amounts
+of
+
+18
+00:01:25,110 --> 00:01:28,620
+data that should remain private to the
+application, such
+
+19
+00:01:28,620 --> 00:01:31,585
+as temporary files that are used by the
+application.
+
+20
+00:01:31,585 --> 00:01:36,790
+Your applications will typically use
+external storage when you want to
+
+21
+00:01:36,790 --> 00:01:41,980
+store larger amounts of non-private data,
+such as songs or video files.
+
+22
+00:01:43,590 --> 00:01:47,450
+And your application will typically use
+databases, when you intend
+
+23
+00:01:47,450 --> 00:01:52,345
+to store small to large to amounts of
+private structured data.
+
+24
+00:01:52,345 --> 00:01:59,830
+SharedPreferences are essentially
+persistent maps, and like any map,
+
+25
+00:01:59,830 --> 00:02:06,012
+they hold key value pairs of simple data
+types, things like strings and floats.
+
+26
+00:02:06,012 --> 00:02:12,960
+And SharedPreferences are automatically
+persisted across application sessions.
+
+27
+00:02:12,960 --> 00:02:14,800
+And this allows a user to create
+
+28
+00:02:14,800 --> 00:02:19,610
+information during one use of an
+application, exit
+
+29
+00:02:19,610 --> 00:02:23,300
+the application, restart it later, and
+still
+
+30
+00:02:23,300 --> 00:02:27,220
+have access to the information they
+created earlier.
+
+31
+00:02:28,910 --> 00:02:31,095
+SharedPreferences are often used for
+
+32
+00:02:31,095 --> 00:02:35,430
+long-term storage of customizable
+application data.
+
+33
+00:02:35,430 --> 00:02:39,060
+Including things like a username, favorite
+WiFi
+
+34
+00:02:39,060 --> 00:02:42,870
+networks, or specific user options or
+preferences.
+
+35
+00:02:44,420 --> 00:02:49,890
+To get a SharedPreferences object, that is
+associated with a given activity, you can
+
+36
+00:02:49,890 --> 00:02:57,070
+use the Activity.getPreferences method,
+passing in an access mode as a parameter.
+
+37
+00:02:57,070 --> 00:03:02,450
+For example, this mode can be
+mode_private, indicating
+
+38
+00:03:02,450 --> 00:03:05,720
+that the data is private to the calling
+application.
+
+39
+00:03:07,570 --> 00:03:09,770
+If you want a SharedPreferences object,
+that
+
+40
+00:03:09,770 --> 00:03:13,350
+is not associated with a specific
+activity,
+
+41
+00:03:13,350 --> 00:03:17,870
+then you can use the
+context.getSharedPreferences method,
+
+42
+00:03:17,870 --> 00:03:22,190
+to retrieve a named shared preferences
+object.
+
+43
+00:03:22,190 --> 00:03:27,500
+And with this method, you pass in a name
+for the SharedPreferences object and you
+
+44
+00:03:27,500 --> 00:03:32,910
+pass in an access mode, such as the
+mode_private that we saw earlier.
+
+45
+00:03:34,930 --> 00:03:39,480
+Once you've acquired a SharedPreferences
+object, you can edit that object, by
+
+46
+00:03:39,480 --> 00:03:45,750
+calling SharedPreferences.edit, and this
+method
+
+47
+00:03:45,750 --> 00:03:51,220
+returns a SharedPreferences.Editor
+instance.
+
+48
+00:03:51,220 --> 00:03:56,250
+You can then add or change the values of
+the SharedPreferences object, using
+
+49
+00:03:56,250 --> 00:04:02,330
+methods such as putInt, putString, and
+remove.
+
+50
+00:04:02,330 --> 00:04:06,940
+And after you've made whatever changes you
+wanted to, you can then make those changes
+
+51
+00:04:06,940 --> 00:04:13,526
+permanent by calling the
+SharedPreferences.Editor.commit method.
+
+52
+00:04:13,526 --> 00:04:19,330
+And at this point, the SharedPreferences
+object is saved, and applications can
+
+53
+00:04:19,330 --> 00:04:21,520
+exit, knowing that their data can
+
+54
+00:04:21,520 --> 00:04:24,590
+be retrieved during later application
+sessions.
+
+55
+00:04:26,690 --> 00:04:29,330
+If an application later wants to read
+these
+
+56
+00:04:29,330 --> 00:04:33,940
+values, it can get the SharedPreferences
+object again,
+
+57
+00:04:33,940 --> 00:04:36,180
+and then use various methods to read out
+
+58
+00:04:36,180 --> 00:04:39,480
+the values that are stored within the
+object.
+
+59
+00:04:39,480 --> 00:04:45,050
+For instance, it can call getAll to get
+the SharedPreferences values.
+
+60
+00:04:45,050 --> 00:04:49,690
+It can call getBoolean to get a particular
+Boolean value.
+
+61
+00:04:49,690 --> 00:04:53,190
+Or, it can call getString to get a
+particular String value.
+
+62
+00:04:55,300 --> 00:04:57,456
+Our first example application in
+
+63
+00:04:57,456 --> 00:05:01,549
+this lesson, is called
+DataManagementSharedPreferences.
+
+64
+00:05:01,549 --> 00:05:05,503
+This application has a button labeled
+Play.
+
+65
+00:05:05,503 --> 00:05:10,390
+And when the user presses the Play button,
+the application displays a random number.
+
+66
+00:05:11,470 --> 00:05:14,420
+The application keeps track of the highest
+number seen
+
+67
+00:05:14,420 --> 00:05:20,360
+so far, and saves that number across
+different user sessions.
+
+68
+00:05:20,360 --> 00:05:21,810
+Let's run this application now.
+
+69
+00:05:26,310 --> 00:05:28,260
+So here is my device.
+
+70
+00:05:28,260 --> 00:05:32,970
+Now, I'll start the Data Management Shared
+Preferences application.
+
+71
+00:05:34,700 --> 00:05:40,260
+When this application starts, it shows
+that the high score is currently zero.
+
+72
+00:05:42,140 --> 00:05:44,810
+When I press the Play button, you'll see
+that a
+
+73
+00:05:44,810 --> 00:05:49,310
+new number is now displayed in the center
+of the screen.
+
+74
+00:05:51,080 --> 00:05:53,990
+And since that number was higher than the
+previous high score,
+
+75
+00:05:55,520 --> 00:05:59,380
+the high score display has been updated to
+show the new number.
+
+76
+00:06:00,670 --> 00:06:02,250
+Now, remember this high score.
+
+77
+00:06:03,550 --> 00:06:08,800
+I'm going to now quit this application,
+and now I'll restart it.
+
+78
+00:06:11,430 --> 00:06:15,230
+And as you can see, the current high score
+is the same
+
+79
+00:06:15,230 --> 00:06:18,920
+high score that we saw from the last time
+we ran the application.
+
+80
+00:06:20,420 --> 00:06:23,400
+Now let me hit the Play button a few more
+times.
+
+81
+00:06:23,400 --> 00:06:25,770
+So I'll increase the high score.
+
+82
+00:06:25,770 --> 00:06:26,290
+There we go.
+
+83
+00:06:28,120 --> 00:06:31,810
+And now I'll stop the application again,
+and restart it.
+
+84
+00:06:33,590 --> 00:06:37,300
+And again, you can see that the
+application displays the high
+
+85
+00:06:37,300 --> 00:06:40,850
+score, that was set in the previous use of
+the application.
+
+86
+00:06:40,850 --> 00:06:41,350
+Now
+
+87
+00:06:42,970 --> 00:06:47,690
+I can also hit the Reset button, to reset
+that high score to 0.
+
+88
+00:06:47,690 --> 00:06:50,740
+Let's look at the source code for this
+application.
+
+89
+00:06:52,580 --> 00:06:55,750
+So, here's the application, open in the
+IDE.
+
+90
+00:06:55,750 --> 00:06:57,560
+Now, I'll open the main activity.
+
+91
+00:06:59,020 --> 00:07:00,760
+In onCreate, the code acquires
+
+92
+00:07:00,760 --> 00:07:03,660
+the SharedPreferences object for this
+activity.
+
+93
+00:07:04,700 --> 00:07:08,830
+Next, when the user clicks the Play
+button, the code generates
+
+94
+00:07:08,830 --> 00:07:12,080
+a new score, which it stores in a variable
+called Val.
+
+95
+00:07:13,780 --> 00:07:16,310
+After that, the code calls getInt on the
+
+96
+00:07:16,310 --> 00:07:19,970
+Preferences object, to retrieve the
+current high score.
+
+97
+00:07:22,780 --> 00:07:24,530
+If Val is greater than the current high
+
+98
+00:07:24,530 --> 00:07:29,750
+score, then we need to update the high
+score.
+
+99
+00:07:29,750 --> 00:07:32,440
+So the code calls the Edit method on
+
+100
+00:07:32,440 --> 00:07:38,409
+the Preferences object, which returns a
+SharedPreferences.Editor object.
+
+101
+00:07:39,930 --> 00:07:43,710
+Next, the code calls the, calls putInt on
+the editor
+
+102
+00:07:43,710 --> 00:07:47,370
+object to update the high score, to the
+current value.
+
+103
+00:07:48,440 --> 00:07:54,060
+And finally, the code calls commit on the
+editor, to save the current high score.
+
+104
+00:08:00,340 --> 00:08:03,610
+As I said earlier, the Shared Preferences
+class
+
+105
+00:08:03,610 --> 00:08:07,980
+is often used to store an application's
+user preferences.
+
+106
+00:08:09,150 --> 00:08:14,490
+To make this easier, Android provides a
+class called PreferenceFragment,
+
+107
+00:08:14,490 --> 00:08:19,510
+that applications can use to display and
+modify user preferences.
+
+108
+00:08:21,010 --> 00:08:25,740
+Our next example application is called
+DataManagement PreferenceFragment.
+
+109
+00:08:26,740 --> 00:08:29,330
+This application uses a PreferenceFragment
+to
+
+110
+00:08:29,330 --> 00:08:34,600
+display and modify an application's user
+preferences.
+
+111
+00:08:34,600 --> 00:08:37,870
+In this case, the preference is the name
+
+112
+00:08:37,870 --> 00:08:42,010
+that the application will use when
+addressing the user.
+
+113
+00:08:42,010 --> 00:08:43,350
+Let's take a look at that application.
+
+114
+00:08:45,790 --> 00:08:47,010
+So here's my device.
+
+115
+00:08:48,080 --> 00:08:52,960
+Now, I'll start the Data Management
+Preference Fragment application.
+
+116
+00:08:54,170 --> 00:08:56,170
+This application starts up.
+
+117
+00:08:56,170 --> 00:08:59,730
+It presents a single button, labeled View
+User Name.
+
+118
+00:09:01,040 --> 00:09:06,830
+When I click on this button, the
+Preference Fragment will appear,
+
+119
+00:09:06,830 --> 00:09:12,820
+allowing me to view my current user name,
+and to change it if I wish.
+
+120
+00:09:12,820 --> 00:09:13,510
+Let me do that now.
+
+121
+00:09:15,730 --> 00:09:20,120
+Now as you can see, my User Name has not
+yet been set.
+
+122
+00:09:21,390 --> 00:09:25,700
+So I'll click on this area, and now a
+dialog
+
+123
+00:09:25,700 --> 00:09:28,840
+box pops up, asking me to enter my User
+Name.
+
+124
+00:09:29,950 --> 00:09:30,670
+Let me do that now.
+
+125
+00:09:33,540 --> 00:09:38,350
+Now, I'll click on the Submit button to
+accept this new User Name.
+
+126
+00:09:38,350 --> 00:09:42,170
+The dialog box closes, and here you can
+see that
+
+127
+00:09:42,170 --> 00:09:45,700
+my User Name is now the name that I just
+entered.
+
+128
+00:09:48,100 --> 00:09:50,600
+Now I'll close the application, and
+restart it.
+
+129
+00:09:53,960 --> 00:09:56,610
+I'll click again on the View User Name
+button, and
+
+130
+00:09:58,010 --> 00:10:02,290
+as you can see, my User Name is still
+Adam.
+
+131
+00:10:02,290 --> 00:10:07,100
+So, the information does indeed persist
+across user sessions.
+
+132
+00:10:10,130 --> 00:10:12,740
+Let's take a look at the source code for
+this application.
+
+133
+00:10:14,080 --> 00:10:16,400
+So here's the application open in the IDE.
+
+134
+00:10:17,680 --> 00:10:22,540
+Now, I'll open the
+ViewAndUpdatePreferencesActivity.
+
+135
+00:10:22,540 --> 00:10:24,870
+This activity is the one that is started
+
+136
+00:10:24,870 --> 00:10:27,860
+when the user clicks the View User Name
+button.
+
+137
+00:10:30,000 --> 00:10:34,900
+The onCreate method first call
+setContentView, passing in an XML file
+
+138
+00:10:34,900 --> 00:10:43,750
+called User _prefs_fragment.xml.
+
+139
+00:10:43,750 --> 00:10:48,190
+And this layout file instantiates and
+displays an instance of
+
+140
+00:10:48,190 --> 00:10:53,510
+the User Preference Fragment class, which
+is defined in this file.
+
+141
+00:10:54,930 --> 00:10:55,890
+Let's look at that class now.
+
+142
+00:10:57,870 --> 00:11:05,462
+This class's onCreate method first calls
+the AddPreferencesFromResource method,
+
+143
+00:11:05,462 --> 00:11:12,540
+passing in the user_preps.xml file, that's
+in the res/.xml directory.
+
+144
+00:11:13,860 --> 00:11:18,101
+Let's open that file.
+
+145
+00:11:18,101 --> 00:11:24,226
+As you can see, this file defines a
+preference screen resource.
+
+146
+00:11:24,226 --> 00:11:28,006
+This preference screen, contains one
+preference,
+
+147
+00:11:28,006 --> 00:11:30,820
+that's displayed in an edit text box.
+
+148
+00:11:32,650 --> 00:11:35,430
+And that preference has a key, the string
+you
+
+149
+00:11:35,430 --> 00:11:40,550
+name, and is displayed with the title User
+Name.
+
+150
+00:11:42,090 --> 00:11:45,790
+When the user clicks on the edit text box
+to change the
+
+151
+00:11:45,790 --> 00:11:51,980
+User Name, a dialog box pops up, with the
+title Change User Name.
+
+152
+00:11:53,120 --> 00:11:58,320
+A subtitle, or message, saying enter your
+User Name,
+
+153
+00:11:59,390 --> 00:12:03,680
+and two buttons labelled Cancel and
+Submit.
+
+154
+00:12:07,020 --> 00:12:10,990
+In addition to preferences, Android
+supports the use of files.
+
+155
+00:12:12,690 --> 00:12:18,392
+File is a class that represents a file
+system entity identified by a path name.
+
+156
+00:12:19,770 --> 00:12:25,820
+In Android, storage areas are classified
+as being either internal or external.
+
+157
+00:12:26,990 --> 00:12:33,330
+Historically, this distinguished between
+the internal flash memory on a device,
+
+158
+00:12:33,330 --> 00:12:38,780
+and the removable external memory cards
+attached to the device.
+
+159
+00:12:38,780 --> 00:12:42,250
+Nowadays however, not all external memory
+is removable.
+
+160
+00:12:43,670 --> 00:12:46,410
+Internal memory, is usually used for
+smaller
+
+161
+00:12:46,410 --> 00:12:49,420
+data sets that are private to an
+application.
+
+162
+00:12:50,650 --> 00:12:57,120
+External memory, in contrast, is usually
+reserved for larger non-private data sets.
+
+163
+00:12:57,120 --> 00:12:59,760
+Things like music files and pictures.
+
+164
+00:13:00,840 --> 00:13:03,110
+The example applications that we'll look
+in just
+
+165
+00:13:03,110 --> 00:13:07,300
+a second, access and use files to store
+information.
+
+166
+00:13:08,340 --> 00:13:11,420
+Two of the methods they use to do this,
+are
+
+167
+00:13:11,420 --> 00:13:16,492
+the OpenFileOutput method which opens a
+private file for writing.
+
+168
+00:13:16,492 --> 00:13:22,321
+And this method will create a physical
+file, if it doesn't already exist, and
+
+169
+00:13:22,321 --> 00:13:28,506
+there's also that OpenFileInput, method
+which opens a private file for reading.
+
+170
+00:13:28,506 --> 00:13:31,000
+And there are, of course, many other file
+related
+
+171
+00:13:31,000 --> 00:13:34,510
+methods, so please look at the
+documentation for more information.
+
+172
+00:13:36,550 --> 00:13:43,290
+The next example application is called
+Data Management File Internal Memory.
+
+173
+00:13:43,290 --> 00:13:48,850
+When this application starts up, it checks
+whether a particular text file exists.
+
+174
+00:13:49,860 --> 00:13:52,300
+And if it does not, the application then
+
+175
+00:13:52,300 --> 00:13:55,830
+creates that file, and writes some text
+into it.
+
+176
+00:13:56,930 --> 00:14:00,930
+After that, the application opens that
+file, reads the
+
+177
+00:14:00,930 --> 00:14:06,030
+text from it, and displays that text on
+the display.
+
+178
+00:14:06,030 --> 00:14:07,420
+Let's take a look at this application.
+
+179
+00:14:07,420 --> 00:14:07,920
+So
+
+180
+00:14:10,230 --> 00:14:12,200
+here's my device.
+
+181
+00:14:12,200 --> 00:14:17,420
+Now, I'll open the Data Management File
+Internal Memory application.
+
+182
+00:14:19,030 --> 00:14:23,310
+As you can see, the application has
+displayed some text on the screen.
+
+183
+00:14:24,770 --> 00:14:26,260
+Let's look at the source code for this
+
+184
+00:14:26,260 --> 00:14:28,820
+application, to find out where that text
+came from.
+
+185
+00:14:31,960 --> 00:14:35,410
+So here's the application, open in the
+IDE.
+
+186
+00:14:35,410 --> 00:14:38,980
+Now, I'll open the main activity for this
+application.
+
+187
+00:14:40,610 --> 00:14:45,490
+And here in the onCreate method, the code
+first gets the file string path
+
+188
+00:14:46,740 --> 00:14:52,120
+associated with the file name,
+TestFile.txt.
+
+189
+00:14:52,120 --> 00:14:59,100
+And if that file does not exist, then the
+code goes on to call the WriteFile method.
+
+190
+00:14:59,100 --> 00:15:02,385
+Let's scroll down and look at that method.
+
+191
+00:15:02,385 --> 00:15:06,265
+Now this method first calls the
+OpenFileOutput
+
+192
+00:15:06,265 --> 00:15:10,068
+method, which returns a file output
+stream.
+
+193
+00:15:10,068 --> 00:15:15,332
+The code then continues, by writing three
+lines of text
+
+194
+00:15:15,332 --> 00:15:20,169
+to that text file, and finally it closes
+the file.
+
+195
+00:15:20,169 --> 00:15:23,235
+Now let's scroll back up to the onCreate
+method.
+
+196
+00:15:23,235 --> 00:15:26,740
+[BLANK_AUDIO]
+
+197
+00:15:26,740 --> 00:15:31,780
+Now the code continues, by calling the
+readFile method, passing
+
+198
+00:15:31,780 --> 00:15:35,444
+in a linear layout on which to display the
+text.
+
+199
+00:15:35,444 --> 00:15:40,688
+The readFile method now opens the text
+file for input,
+
+200
+00:15:40,688 --> 00:15:45,441
+and then begins to read each line out of
+the file.
+
+201
+00:15:45,441 --> 00:15:48,101
+And each of these lines is then placed
+into
+
+202
+00:15:48,101 --> 00:15:51,035
+a text view, and added to the linear
+layout.
+
+203
+00:15:51,035 --> 00:15:51,333
+[BLANK_AUDIO]
+

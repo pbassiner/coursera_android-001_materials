@@ -1,0 +1,828 @@
+1
+00:00:09,880 --> 00:00:13,190
+Hi, I'm Adam Porter, and this is
+
+2
+00:00:13,190 --> 00:00:18,030
+Programming Mobile Applications for
+Android Handheld Systems.
+
+3
+00:00:19,900 --> 00:00:25,250
+As I said before, Android also allows
+applications to write to external memory.
+
+4
+00:00:26,680 --> 00:00:29,850
+One extra twist that you'll need to
+consider however, when
+
+5
+00:00:29,850 --> 00:00:34,280
+you do this, is that external memory can
+be removable.
+
+6
+00:00:34,280 --> 00:00:37,210
+For example, when it's provided by an SD
+card.
+
+7
+00:00:38,260 --> 00:00:43,220
+And because of this, that media can appear
+or disappear without warning.
+
+8
+00:00:44,450 --> 00:00:48,010
+And therefore, when your application is
+going to write to external
+
+9
+00:00:48,010 --> 00:00:53,170
+memory, you'll first need to determine the
+state of the external memory.
+
+10
+00:00:54,330 --> 00:00:55,870
+Now one way to do that is
+
+11
+00:00:55,870 --> 00:01:03,040
+by using the environment class's
+getExternalStorageState Method.
+
+12
+00:01:03,040 --> 00:01:06,208
+That method will return a value indicating
+
+13
+00:01:06,208 --> 00:01:10,216
+the current state of the device's external
+memory.
+
+14
+00:01:10,216 --> 00:01:16,966
+And some of those values are shown here,
+for example, there's MEDIA_MOUNTED, which
+
+15
+00:01:16,966 --> 00:01:23,217
+means that the media is present and that
+it's mounted with read and write access.
+
+16
+00:01:23,217 --> 00:01:28,967
+There's MEDIA_MOUNTED_READ_ONLY, which
+means that
+
+17
+00:01:28,967 --> 00:01:35,039
+the media is present and mounted, but as
+read-only access.
+
+18
+00:01:35,039 --> 00:01:42,750
+And there's MEDIA_REMOVED, which indicates
+that the external memory is not present.
+
+19
+00:01:42,750 --> 00:01:46,305
+And of course, there's several other
+values as well.
+
+20
+00:01:46,305 --> 00:01:50,289
+If your application wishes to write to
+external memory,
+
+21
+00:01:50,289 --> 00:01:54,379
+Then it will need to request the
+appropriate permission.
+
+22
+00:01:54,379 --> 00:02:00,934
+Specifically, you'll need to add the
+WRITE_EXTERNAL_STORAGE
+
+23
+00:02:00,934 --> 00:02:07,550
+permission, in the application's
+AndroidManifest.xml file.
+
+24
+00:02:07,550 --> 00:02:12,990
+Our next example application is called
+DataManagement FileExternalMemory.
+
+25
+00:02:14,030 --> 00:02:20,508
+This application reads an image file from
+the res/raw directory.
+
+26
+00:02:20,508 --> 00:02:26,250
+It copies that file to external storage,
+it reads the image data back
+
+27
+00:02:26,250 --> 00:02:32,288
+from that external file, and then it
+displays the image on the screen.
+
+28
+00:02:32,288 --> 00:02:35,060
+Let's take a look at that application
+right now.
+
+29
+00:02:35,060 --> 00:02:35,560
+So
+
+30
+00:02:38,480 --> 00:02:39,280
+here's my device.
+
+31
+00:02:40,740 --> 00:02:43,830
+When I start the Data Management File
+External Memory
+
+32
+00:02:43,830 --> 00:02:47,180
+application, you'll see an image displayed
+on the screen.
+
+33
+00:02:47,180 --> 00:02:48,470
+Here it goes.
+
+34
+00:02:48,470 --> 00:02:48,970
+Let's
+
+35
+00:02:51,350 --> 00:02:53,470
+look at the source code, to better
+
+36
+00:02:53,470 --> 00:02:55,620
+understand where this image data came
+from.
+
+37
+00:02:55,620 --> 00:02:56,120
+So
+
+38
+00:02:59,050 --> 00:03:01,980
+here's the application open in the IDE.
+
+39
+00:03:03,250 --> 00:03:05,176
+Now, I'll open the main activity.
+
+40
+00:03:05,176 --> 00:03:11,000
+In the onCreate method, the code checks
+the external storage state
+
+41
+00:03:11,000 --> 00:03:15,930
+to ensure that the media is mounted, and
+that is readable and writable.
+
+42
+00:03:17,440 --> 00:03:19,790
+After that, the code gets the external
+
+43
+00:03:19,790 --> 00:03:23,160
+file directory, where pictures are
+normally stored.
+
+44
+00:03:24,690 --> 00:03:29,190
+And it constructs a new file object,
+pointing within that directory.
+
+45
+00:03:30,510 --> 00:03:36,690
+Next, it checks whether a file actually
+exists on the external memory.
+
+46
+00:03:36,690 --> 00:03:41,040
+The code then calls the copy image data to
+memory method.
+
+47
+00:03:42,580 --> 00:03:43,570
+Let's look at that method.
+
+48
+00:03:45,680 --> 00:03:49,150
+Now this method starts by creating a new
+output stream, that
+
+49
+00:03:49,150 --> 00:03:53,240
+will be used to write to a file, on the
+external memory.
+
+50
+00:03:54,280 --> 00:03:57,040
+Next, it creates an input stream, so that
+
+51
+00:03:57,040 --> 00:04:01,924
+it can read image data from the res/raw
+directory.
+
+52
+00:04:02,995 --> 00:04:07,850
+And finally, it copies the data from the
+input stream to the output stream.
+
+53
+00:04:09,280 --> 00:04:14,330
+When this method completes, there will be
+a new file in external memory.
+
+54
+00:04:16,090 --> 00:04:21,890
+Now, going back to the on create method,
+the code gets a reference to an image
+
+55
+00:04:21,890 --> 00:04:26,300
+view, and insets the image URI to be
+
+56
+00:04:26,300 --> 00:04:28,870
+the file that was just created in external
+memory.
+
+57
+00:04:33,720 --> 00:04:37,020
+If your application creates temporary
+files, then
+
+58
+00:04:37,020 --> 00:04:41,220
+you may consider writing these to cache
+directories.
+
+59
+00:04:41,220 --> 00:04:44,070
+Cache files are temporary files that may
+be
+
+60
+00:04:44,070 --> 00:04:47,680
+deleted by the system, when storage is
+low.
+
+61
+00:04:47,680 --> 00:04:51,380
+And these files are removed when the
+application is uninstalled.
+
+62
+00:04:52,640 --> 00:04:54,310
+And you can get access to the Cache
+
+63
+00:04:54,310 --> 00:04:59,889
+directory, by using the context class's,
+getCacheDir method.
+
+64
+00:05:01,340 --> 00:05:03,905
+This method returns the absolute path to
+an
+
+65
+00:05:03,905 --> 00:05:08,120
+application-specific directory, that can
+be used for temporary files.
+
+66
+00:05:10,150 --> 00:05:12,210
+Alternatively, you can also use the
+
+67
+00:05:12,210 --> 00:05:17,830
+context class's getExternalCacheDir
+method, which returns
+
+68
+00:05:17,830 --> 00:05:23,180
+a file object representing a directory for
+Cache files in external storage.
+
+69
+00:05:25,590 --> 00:05:29,960
+When your application reads and uses
+larger amounts of structured and
+
+70
+00:05:29,960 --> 00:05:34,140
+complex data, you may want to put that
+data in a database.
+
+71
+00:05:35,180 --> 00:05:40,340
+Android provides an implementation of
+SQLite, which allows applications to
+
+72
+00:05:40,340 --> 00:05:45,590
+create and use in-memory relational
+databases.
+
+73
+00:05:45,590 --> 00:05:48,450
+SQLite is designed to operate within a
+very
+
+74
+00:05:48,450 --> 00:05:52,142
+small footprint, say less than 300
+kilobites of storage.
+
+75
+00:05:53,670 --> 00:05:57,731
+SQLIte is however, a full fledged
+relational database.
+
+76
+00:05:57,731 --> 00:06:03,191
+It implements most of the SQL92 standard,
+and it supports highly reliable
+
+77
+00:06:03,191 --> 00:06:06,215
+ACID transitions, which means that it's
+
+78
+00:06:06,215 --> 00:06:11,130
+transactions are atomic, consistent,
+isolated, and durable.
+
+79
+00:06:13,420 --> 00:06:16,950
+To use an SQL database in your
+applications, Android
+
+80
+00:06:16,950 --> 00:06:22,310
+recommends that you use a helper class
+called SQLiteOpenHelper.
+
+81
+00:06:23,840 --> 00:06:29,690
+And what you'll do, is you'll create a
+subclass of this SQLiteOpenHelper class.
+
+82
+00:06:30,800 --> 00:06:34,344
+And in the constructor for that class,
+you'll need to call the super
+
+83
+00:06:34,344 --> 00:06:37,920
+classes constructor, passing in some
+information
+
+84
+00:06:37,920 --> 00:06:40,340
+about the database you want to create.
+
+85
+00:06:43,130 --> 00:06:49,330
+Next, you'll override the onCreate method,
+the onUpgrade method as well.
+
+86
+00:06:51,010 --> 00:06:54,450
+Now typically, in onCreate, you'll execute
+one or more
+
+87
+00:06:54,450 --> 00:07:00,680
+Create Table commands, which define the
+database's structure and layout.
+
+88
+00:07:01,960 --> 00:07:07,410
+And after that, you'll use the
+SQLiteOpenHelper methods,
+
+89
+00:07:07,410 --> 00:07:14,070
+for example, to open and return the
+underlying SQLite database.
+
+90
+00:07:14,070 --> 00:07:18,520
+And then, you execute operations on the
+underlying database.
+
+91
+00:07:20,380 --> 00:07:25,630
+Our last example application is called
+DataManagementSQL.
+
+92
+00:07:25,630 --> 00:07:29,470
+This application creates an SQLite
+database, and then
+
+93
+00:07:29,470 --> 00:07:35,180
+inserts several records, some with errors,
+into the database.
+
+94
+00:07:35,180 --> 00:07:39,740
+The application will also display a button
+labeled Fix.
+
+95
+00:07:39,740 --> 00:07:42,920
+And when the user presses the Fix button,
+the application will
+
+96
+00:07:42,920 --> 00:07:47,600
+delete and update, some of those records
+that were just inserted.
+
+97
+00:07:48,630 --> 00:07:52,540
+And it will then re-display the updated
+database records on the screen.
+
+98
+00:07:52,540 --> 00:07:55,310
+Let's take a look at that application now.
+
+99
+00:07:55,310 --> 00:07:55,810
+So
+
+100
+00:07:59,420 --> 00:08:00,360
+here is my device.
+
+101
+00:08:01,430 --> 00:08:05,720
+And now, I'll start up the Data Management
+SQL application.
+
+102
+00:08:06,960 --> 00:08:11,740
+As you can see, the application now
+displays four database records,
+
+103
+00:08:11,740 --> 00:08:16,280
+each containing a record ID, and the name
+of an artist.
+
+104
+00:08:17,600 --> 00:08:22,090
+At the bottom of the screen, there's also
+the Fix button that I mentioned earlier.
+
+105
+00:08:23,200 --> 00:08:28,750
+When I press this button, record number
+two, Lady Gaga, will be deleted.
+
+106
+00:08:29,850 --> 00:08:33,320
+And record number three, Johnny Cash, will
+be
+
+107
+00:08:33,320 --> 00:08:36,760
+updated to correctly spell the artist's
+first name.
+
+108
+00:08:38,150 --> 00:08:39,650
+Let me hit the Fix button now.
+
+109
+00:08:41,350 --> 00:08:46,290
+And as you can see, record number two has
+been deleted, and
+
+110
+00:08:46,290 --> 00:08:51,190
+record number three now shows the correct
+spelling of Johnny Cash's first name.
+
+111
+00:08:52,550 --> 00:08:57,222
+Let's look at the source code for this
+application.
+
+112
+00:08:57,222 --> 00:09:00,349
+Here's the application open in the IDE.
+
+113
+00:09:00,349 --> 00:09:03,885
+I'll now open up the main activity.
+
+114
+00:09:03,885 --> 00:09:06,180
+Here in the onCreate method, we
+
+115
+00:09:06,180 --> 00:09:10,210
+begin by creating a new DatabaseOpenHelper
+instance.
+
+116
+00:09:11,550 --> 00:09:15,870
+And that class is a subclass of
+SQLiteOpenHelper.
+
+117
+00:09:15,870 --> 00:09:16,370
+Let's
+
+118
+00:09:18,380 --> 00:09:19,550
+take a look at that class.
+
+119
+00:09:19,550 --> 00:09:20,050
+The
+
+120
+00:09:22,580 --> 00:09:27,250
+constructor for this class, calls the
+super class's constructor passing in
+
+121
+00:09:27,250 --> 00:09:31,990
+information, such as the name of the
+database, and a version number.
+
+122
+00:09:31,990 --> 00:09:36,988
+Now this class's onCreate method, receives
+an
+
+123
+00:09:36,988 --> 00:09:42,584
+SQLite database object, and then calls its
+ExecSQL
+
+124
+00:09:42,584 --> 00:09:47,740
+method, passing in a string, which
+corresponds to an actual
+
+125
+00:09:47,740 --> 00:09:53,600
+SQL command, that will create a table
+named Artists.
+
+126
+00:09:53,600 --> 00:09:57,080
+And that table will contain two fields, an
+
+127
+00:09:57,080 --> 00:10:01,300
+integer ID, and a string for the artist's
+name.
+
+128
+00:10:02,660 --> 00:10:07,830
+This class also has a DeleteDatabase
+method, which simply deletes the database.
+
+129
+00:10:09,620 --> 00:10:14,540
+Now going back to the main activity, the
+onCreate method continues by getting a
+
+130
+00:10:14,540 --> 00:10:19,360
+reference to the underlying data base,
+that can be used for reading and writing.
+
+131
+00:10:20,540 --> 00:10:25,723
+Next, it calls the clearAll method, which
+just deletes every record in the database.
+
+132
+00:10:27,220 --> 00:10:31,000
+After that, the code calls the
+InsertArtist method,
+
+133
+00:10:31,000 --> 00:10:34,430
+which inserts a number of records into the
+database.
+
+134
+00:10:37,260 --> 00:10:38,802
+Now this method first creates a
+
+135
+00:10:38,802 --> 00:10:42,730
+ContentValues object, and then puts
+information
+
+136
+00:10:42,730 --> 00:10:48,380
+into that object, corresponding in this
+case, to the artist's name, Frank Sinatra.
+
+137
+00:10:49,660 --> 00:10:54,610
+Next, it inserts the record into the
+Artist table by calling the insert method.
+
+138
+00:10:55,920 --> 00:10:58,940
+Now since the ID field is auto generated
+by
+
+139
+00:10:58,940 --> 00:11:03,390
+the database, the application doesn't need
+to include it here.
+
+140
+00:11:04,920 --> 00:11:08,250
+Next, the code clears out the values
+object,
+
+141
+00:11:08,250 --> 00:11:11,140
+and then add a second record for Lady
+Gaga.
+
+142
+00:11:11,140 --> 00:11:18,520
+A third record for Johnny Cash, and the
+fourth record, for Ludwig van Beethoven.
+
+143
+00:11:19,890 --> 00:11:24,740
+Now, going back up to the onCreate method,
+the code calls the readArtist method,
+
+144
+00:11:25,780 --> 00:11:30,350
+which reads all the records in the
+database, and returns a cursor object.
+
+145
+00:11:31,630 --> 00:11:33,910
+A cursor is essentially an iterator over a
+
+146
+00:11:33,910 --> 00:11:36,860
+set of records returned by a query
+operation.
+
+147
+00:11:36,860 --> 00:11:40,690
+And this cursor is then used to create an
+adapter for
+
+148
+00:11:40,690 --> 00:11:45,260
+the list view, that will display these
+records on the display.
+
+149
+00:11:46,510 --> 00:11:51,170
+And finally, the code sets a listener on
+the Fix button.
+
+150
+00:11:51,170 --> 00:11:54,890
+When the user presses this button, the
+code calls the Fix method.
+
+151
+00:11:56,360 --> 00:11:57,480
+Let's scroll down to that method.
+
+152
+00:12:01,030 --> 00:12:05,660
+This method first calls the Delete method,
+which finds the
+
+153
+00:12:05,660 --> 00:12:09,970
+record with the artist name Lady Gaga, and
+then deletes it.
+
+154
+00:12:11,030 --> 00:12:14,446
+And after that, the method creates a
+ContentValues
+
+155
+00:12:14,446 --> 00:12:17,600
+object, with the right spelling of the
+name Johnny.
+
+156
+00:12:18,820 --> 00:12:22,950
+It then performs an update operation, that
+first finds the record
+
+157
+00:12:22,950 --> 00:12:28,070
+with the misspelled name, and then
+replaces it with the correct spelling.
+
+158
+00:12:31,400 --> 00:12:34,780
+You need to debug your database
+applications, there
+
+159
+00:12:34,780 --> 00:12:36,420
+are several things you might need to know.
+
+160
+00:12:37,480 --> 00:12:40,470
+First, the database files are
+
+161
+00:12:40,470 --> 00:12:47,910
+stored in the data/data/package
+name/databases directory.
+
+162
+00:12:47,910 --> 00:12:50,790
+And you examine these files, by first
+opening a
+
+163
+00:12:50,790 --> 00:12:56,000
+shell to the emulator, or to your device,
+with ADB.
+
+164
+00:12:56,000 --> 00:13:02,028
+For instance, if your emulator's name is
+emulator-5554, then
+
+165
+00:13:02,028 --> 00:13:05,260
+you can issue this command to open a
+shell.
+
+166
+00:13:08,370 --> 00:13:11,120
+And once the shell is open, you can then
+use
+
+167
+00:13:11,120 --> 00:13:17,440
+the SQLite3 command to open the connection
+to the database itself.
+
+168
+00:13:17,440 --> 00:13:21,074
+And from there, you can type, for example,
+.help to
+
+169
+00:13:21,074 --> 00:13:26,310
+get more information about the specific
+commands this program understands.
+
+170
+00:13:28,480 --> 00:13:32,000
+So that's all for our lesson on Data
+Management.
+
+171
+00:13:32,000 --> 00:13:36,440
+Please join me next time, when we'll
+discuss the ContentProvider class.
+
+172
+00:13:36,440 --> 00:13:38,338
+See you then.
+
+173
+00:13:38,338 --> 00:13:43,190
+[BLANK_AUDIO]
+
